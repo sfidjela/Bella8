@@ -23,6 +23,24 @@ ikke API for tredjeparter. Innslippet **er** inngangen.
 
 *Vanskelighetsgrad: lav. Enhver med modelltilgang kan gjøre dette.*
 
+**Men slutt å kalle det en nødløsning.** Jeg har rammet skjermbildet som noe vi gjør fordi
+Vigilo ikke har API. Det er feil vei rundt. Skjermbildet er det riktige designet, av fire grunner:
+
+1. **Det krever ingen beslutning.** En integrasjon krever at hun tenker på hva som er koblet,
+   om det virket, og om noe ble borte. En stresset person vil ikke konfigurere — hun vil dumpe.
+2. **Det virker på alt.** Vigilo, Spond, en lapp på kjøleskapet, en melding fra en annen mamma,
+   et bilde av tavla i garderoben. En integrasjon virker på nøyaktig én kilde.
+3. **Hun ser hva hun sender.** Ingen tvil om hva systemet har fått vite.
+4. **Og dette er det viktigste:** setningen *«jeg leser bare det du sender meg her»* er bare sann
+   fordi det er skjermbilder. En integrasjon betyr stående tilgang. Skjermbildet er grunnen til at
+   personvernløftet holder — ikke på tross av det.
+
+Kombinert med en modell som kjører på egne servere er skjermbilde-innslipp den mest forsvarlige
+personvernhistorien noen i kategorien kan fortelle.
+
+**Konsekvens:** selv om Vigilo-tilgang en dag ble mulig, skal integrasjoner aldri bli overskriften.
+De kan være en stille oppgradering for dem som vil. Innslippet blir stående.
+
 ### 2. Det husker
 
 Allergier, hentetider, skostørrelser, hvem som jobber sent hvilke dager, hvilke uker barna er hvor.
