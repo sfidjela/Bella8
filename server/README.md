@@ -30,8 +30,12 @@ i innboksen hans, men da kan han ikke svare — og hele sløyfa er at han svarer
 Sett webhooken deres til `https://ditt-domene/sms/inn`.
 
 ### 3. Modelltilgang
-Én URL, ett modellnavn, én nøkkel. Alle store leverandører snakker samme format nå, så
-`MODELL_URL` avgjør hvem du bruker. Bytt de tre linjene, så bytter du leverandør.
+Én URL, ett modellnavn, én nøkkel. Grok, Gemini og de fleste andre snakker samme format,
+så `MODELL_URL` avgjør hvem du bruker. Ferdige linjer for begge ligger i `.env.example`.
+
+**Og det viktige:** nøkkelen er din, og kallet skjer her på serveren.
+**Brukerne trenger ingen konto hos noen.** Verken Claude, Google eller xAI.
+De åpner en lenke, og det er alt.
 
 ### 4. Et sted å kjøre det
 Den trenger en maskin som er på hele tiden og et domene med HTTPS —

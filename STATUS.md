@@ -57,8 +57,15 @@ Da ligger den som et ikon. Hun ser aldri en URL igjen.
 Første melding ligger der allerede. Trykk **Bilde**, velg et skjermbilde fra barnehagen,
 send. Det er hele onboardingen.
 
-**Hun trenger en Claude-konto.** Første melding spør om lov til å bruke den.
-Det er prisen for at dette virker i dag uten server.
+**Hun trenger en Claude-konto.** Appen kjører modellen på hennes egen Claude-tilgang, og
+første melding spør om lov. Det kan ikke byttes til Gemini eller noe annet — en artefakt har
+ingen nettverkstilgang ut, så den kan ikke ringe Google uansett hvilken nøkkel du har.
+
+**Men det gjelder bare denne prototypen.** Så snart appen peker på serveren, er nøkkelen din,
+kallet skjer der, og **ingen bruker trenger konto hos noen** — verken Claude, Google eller xAI.
+
+Hvis Claude-kontoen er friksjon nok til at testen ikke skjer, er det bedre å bruke dagen på å
+koble appen til serveren først. Da forsvinner kravet for henne og for alle senere testere.
 
 ### Ikke si hva hun skal gjøre
 
