@@ -156,6 +156,63 @@ gyldig i Nederland, Tyskland og Storbritannia, der delt bosted også øker, og d
 det første året på dem i stedet for på del 3. Sløyfa til folk uten konto er det eneste ingen andre
 har bygget, og det eneste som tar tid å ta igjen.
 
+## Tjener naboene penger?
+
+### Vigilo: ja, men knapt
+
+| | |
+|---|---|
+| Omsetning (2023) | 26,9 mill. kr |
+| Driftsresultat | +1,0 mill. kr |
+| Egenkapital | 42,1 mill. kr |
+| Rekkevidde | 64 kommuner, ~40 % av alle barn i norske barnehager og skoler |
+| Kunder | 8 av Norges 10 største kommuner, inkl. Utdanningsetaten i Oslo |
+| Eier | Kjøpt av danske EG i juli 2024 |
+
+**Inntekt per barn: rundt 60 kr i året**, betalt av kommunen. De har relasjonen til 40 % av norske
+barnefamilier og henter under en hundrelapp i året for den.
+
+### Spond: nei
+
+| | |
+|---|---|
+| Omsetning 2024 | 117,5 mill. kr (opp fra 64 mill.) |
+| Driftsresultat 2024 | −17,6 mill. kr |
+| Underskudd 2024 | −11,8 mill. kr |
+| Underskudd 2023 | −68,8 mill. kr |
+| Underskudd 2022 | −53,4 mill. kr |
+| Brukere | 2 mill.+ |
+| Modell | Gratis app. Tar kutt av betalinger, pluss annonser og dugnadskampanjer. |
+| Eier | Verdane ~35 % |
+
+**Inntekt per bruker: rundt 60 kr i året.** Samme tall som Vigilo, helt annen vei dit.
+
+## Hva dette betyr
+
+**1. Distribusjon er ikke svaret.** Spond har over to millioner brukere og går fortsatt i minus.
+Hadde rekkevidde løst dette, hadde Spond vunnet for lenge siden.
+
+**2. Ingen tar betalt av foreldre for avlastning.** Vigilo selger til kommunen. Spond tar
+transaksjonskutt. Begge lander på ~60 kr per bruker i året. Du foreslår 3 600 kr.
+Det er ikke samme marked — det er en annen inntektsklasse, 60 ganger opp.
+
+**3. Det er utestet, ikke motbevist.** Ingen av dem *kan* teste det.
+Spond sitt DNA er gratis-for-klubber; en 299-plan ville brutt modellen og
+Verdane-eierskapet presser mot brukervekst, ikke ARPU. Vigilo selger til kommuner, og en kommune
+kan ikke fakturere foreldre for en app.
+
+**4. Risikoen er at Spond snur.** De har distribusjonen til norske foreldre og kunne bygget sløyfa.
+Tapshistorikken sier at de jakter volum, men det er ingen garanti.
+
+**5. Vigilo-salget avgjør API-spørsmålet.** EG er et dansk konsern som konsoliderer nordisk
+offentlig programvare. Data ut av Vigilo er nå en corp-dev-samtale, ikke en teknisk integrasjon —
+og de har ingen grunn til å si ja mens de eier relasjonen selv.
+**Skjermbilde-innslippet er permanent, ikke en midlertidig løsning.**
+
+**6. Begge er mer sannsynlige som kjøpere enn som konkurrenter.** EG kjøper nordisk programvare.
+Verdane kjøper vekstselskaper. Hvis du beviser at foreldre betaler 3 600 kr i året,
+er du interessant for begge — nettopp fordi ingen av dem klarer det selv.
+
 ## Kilder
 
 - [SSB: Familier og husholdninger (628 500 barnefamilier, 1 092 900 barn)](https://www.ssb.no/befolkning/barn-familier-og-husholdninger/statistikk/familier-og-husholdninger)
@@ -164,6 +221,12 @@ har bygget, og det eneste som tar tid å ta igjen.
 - [SCB: Så ser Sveriges barnfamiljer ut](https://www.scb.se/hitta-statistik/statistik-efter-amne/befolkning-och-levnadsforhallanden/levnadsforhallanden/barn-och-familjestatistik/pong/statistiknyhet/barn--och-familjestatistik-20242/)
 - [DR: Langt flere skilsmissebørn bor lige meget hos begge forældre](https://www.dr.dk/nyheder/indland/langt-flere-skilsmisseboern-bor-lige-meget-hos-begge-foraeldre)
 - [Rockwool Fonden om deleordninger](https://via.ritzau.dk/pressemeddelelse/14211230/ingen-forskel-pa-skilsmisseborns-trivsel-uanset-hvilken-deleordning)
+
+- [Shifter: Spond — ny milepæl og sjef, men underskuddet vokser](https://www.shifter.no/nyheter/spond-ny-milepael-og-sjef-men-underskuddet-vokser/338500)
+- [Purehelp: Spond AS regnskap](https://www.purehelp.no/m/company/account/spondas/998209218)
+- [Proff: Vigilo AS regnskap](https://www.proff.no/regnskap/vigilo-as/karmsund/it-konsulenter-og-r%C3%A5dgivning/IGGMPYR03DC)
+- [EG kjøper opp norske Vigilo](https://egsoftware.com/no/ressource/eg-kjoeper-opp-norske-vigilo)
+- [Finansavisen: Verdaneselskap fortsetter å blø](https://www.finansavisen.no/teknologi/2025/07/09/8276533/verdaneselskap-fortsetter-a-blo)
 
 **Om tallene:** familietall for Sverige og Danmark er min skalering fra norsk rate mot folketall —
 ikke offisiell statistikk. Barnetall og andeler for delt bosted er hentet fra kildene over.
