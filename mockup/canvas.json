@@ -1,49 +1,195 @@
 {
+  "pages": [
+    {
+      "id": "page-1",
+      "name": "Kjerneflyt"
+    },
+    {
+      "id": "page-2",
+      "name": "Flere flyter"
+    },
+    {
+      "id": "page-3",
+      "name": "Bekreftelsessløyfa"
+    }
+  ],
   "artboards": [
     {
       "file": "Main.dc.html",
+      "title": "1 · Innslipp",
       "x": 0,
       "y": 0,
       "w": 390,
       "h": 844,
-      "title": "1 · Innslipp"
+      "page": "page-1"
     },
     {
       "file": "Hendelse.dc.html",
+      "title": "2 · Hendelseskort",
       "x": 490,
       "y": 0,
       "w": 390,
       "h": 844,
-      "title": "2 · Hendelseskort"
+      "page": "page-1"
     },
     {
       "file": "Morgen.dc.html",
+      "title": "3 · Morgenmeldingen",
       "x": 980,
       "y": 0,
       "w": 390,
       "h": 844,
-      "title": "3 · Morgenmeldingen"
+      "page": "page-1"
     },
     {
       "file": "Minne.dc.html",
+      "title": "4 · Det jeg vet om dere",
       "x": 1470,
       "y": 0,
       "w": 390,
       "h": 844,
-      "title": "4 · Det jeg vet om dere"
+      "page": "page-1"
     },
     {
       "file": "Del.dc.html",
+      "title": "5 · Del med partner",
       "x": 1960,
       "y": 0,
       "w": 390,
       "h": 844,
-      "title": "5 · Del med partner"
+      "page": "page-1"
+    },
+    {
+      "file": "Bursdag.dc.html",
+      "title": "Bursdagen",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-2"
+    },
+    {
+      "file": "Middag.dc.html",
+      "title": "Middagen",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-2"
+    },
+    {
+      "file": "Frist.dc.html",
+      "title": "Fristen i april",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-2"
+    },
+    {
+      "file": "Kollisjon.dc.html",
+      "title": "Kollisjonen",
+      "x": 1470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-2"
+    },
+    {
+      "file": "Kveld.dc.html",
+      "title": "Kvelden",
+      "x": 1960,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-2"
+    },
+    {
+      "file": "Uke.dc.html",
+      "title": "Søndagskartet",
+      "x": 2450,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-2"
+    },
+    {
+      "file": "Be.dc.html",
+      "title": "1 · Hun ber",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
+    },
+    {
+      "file": "Sendt.dc.html",
+      "title": "2 · Sendt, venter",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
+    },
+    {
+      "file": "Sms.dc.html",
+      "title": "3 · Marius' SMS",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
+    },
+    {
+      "file": "Bekreftet.dc.html",
+      "title": "4 · Sløyfa lukket",
+      "x": 1470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
+    },
+    {
+      "file": "SmsNyTid.dc.html",
+      "title": "5 · Han kan ikke",
+      "x": 0,
+      "y": 1060,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
+    },
+    {
+      "file": "Delt.dc.html",
+      "title": "6 · Ny fordeling",
+      "x": 490,
+      "y": 1060,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
+    },
+    {
+      "file": "Mormor.dc.html",
+      "title": "7 · Mormor spørres",
+      "x": 980,
+      "y": 1060,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
+    },
+    {
+      "file": "SmsMormor.dc.html",
+      "title": "8 · Mormors SMS",
+      "x": 1470,
+      "y": 1060,
+      "w": 390,
+      "h": 844,
+      "page": "page-3"
     }
   ],
   "annotations": [
     {
       "id": "retning",
+      "page": "page-1",
       "x": 0,
       "y": -168,
       "w": 430,
@@ -51,6 +197,7 @@
     },
     {
       "id": "apent-valg",
+      "page": "page-1",
       "x": 490,
       "y": -168,
       "w": 430,
@@ -58,13 +205,39 @@
     },
     {
       "id": "navn",
+      "page": "page-1",
       "x": 1960,
       "y": -168,
       "w": 430,
       "text": "Navnet i toppen står som Jajumi.\nLanseringsmateriellet i repoet bruker Familiens ro som arbeidsnavn.\nDette må låses før noe publiseres."
+    },
+    {
+      "id": "forskning",
+      "page": "page-2",
+      "x": 0,
+      "y": -200,
+      "w": 900,
+      "text": "Disse seks er valgt ut fra forskning, ikke magefølelse.\n\nOsloMet/BFD 2021 (N=1035) rangerer stressituasjonene: jobb, så MORGENEN, så MIDDAGEN, så LEGGETIDEN.\nDet tredje skiftet (NIFU/OsloMet 2025, N=602) er planlegging og overvåking — skjevt fordelt selv i par som deler likt på oppgavene.\nNavngitte oppgaver i forskningen: bursdager og gaver, Spond-varsler, turdager, foreldremøter, klær, legetimer, sommerferie.\n\nMiddagen var den jeg ba deg kutte. Det var feil — 1 av 2 sliter med å bestemme hva de skal ha."
+    },
+    {
+      "id": "kanal",
+      "page": "page-3",
+      "x": 0,
+      "y": -220,
+      "w": 900,
+      "text": "Kanalvalget er ikke fritt.\n\nSMS er den eneste som faktisk går: en tjenestemelding hun har bedt om er ikke markedsføring, så mfl. §15 sperrer ikke.\nWhatsApp krever at MOTTAKEREN har gitt eksplisitt opt-in til deg først — at hun oppgir nummeret hans teller ikke.\nMessenger og Instagram krever at han sender første melding. Kald utsending er umulig.\n\nDerfor ser skjermene til Marius og mormor ut som vanlig SMS, ikke som produktet."
+    },
+    {
+      "id": "gdpr",
+      "page": "page-3",
+      "x": 980,
+      "y": 870,
+      "w": 430,
+      "text": "Marius og mormor er tredjepersoner som ikke er kunder.\nFørste SMS må si hvem som sender, på oppdrag fra hvem,\nog hvordan de sier nei. Det er GDPR art. 14, ikke høflighet."
     }
   ],
   "launch": {
-    "view": "canvas"
+    "view": "canvas",
+    "page": "page-3"
   }
 }
