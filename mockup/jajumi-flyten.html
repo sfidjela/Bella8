@@ -1,0 +1,481 @@
+<title>Jajumi-flyten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Karla:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --stage:   #292520;
+    --stage-2: #201D19;
+    --sand:    #F4EEE5;
+    --card:    #FFFDF9;
+    --line:    #E5DACB;
+    --hair:    #F1EAE0;
+    --ink:     #2C2722;
+    --ink-2:   #3A342D;
+    --muted:   #6F665C;
+    --faint:   #8A8075;
+    --forest:  #44574B;
+    --on-dark: #F7F4EE;
+    --clay:    #A0603F;
+    --clay-ink:#7E4A30;
+    --clay-bg: #F6E6DA;
+    --cap:     #EFE7DA;
+    --ease: cubic-bezier(.2,.7,.2,1);
+    --d: .55s;
+  }
+  /* Bevisst ett visuelt univers: dette er en annonseflate, ikke et dokument. */
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--stage-2);
+    color: var(--cap);
+    font-family: Karla, 'Helvetica Neue', Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 16px 24px;
+    box-sizing: border-box;
+  }
+  .reduced * { transition-duration: 0s !important; }
+
+  /* ---------- sidetopp ---------- */
+  .masthead { width: 100%; max-width: 520px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-shrink: 0; }
+  .masthead h1 { font-family: Newsreader, Georgia, serif; font-weight: 500; font-size: 20px; margin: 0; letter-spacing: .01em; }
+  .masthead p { margin: 0; font-size: 12.5px; color: #9D9284; }
+
+  /* ---------- scene ---------- */
+  .stage {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    height: min(100%, 1000px);
+    max-width: 100%;
+    background: radial-gradient(120% 80% at 50% 12%, #332E27 0%, var(--stage) 55%, var(--stage-2) 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 1;
+    min-height: 0;
+  }
+
+  .phone {
+    position: absolute; left: 50%; top: 46%;
+    width: 390px; height: 844px;
+    transform: translate(-50%, -50%) scale(var(--s, .5));
+    transform-origin: center center;
+    border-radius: 46px;
+    background: #15120F;
+    padding: 9px;
+    box-shadow: 0 34px 70px rgba(0,0,0,.5), 0 0 0 1px rgba(247,244,238,.09);
+  }
+  .screen {
+    width: 100%; height: 100%;
+    border-radius: 38px;
+    overflow: hidden;
+    background: var(--sand);
+    color: var(--ink);
+    display: flex; flex-direction: column;
+  }
+
+  /* ---------- telefonens topp ---------- */
+  .safe { height: 52px; flex-shrink: 0; }
+  .topbar { display: flex; align-items: center; gap: 12px; padding: 0 12px 14px 16px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+  .avatar { width: 36px; height: 36px; border-radius: 18px; background: var(--forest); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .topname { flex-grow: 1; font-family: Newsreader, Georgia, serif; font-size: 19px; font-weight: 500; letter-spacing: .01em; }
+  .icon-slot { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+
+  /* ---------- tråden ---------- */
+  .thread { flex-grow: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 16px 8px; min-height: 0; }
+  .stack { display: flex; flex-direction: column; }
+  .row { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--d) var(--ease); }
+  .row > .in { overflow: hidden; opacity: 0; transform: translateY(10px); transition: opacity var(--d) var(--ease), transform var(--d) var(--ease); }
+  .row.on { grid-template-rows: 1fr; }
+  .row.on > .in { opacity: 1; transform: none; }
+  .in { padding-top: 10px; }
+
+  .day { display: flex; align-items: center; justify-content: center; padding: 4px 0; }
+  .day span { font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: #9A9086; font-weight: 600; }
+
+  .from-them { display: flex; justify-content: flex-start; }
+  .from-me { display: flex; justify-content: flex-end; }
+  .bubble-them { max-width: 296px; background: var(--card); border: 1px solid var(--line); border-radius: 20px 20px 20px 6px; padding: 12px 16px; font-family: Newsreader, Georgia, serif; font-size: 17.5px; line-height: 1.5; }
+  .bubble-me { max-width: 268px; background: var(--forest); color: var(--on-dark); border-radius: 20px 20px 6px 20px; padding: 11px 16px; font-size: 15.5px; line-height: 1.45; }
+  .thinking { font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 14px; color: #9A9086; padding-left: 6px; }
+  .thinking i { font-style: normal; animation: blink 1.4s var(--ease) infinite; }
+  .thinking i:nth-child(2) { animation-delay: .2s; }
+  .thinking i:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 60%, 100% { opacity: .25; } 30% { opacity: 1; } }
+
+  /* ---------- skjermbildet hun sender ---------- */
+  .shot { width: 268px; border-radius: 18px; overflow: hidden; border: 1px solid #DCD0BF; background: #fff; }
+  .shot-head { background: #EFEAE1; padding: 10px 14px; border-bottom: 1px solid #E2D9CB; }
+  .shot-kicker { font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+  .shot-sub { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .shot-body { position: relative; padding: 14px; font-family: Newsreader, Georgia, serif; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); display: flex; flex-direction: column; gap: 9px; }
+  .shot-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 44px; background: linear-gradient(to bottom, rgba(255,255,255,0), #fff); }
+
+  /* ---------- hendelseskortet ---------- */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .card-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--hair); }
+  .card-title { font-family: Newsreader, Georgia, serif; font-size: 22px; line-height: 1.2; }
+  .card-sub { font-size: 13.5px; color: var(--muted); margin-top: 5px; }
+  .card-body { padding: 6px 18px 14px; }
+  .fact { padding: 8px 0; border-bottom: 1px solid var(--hair); opacity: 0; transform: translateY(6px); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+  .fact:last-of-type { border-bottom: none; }
+  .fact.on { opacity: 1; transform: none; }
+  .fact-label { font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+  .fact-value { font-family: Newsreader, Georgia, serif; font-size: 16px; line-height: 1.35; margin-top: 3px; }
+  .deadline { background: var(--clay-bg); border-radius: 12px; padding: 12px 14px; margin-top: 8px; opacity: 0; transform: translateY(6px); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+  .deadline.on { opacity: 1; transform: none; }
+  .deadline .fact-label { color: var(--clay); }
+  .deadline .fact-value { color: var(--clay-ink); }
+
+  .actions { display: flex; gap: 10px; padding: 0 18px 18px; opacity: 0; transform: translateY(6px); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+  .actions.on { opacity: 1; transform: none; }
+  .btn-primary { flex-grow: 1; height: 48px; border-radius: 24px; background: var(--forest); color: var(--on-dark); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600; transition: transform .22s var(--ease), background .35s var(--ease); }
+  .btn-ghost { height: 48px; padding: 0 20px; border-radius: 24px; border: 1px solid #CFC2AF; color: var(--forest); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; transition: opacity .35s var(--ease); }
+  .actions.press .btn-primary { transform: scale(.955); }
+  .actions.done .btn-primary { background: #3C4E42; }
+  .actions.done .btn-ghost { opacity: 0; }
+  .btn-primary .swap { display: flex; align-items: center; gap: 8px; }
+  .actions.done .label-do { display: none; }
+  .label-done { display: none; }
+  .actions.done .label-done { display: flex; }
+  .check { stroke-dasharray: 22; stroke-dashoffset: 22; }
+  .actions.done .check { animation: draw .5s var(--ease) forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .aside { padding: 2px 6px 0; font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 14px; line-height: 1.5; color: var(--faint); }
+
+  /* ---------- morgenkortet ---------- */
+  .morning { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 8px 18px; }
+  .task { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--hair); opacity: 0; transform: translateY(6px); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+  .task:last-child { border-bottom: none; }
+  .task.on { opacity: 1; transform: none; }
+  .num { width: 26px; height: 26px; border-radius: 13px; border: 1px solid #C5B9A6; color: var(--muted); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+  .num.warn { background: var(--clay-bg); border-color: #E3C6B0; color: var(--clay); }
+  .task-title { font-family: Newsreader, Georgia, serif; font-size: 17px; line-height: 1.3; }
+  .task-sub { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+  .task-sub.warn { color: var(--clay); }
+
+  /* ---------- skrivefelt ---------- */
+  .composer { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); background: #FAF6EF; flex-shrink: 0; }
+  .composer .plus { width: 44px; height: 44px; border-radius: 22px; border: 1px solid #DDD1BF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .composer .field { flex-grow: 1; height: 44px; border-radius: 22px; background: var(--card); border: 1px solid #DDD1BF; display: flex; align-items: center; padding: 0 18px; font-size: 15px; color: #A0968A; }
+  .home { height: 34px; background: #FAF6EF; flex-shrink: 0; }
+
+  /* ---------- undertekst ---------- */
+  .caption { position: absolute; left: 8%; right: 8%; bottom: 6.5%; text-align: center; }
+  .caption p { margin: 0; font-family: Newsreader, Georgia, serif; font-size: clamp(17px, 3.6cqw, 34px); line-height: 1.3; color: var(--cap); text-wrap: balance; opacity: 0; transform: translateY(8px); transition: opacity .6s var(--ease), transform .6s var(--ease); position: absolute; left: 0; right: 0; bottom: 0; }
+  .caption p.on { opacity: 1; transform: none; }
+  .stage { container-type: inline-size; }
+
+  .progress { position: absolute; left: 0; bottom: 0; height: 2px; background: rgba(247,244,238,.5); width: 0; }
+
+  /* ---------- kontroller ---------- */
+  .controls { display: flex; gap: 8px; align-items: center; flex-shrink: 0; flex-wrap: wrap; justify-content: center; }
+  .controls button {
+    font-family: Karla, sans-serif; font-size: 13.5px; font-weight: 600;
+    color: var(--cap); background: rgba(247,244,238,.07);
+    border: 1px solid rgba(247,244,238,.16); border-radius: 20px;
+    height: 40px; padding: 0 18px; cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .controls button:hover { background: rgba(247,244,238,.13); }
+  .controls button:focus-visible { outline: 2px solid #C9A88C; outline-offset: 2px; }
+  .hint { position: absolute; top: 14px; right: 16px; font-size: 12px; color: rgba(239,231,218,.65); opacity: 0; transition: opacity .5s ease; pointer-events: none; }
+
+  body.capture { padding: 0; gap: 0; background: var(--stage-2); justify-content: center; }
+  body.capture .masthead, body.capture .controls, body.capture .progress { display: none; }
+  body.capture .stage { border-radius: 0; height: 100%; }
+  body.capture .hint { opacity: 1; animation: fadehint 3s var(--ease) forwards; }
+  @keyframes fadehint { 0%, 55% { opacity: 1; } 100% { opacity: 0; } }
+</style>
+
+<div class="masthead">
+  <h1>Jajumi-flyten</h1>
+  <p>9:16 · ca. 20 sek · går i loop</p>
+</div>
+
+<div class="stage" id="stage">
+  <div class="phone" id="phone">
+    <div class="screen">
+      <div class="safe"></div>
+      <div class="topbar">
+        <div class="avatar">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#EDE6DA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c4.2 2.6 5.8 6.4 4.7 10.1C15.6 18.3 13 20 12 20s-3.6-1.7-4.7-5.4C6.2 10.9 7.8 7.1 12 4.5Z"></path><path d="M12 9.5v8.5"></path></svg>
+        </div>
+        <div class="topname">Jajumi</div>
+        <div class="icon-slot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A8075" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 11.2v4.6"></path><path d="M12 8.3v.2"></path></svg>
+        </div>
+      </div>
+
+      <div class="thread">
+        <div class="stack">
+
+          <div class="row on" id="r-yesterday"><div class="in">
+            <div class="day"><span>I går</span></div>
+          </div></div>
+          <div class="row on" id="r-swim"><div class="in">
+            <div class="from-them"><div class="bubble-them">Svømmetøyet henger fortsatt til tørk. Jeg sier ifra fredag kveld.</div></div>
+          </div></div>
+
+          <div class="row" id="r-today"><div class="in">
+            <div class="day"><span>I dag</span></div>
+          </div></div>
+
+          <div class="row" id="r-shot"><div class="in">
+            <div class="from-me">
+              <div class="shot">
+                <div class="shot-head">
+                  <div class="shot-kicker">Bekkeblomen barnehage</div>
+                  <div class="shot-sub">Avdeling Maurtua · 11. september</div>
+                </div>
+                <div class="shot-body">
+                  <div>Hei alle sammen!</div>
+                  <div>Torsdag 24. september tar vi høsttur til Sognsvann. Vi går fra barnehagen kl. 08.30, så vær her senest 08.15.</div>
+                  <div>Barna må ha med matpakke, drikkeflaske, regntøy og et ekstra skift.</div>
+                  <div>Meld på i Vigilo innen mandag 21. september.</div>
+                  <div class="shot-fade"></div>
+                </div>
+              </div>
+            </div>
+          </div></div>
+
+          <div class="row" id="r-ask"><div class="in">
+            <div class="from-me"><div class="bubble-me">kan du ta denne?</div></div>
+          </div></div>
+
+          <div class="row" id="r-think"><div class="in">
+            <div class="thinking">Ser på det<i>.</i><i>.</i><i>.</i></div>
+          </div></div>
+
+          <div class="row" id="r-intro"><div class="in">
+            <div class="from-them"><div class="bubble-them">Dette gjelder Emma, om åtte dager.</div></div>
+          </div></div>
+
+          <div class="row" id="r-card"><div class="in">
+            <div class="card">
+              <div class="card-head">
+                <div class="card-title">Høsttur til Sognsvann</div>
+                <div class="card-sub">Emma · Bekkeblomen barnehage</div>
+              </div>
+              <div class="card-body">
+                <div class="fact" id="f1">
+                  <div class="fact-label">Når</div>
+                  <div class="fact-value">Torsdag 24. september, 08.30–14.00</div>
+                </div>
+                <div class="fact" id="f2">
+                  <div class="fact-label">Oppmøte</div>
+                  <div class="fact-value">Barnehagen, senest 08.15</div>
+                </div>
+                <div class="fact" id="f3">
+                  <div class="fact-label">Ta med</div>
+                  <div class="fact-value">Matpakke, drikkeflaske, regntøy, skift</div>
+                </div>
+                <div class="deadline" id="f4">
+                  <div class="fact-label">Frist</div>
+                  <div class="fact-value">Påmelding i Vigilo innen mandag</div>
+                </div>
+              </div>
+              <div class="actions" id="acts">
+                <div class="btn-primary">
+                  <span class="swap label-do">Legg i kalenderen</span>
+                  <span class="swap label-done">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F7F4EE" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path class="check" d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+                    Lagt i kalenderen
+                  </span>
+                </div>
+                <div class="btn-ghost">Endre</div>
+              </div>
+            </div>
+          </div></div>
+
+          <div class="row" id="r-aside"><div class="in">
+            <div class="aside">Jeg sier ifra om påmeldingen søndag kveld hvis den ikke er gjort.</div>
+          </div></div>
+
+          <div class="row" id="r-morningday"><div class="in">
+            <div class="day"><span>Onsdag 16. september · 07.02</span></div>
+          </div></div>
+
+          <div class="row" id="r-greet"><div class="in">
+            <div class="from-them"><div class="bubble-them">God morgen. Tre ting i dag.</div></div>
+          </div></div>
+
+          <div class="row" id="r-morning"><div class="in">
+            <div class="morning">
+              <div class="task" id="t1">
+                <div class="num">1</div>
+                <div>
+                  <div class="task-title">Turdag i barnehagen</div>
+                  <div class="task-sub">Gummistøvler og skift i sekken</div>
+                </div>
+              </div>
+              <div class="task" id="t2">
+                <div class="num">2</div>
+                <div>
+                  <div class="task-title">Jakob har fotball 17.00</div>
+                  <div class="task-sub">Marius kjører</div>
+                </div>
+              </div>
+              <div class="task" id="t3">
+                <div class="num warn">3</div>
+                <div>
+                  <div class="task-title">Meld på høstturen</div>
+                  <div class="task-sub warn">Fristen går ut mandag</div>
+                </div>
+              </div>
+            </div>
+          </div></div>
+
+          <div class="row" id="r-close"><div class="in">
+            <div class="from-them"><div class="bubble-them">Ellers er det ingenting du må huske i dag.</div></div>
+          </div></div>
+
+        </div>
+      </div>
+
+      <div class="composer">
+        <div class="plus">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6F665C" stroke-width="1.5" stroke-linecap="round"><path d="M12 6v12"></path><path d="M6 12h12"></path></svg>
+        </div>
+        <div class="field">Melding</div>
+      </div>
+      <div class="home"></div>
+    </div>
+  </div>
+
+  <div class="caption" id="caption">
+    <p id="c1">Send det videre.</p>
+    <p id="c2">Få det tilbake som en avtale.</p>
+    <p id="c3">Og dagen din, om morgenen.</p>
+    <p id="c4">Noen andre husker det nå.</p>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="hint">Esc avslutter opptaksmodus</div>
+</div>
+
+<div class="controls">
+  <button type="button" id="btn-play">Pause</button>
+  <button type="button" id="btn-restart">Start på nytt</button>
+  <button type="button" id="btn-capture">Opptaksmodus</button>
+</div>
+
+<script>
+  var $ = function (id) { return document.getElementById(id); };
+  var LOOP = 21000;
+
+  var CAPTIONS = ['c1', 'c2', 'c3', 'c4'];
+
+  function show(id) { $(id).classList.add('on'); }
+  function hide(id) { $(id).classList.remove('on'); }
+  function caption(id) {
+    CAPTIONS.forEach(function (c) { if (c !== id) hide(c); });
+    show(id);
+  }
+
+  var steps = [
+    [0,     function () { caption('c1'); }],
+    [700,   function () { show('r-today'); }],
+    [1300,  function () { show('r-shot'); }],
+    [3100,  function () { show('r-ask'); }],
+    [4300,  function () { show('r-think'); }],
+    [5600,  function () { caption('c2'); hide('r-think'); show('r-intro'); }],
+    [6500,  function () { show('r-card'); }],
+    [7000,  function () { show('f1'); }],
+    [7450,  function () { show('f2'); }],
+    [7900,  function () { show('f3'); }],
+    [8500,  function () { show('f4'); }],
+    [9200,  function () { show('acts'); }],
+    [10400, function () { $('acts').classList.add('press'); }],
+    [10750, function () { $('acts').classList.remove('press'); $('acts').classList.add('done'); }],
+    [11600, function () { show('r-aside'); }],
+    [12900, function () { caption('c3'); show('r-morningday'); }],
+    [13600, function () { show('r-greet'); }],
+    [14300, function () { show('r-morning'); }],
+    [14700, function () { show('t1'); }],
+    [15200, function () { show('t2'); }],
+    [15700, function () { show('t3'); }],
+    [16800, function () { show('r-close'); }],
+    [18400, function () { caption('c4'); }]
+  ];
+
+  var TRANSIENT = ['r-today','r-shot','r-ask','r-think','r-intro','r-card','r-aside',
+                   'r-morningday','r-greet','r-morning','r-close',
+                   'f1','f2','f3','f4','acts','t1','t2','t3'];
+
+  function reset() {
+    TRANSIENT.forEach(hide);
+    CAPTIONS.forEach(hide);
+    $('acts').classList.remove('press', 'done');
+  }
+
+  var t0 = performance.now();
+  var idx = 0;
+  var paused = false;
+  var elapsedAtPause = 0;
+
+  function tick(now) {
+    if (!paused) {
+      var e = now - t0;
+      while (idx < steps.length && steps[idx][0] <= e) { steps[idx][1](); idx++; }
+      $('progress').style.width = Math.min(100, (e / LOOP) * 100) + '%';
+      if (e >= LOOP) { reset(); t0 = now; idx = 0; }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function restart() {
+    reset();
+    idx = 0;
+    t0 = performance.now();
+    elapsedAtPause = 0;
+    if (paused) { paused = false; $('btn-play').textContent = 'Pause'; }
+  }
+
+  function togglePlay() {
+    if (paused) {
+      paused = false;
+      t0 = performance.now() - elapsedAtPause;
+      $('btn-play').textContent = 'Pause';
+    } else {
+      paused = true;
+      elapsedAtPause = performance.now() - t0;
+      $('btn-play').textContent = 'Spill av';
+    }
+  }
+
+  function toggleCapture() {
+    var on = document.body.classList.toggle('capture');
+    $('btn-capture').textContent = on ? 'Avslutt opptak' : 'Opptaksmodus';
+    fit();
+  }
+
+  function fit() {
+    var stage = $('stage');
+    var h = stage.clientHeight;
+    if (!h) return;
+    $('phone').style.setProperty('--s', (h * 0.76) / 844);
+  }
+
+  $('btn-play').addEventListener('click', togglePlay);
+  $('btn-restart').addEventListener('click', restart);
+  $('btn-capture').addEventListener('click', toggleCapture);
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape' && document.body.classList.contains('capture')) { toggleCapture(); }
+    else if (ev.key === 'r' || ev.key === 'R') { restart(); }
+    else if (ev.code === 'Space' && ev.target === document.body) { ev.preventDefault(); togglePlay(); }
+  });
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.body.classList.add('reduced');
+  }
+
+  if (window.ResizeObserver) { new ResizeObserver(fit).observe($('stage')); }
+  window.addEventListener('resize', fit);
+  fit();
+  requestAnimationFrame(tick);
+</script>
