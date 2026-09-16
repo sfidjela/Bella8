@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Karla:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    a { color: #A0603F; } a:hover { color: #7E4A30; }
+  </style>
+</helmet>
+<div style="width: 390px; min-height: 844px; background: linear-gradient(175deg, #33302B 0%, #262320 45%, #1B1916 100%); font-family: Karla, 'Helvetica Neue', Helvetica, sans-serif; color: #2C2722; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+  <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; padding: 96px 26px 0 26px;">
+    <div style="font-family: Newsreader, Georgia, serif; font-size: 74px; line-height: 1; color: #FBF7F0; letter-spacing: -.02em;">07.02</div>
+    <div style="font-size: 14px; color: rgba(251,247,240,.75); margin-top: 8px;">onsdag 16. september</div>
+
+    <div style="width: 100%; margin-top: 30px; background: rgba(251,247,240,.13); border: 1px solid rgba(251,247,240,.18); border-radius: 18px; padding: 14px 16px; backdrop-filter: blur(8px);">
+      <div style="display: flex; align-items: center; gap: 9px; padding-bottom: 7px;">
+        <div style="width: 17px; height: 17px; border-radius: 5px; background: #6E8375; display: flex; align-items: center; justify-content: center;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EDE6DA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c4.2 2.6 5.8 6.4 4.7 10.1C15.6 18.3 13 20 12 20s-3.6-1.7-4.7-5.4C6.2 10.9 7.8 7.1 12 4.5Z"></path><path d="M12 9.5v8.5"></path></svg>
+        </div>
+        <div style="font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: rgba(251,247,240,.7); font-weight: 600;">Jajumi</div>
+        <div style="flex-grow: 1;"></div>
+        <div style="font-size: 11.5px; color: rgba(251,247,240,.55);">nå</div>
+      </div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 17px; line-height: 1.35; color: #FBF7F0;">Turdag i dag. Gummistøvler og skift i sekken.</div>
+      <div style="font-size: 13px; color: rgba(251,247,240,.65); margin-top: 4px;">To ting til i dag</div>
+    </div>
+
+    <div style="width: 100%; margin-top: 10px; background: rgba(251,247,240,.08); border-radius: 16px; padding: 12px 16px;">
+      <div style="font-size: 12.5px; color: rgba(251,247,240,.6);">Marius bekreftet høstturen · 12.04 i går</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

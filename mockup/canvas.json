@@ -19,6 +19,10 @@
     {
       "id": "page-5",
       "name": "Delt hverdag"
+    },
+    {
+      "id": "page-6",
+      "name": "Hennes flate"
     }
   ],
   "artboards": [
@@ -282,6 +286,33 @@
       "w": 390,
       "h": 844,
       "page": "page-4"
+    },
+    {
+      "file": "Deling.dc.html",
+      "title": "1 · Delingsmenyen",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-6"
+    },
+    {
+      "file": "Widget.dc.html",
+      "title": "2 · Widgeten",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-6"
+    },
+    {
+      "file": "Laas.dc.html",
+      "title": "3 · Låseskjermen",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-6"
     }
   ],
   "annotations": [
@@ -364,10 +395,18 @@
       "y": -168,
       "w": 860,
       "text": "Omfanget er mindre enn de 27 skjermene ser ut som.\n\n23 av dem er SAMME tråd. To er en side du når fra tråden. To er vanlig SMS på en annen telefon — ikke vår flate i det hele tatt.\nProduktet er én tråd, ett minne, fire verktøy (lese det som slippes inn, kalender, SMS ut, påminnelser) og to rutiner (morgen og søndag).\n\nAlt annet på lerretet er innhold, ikke ny overflate."
+    },
+    {
+      "id": "flate",
+      "page": "page-6",
+      "x": 0,
+      "y": -220,
+      "w": 900,
+      "text": "Løftet «ingen app» var aldri om henne. Det var om ham.\n\nUten app koster kjernehandlingen fire trinn: skjermbilde, åpne meldinger, finne tråden, lime inn.\nMed en delingsutvidelse koster den to. Det er halvparten av friksjonen i den handlingen hele produktet hviler på.\nWidgeten gir dagens tre ting uten at hun åpner noe — det er kjøkkenskjermen, i lomma, uten maskinvare.\nOg et ikon på hjemskjermen er den billigste churn-forsvaret som finnes.\n\nHun får app. Han får aldri app. Det er den skarpe versjonen av løftet."
     }
   ],
   "launch": {
     "view": "canvas",
-    "page": "page-1"
+    "page": "page-6"
   }
 }

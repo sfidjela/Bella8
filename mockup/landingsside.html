@@ -1,0 +1,335 @@
+<title>Noen andre husker det nå</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Karla:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground:#F4EEE5; --band:#EFE7DA; --card:#FFFDF9; --line:#E2D7C6; --hair:#EDE4D6;
+    --ink:#2C2722; --ink-2:#3A342D; --muted:#6F665C; --faint:#8A8075;
+    --forest:#44574B; --forest-hi:#3C4E42; --on-forest:#F7F4EE;
+    --clay:#A0603F; --clay-ink:#7E4A30; --clay-bg:#F6E6DA;
+    --sms-bg:#EDEDF0; --sms-card:#FFFFFF; --sms-ink:#1C1C1E; --sms-out:#4C5A67; --sms-faint:#8E8E96;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#201D19; --band:#262320; --card:#2B2724; --line:#3D372F; --hair:#332E28;
+      --ink:#EFE7DA; --ink-2:#E2D9CA; --muted:#A79C8C; --faint:#8E8375;
+      --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
+      --clay:#D69B77; --clay-ink:#E5B294; --clay-bg:#3A2C23;
+      --sms-bg:#2A2A2E; --sms-card:#35353A; --sms-ink:#EDEDF0; --sms-out:#6C7A87; --sms-faint:#9A9AA2;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#201D19; --band:#262320; --card:#2B2724; --line:#3D372F; --hair:#332E28;
+    --ink:#EFE7DA; --ink-2:#E2D9CA; --muted:#A79C8C; --faint:#8E8375;
+    --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
+    --clay:#D69B77; --clay-ink:#E5B294; --clay-bg:#3A2C23;
+    --sms-bg:#2A2A2E; --sms-card:#35353A; --sms-ink:#EDEDF0; --sms-out:#6C7A87; --sms-faint:#9A9AA2;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: Karla, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--clay); } a:hover { color: var(--clay-ink); }
+
+  .wrap { max-width: 660px; margin: 0 auto; padding-inline: 20px; }
+  section { padding-block: 64px; }
+  .band { background: var(--band); }
+
+  h1, h2, h3 { font-family: Newsreader, Georgia, serif; font-weight: 500; margin: 0; text-wrap: balance; line-height: 1.12; }
+  h1 { font-size: clamp(38px, 8.5vw, 62px); letter-spacing: -.015em; }
+  h2 { font-size: clamp(27px, 5.2vw, 38px); letter-spacing: -.01em; }
+  h3 { font-size: 21px; line-height: 1.25; }
+  p { margin: 0; max-width: 34em; }
+  .lede { font-family: Newsreader, Georgia, serif; font-size: clamp(19px, 3.4vw, 22px); line-height: 1.55; color: var(--ink-2); }
+  .eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+  .stack { display: flex; flex-direction: column; gap: 22px; }
+  .stack-sm { display: flex; flex-direction: column; gap: 12px; }
+
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 56px; padding: 0 30px; border-radius: 28px;
+    background: var(--forest); color: var(--on-forest);
+    font-size: 16.5px; font-weight: 600; text-decoration: none;
+    transition: background .2s ease, transform .15s ease;
+  }
+  .cta:hover { background: var(--forest-hi); color: var(--on-forest); transform: translateY(-1px); }
+  .cta:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  .under-cta { font-size: 14px; color: var(--muted); font-style: italic; font-family: Newsreader, Georgia, serif; }
+
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step { display: grid; grid-template-columns: 34px 1fr; gap: 18px; padding-block: 24px; border-top: 1px solid var(--hair); }
+  .step:last-child { border-bottom: 1px solid var(--hair); }
+  .step-n { font-family: Newsreader, Georgia, serif; font-size: 19px; color: var(--faint); padding-top: 1px; }
+
+  /* beviset: hans telefon, bevisst nøytral */
+  .proof { background: var(--sms-bg); border-radius: 20px; padding: 20px; margin-top: 8px; }
+  .proof-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .proof-who { font-size: 13px; font-weight: 600; color: var(--sms-ink); }
+  .proof-when { font-size: 12px; color: var(--sms-faint); }
+  .sms-in {
+    background: var(--sms-card); color: var(--sms-ink); border-radius: 16px 16px 16px 5px;
+    padding: 13px 15px; font-size: 14.5px; line-height: 1.45;
+    font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex; flex-direction: column; gap: 3px; max-width: 330px;
+  }
+  .sms-gap { height: 8px; }
+  .sms-out {
+    align-self: flex-end; background: var(--sms-out); color: #fff;
+    border-radius: 16px 16px 5px 16px; padding: 9px 16px; font-size: 15px; font-weight: 500;
+    margin-top: 10px; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  .proof-row { display: flex; flex-direction: column; }
+
+  .price { display: flex; flex-wrap: wrap; gap: 14px; }
+  .price-card { flex: 1 1 240px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+  .price-num { font-family: Newsreader, Georgia, serif; font-size: 34px; line-height: 1; }
+  .price-unit { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .price-note { font-size: 14.5px; color: var(--muted); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hair); }
+
+  .incl { display: flex; flex-direction: column; gap: 11px; margin: 0; padding: 0; list-style: none; }
+  .incl li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 16px; }
+  .incl svg { margin-top: 5px; }
+
+  details { border-top: 1px solid var(--hair); }
+  details:last-of-type { border-bottom: 1px solid var(--hair); }
+  summary {
+    cursor: pointer; list-style: none; padding-block: 18px;
+    font-family: Newsreader, Georgia, serif; font-size: 19px;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--faint); font-size: 21px; flex-shrink: 0; }
+  details[open] summary::after { content: "−"; }
+  details p { padding-bottom: 20px; color: var(--muted); font-size: 16px; }
+
+  footer { padding-block: 48px 64px; border-top: 1px solid var(--hair); }
+  .fine { font-size: 13.5px; color: var(--faint); }
+</style>
+
+<section class="wrap">
+  <div class="stack">
+    <div class="eyebrow">Jajumi</div>
+    <h1>Noen andre husker det nå</h1>
+    <p class="lede">
+      Turnklær på torsdag. Foreldremøtet. Påmeldingsfristen som gikk ut i går.
+      At melken er tom. Du har hele familiens hode i ditt eget.
+    </p>
+    <p class="lede">Jajumi tar over listen.</p>
+    <div class="stack-sm" style="margin-top: 6px;">
+      <div><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
+      <div class="under-cta">Ingen binding. Ingen som ringer deg. Og han trenger ikke laste ned noe.</div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap stack">
+    <h2>Slik virker det</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="stack-sm">
+          <h3>Du slipper inn kaoset</h3>
+          <p>Skjermbildet fra barnehagen. Mailen du ikke rakk å lese. Invitasjonen som kom på SMS.
+             Send den videre uten å lese den — du får den tilbake som en avtale, med dato, oppmøte og hva som må pakkes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="stack-sm">
+          <h3>Du får dagen om morgenen</h3>
+          <p>Tre ting. Ikke tjue. Det som faktisk må skje i dag — og beskjed om at det ikke er noe mer.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="stack-sm">
+          <h3>Og han bekrefter at han har fått det med seg</h3>
+          <p>Du skriver «si fra til Marius». Han får en vanlig SMS og svarer med ett tall.
+             Du får beskjed når han har svart — ikke før.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap stack">
+  <div class="eyebrow">Slik ser det ut for ham</div>
+  <h2>Han trenger ingen app</h2>
+  <p>Ingen konto, ingen nedlasting, ingen god vilje. Bare en melding han kan svare på med ett tegn.</p>
+
+  <div class="proof">
+    <div class="proof-head">
+      <span class="proof-who">Marius sin telefon</span>
+      <span class="proof-when">i dag 11.58</span>
+    </div>
+    <div class="proof-row">
+      <div class="sms-in">
+        <div>Fra Kristin, via Jajumi.</div>
+        <div class="sms-gap"></div>
+        <div>Emma: høsttur til Sognsvann.</div>
+        <div>Torsdag 24.9, oppmøte i barnehagen 08.15.</div>
+        <div>Matpakke, drikkeflaske, regntøy, skift.</div>
+        <div class="sms-gap"></div>
+        <div>Kristin spør om du kan levere.</div>
+        <div class="sms-gap"></div>
+        <div>Svar med ett tall:</div>
+        <div>1 — Forstått</div>
+        <div>2 — Forstått, legg den i kalenderen min</div>
+        <div>3 — Passer ikke, foreslå noe annet</div>
+        <div>4 — Noe annet (skriv fritt)</div>
+      </div>
+      <div class="sms-out">2</div>
+    </div>
+  </div>
+
+  <p style="color: var(--muted); font-size: 15.5px;">
+    Samme melding går til mormor, barnepasseren eller den som henter på fredag.
+    Du slipper å minne noen på noe.
+  </p>
+</section>
+
+<section class="band">
+  <div class="wrap stack">
+    <h2>Det er ikke tid du mangler</h2>
+    <p class="lede">Det er at du er den eneste som holder alt i hodet samtidig.</p>
+    <p class="lede">Den jobben har ingen gitt deg. Den bare ble din.</p>
+    <p>Jajumi er ikke enda et sted du må logge inn og fylle ut. Det er at noen andre har oversikten,
+       og gir deg beskjed.</p>
+  </div>
+</section>
+
+<section class="wrap stack">
+  <h2>Du trenger ikke fylle ut noe</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="stack-sm">
+        <h3>Du starter</h3>
+        <p>Betaler første måned. Ingen samtale, ingen skjema, ingen som ringer.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="stack-sm">
+        <h3>Du sender det første skjermbildet</h3>
+        <p>Hva som helst som ligger og venter. Det holder som start.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="stack-sm">
+        <h3>Den spør om det den mangler</h3>
+        <p>Ett spørsmål av gangen, når det er relevant. «Hvem henter Emma på torsdager?»
+           Svarer du én gang, blir du aldri spurt igjen.</p>
+      </div>
+    </div>
+  </div>
+  <p style="color: var(--muted); font-size: 15.5px;">
+    Den første uka gjetter den litt — og sier ifra hver gang den gjør det.
+  </p>
+</section>
+
+<section class="band" id="pris">
+  <div class="wrap stack">
+    <h2>Pris</h2>
+    <div class="price">
+      <div class="price-card">
+        <div class="price-num">299 kr</div>
+        <div class="price-unit">per måned</div>
+        <div class="price-note">Ingen binding. Si opp med en melding.</div>
+      </div>
+      <div class="price-card">
+        <div class="price-num">14 dager</div>
+        <div class="price-unit">angrefrist</div>
+        <div class="price-note">Passer det ikke, får du pengene tilbake. Uten spørsmål.</div>
+      </div>
+    </div>
+
+    <div class="stack-sm" style="margin-top: 10px;">
+      <div class="eyebrow">Inkludert</div>
+      <ul class="incl">
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+          <span>Alt du slipper inn blir til avtaler i kalenderen du allerede bruker</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+          <span>Dagens tre ting hver morgen, og uka som kommer hver søndag</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+          <span>Beskjeder til partner, besteforeldre og barnepasser — med bekreftelse tilbake</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+          <span>Frister den holder øye med, også de som er måneder unna</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+          <span>Ingen reklame inne i produktet. Aldri.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="stack-sm" style="margin-top: 12px;">
+      <div><a class="cta" href="#">Start i dag</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap stack">
+  <h2>Spørsmål</h2>
+  <div>
+    <details>
+      <summary>Er dette en app?</summary>
+      <p>Du får en liten app med en widget som viser dagens tre ting rett på hjemskjermen, og du sender skjermbilder rett inn fra delingsmenyen. Men de du sender beskjeder til — partner, besteforeldre, barnepasser — trenger ingenting. De får vanlig SMS.</p>
+    </details>
+    <details>
+      <summary>Må mannen min være med?</summary>
+      <p>Nei, og han trenger ikke laste ned noe. Han får en vanlig SMS og svarer med ett tall.
+         Det samme gjelder besteforeldre og barnepasser.</p>
+    </details>
+    <details>
+      <summary>Hvem ser kalenderen vår?</summary>
+      <p>Vi, for å holde den i gang. Ingenting deles videre, ingenting selges.
+         Du kan be om at alt slettes, når som helst — og du ser selv hva vi vet om dere.</p>
+    </details>
+    <details>
+      <summary>Hva med de andre som får meldinger fra dere?</summary>
+      <p>Den første meldingen sier hvem som sender, på oppdrag fra hvem, og hvordan de sier nei.
+         De kan reservere seg når som helst, og da sender vi ikke mer.</p>
+    </details>
+    <details>
+      <summary>Hva om den tar feil?</summary>
+      <p>Da retter du det ved å si ifra i meldingen. Den spør ikke om det samme to ganger.
+         Er den usikker, sier den det i stedet for å gjette i stillhet.</p>
+    </details>
+    <details>
+      <summary>Hvor mye jobb er det for meg?</summary>
+      <p>Å sende videre det du allerede får. Noen meldinger i uka.</p>
+    </details>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap stack">
+    <h2>Fortsatt den eneste som husker alt?</h2>
+    <div class="stack-sm">
+      <div><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
+      <div class="under-cta">Ingen binding. 14 dagers angrefrist.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p class="fine">
+    Jajumi · Org.nr. [SETT INN] · [E-POST] ·
+    <a href="#">Personvern</a> · <a href="#">Vilkår</a>
+  </p>
+</footer>
