@@ -1,15 +1,70 @@
 {
   "artboards": [
-    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "1 · Innslipp" },
-    { "file": "Hendelse.dc.html", "x": 490, "y": 0, "w": 390, "h": 844, "title": "2 · Hendelseskort" },
-    { "file": "Morgen.dc.html", "x": 980, "y": 0, "w": 390, "h": 844, "title": "3 · Morgenmeldingen" },
-    { "file": "Minne.dc.html", "x": 1470, "y": 0, "w": 390, "h": 844, "title": "4 · Det jeg vet om dere" },
-    { "file": "Del.dc.html", "x": 1960, "y": 0, "w": 390, "h": 844, "title": "5 · Del med partner" }
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "1 · Innslipp"
+    },
+    {
+      "file": "Hendelse.dc.html",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "2 · Hendelseskort"
+    },
+    {
+      "file": "Morgen.dc.html",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "3 · Morgenmeldingen"
+    },
+    {
+      "file": "Minne.dc.html",
+      "x": 1470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "4 · Det jeg vet om dere"
+    },
+    {
+      "file": "Del.dc.html",
+      "x": 1960,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "5 · Del med partner"
+    }
   ],
   "annotations": [
-    { "id": "retning", "x": 0, "y": -168, "w": 430, "text": "Retning: varm og typografisk, ikke techy.\nNewsreader (serif) er produktets stemme, Karla er grensesnittet.\nIngen falsk statuslinje, ingen emoji, ingen reklame.\nOrdene AI, bot og assistent finnes ikke i grensesnittet." },
-    { "id": "apent-valg", "x": 490, "y": -168, "w": 430, "text": "Skjermene tar ett standpunkt: den FORESLÅR, hun godkjenner.\nAlternativet — at den skriver rett i kalenderen uten knapp — er\nfortsatt et åpent valg, og endrer skjerm 2 og 3 vesentlig." },
-    { "id": "navn", "x": 1470, "y": -168, "w": 430, "text": "Navnet i toppen står som Jajumi.\nLanseringsmateriellet i repoet bruker Familiens ro som arbeidsnavn.\nDette må låses før noe publiseres." }
+    {
+      "id": "retning",
+      "x": 0,
+      "y": -168,
+      "w": 430,
+      "text": "Retning: varm og typografisk, ikke techy.\nNewsreader (serif) er produktets stemme, Karla er grensesnittet.\nIngen falsk statuslinje, ingen emoji, ingen reklame.\nOrdene AI, bot og assistent finnes ikke i grensesnittet."
+    },
+    {
+      "id": "apent-valg",
+      "x": 490,
+      "y": -168,
+      "w": 430,
+      "text": "Skjermene tar ett standpunkt: den FORESLÅR, hun godkjenner.\nAlternativet — at den skriver rett i kalenderen uten knapp — er\nfortsatt et åpent valg, og endrer skjerm 2 og 3 vesentlig."
+    },
+    {
+      "id": "navn",
+      "x": 1960,
+      "y": -168,
+      "w": 430,
+      "text": "Navnet i toppen står som Jajumi.\nLanseringsmateriellet i repoet bruker Familiens ro som arbeidsnavn.\nDette må låses før noe publiseres."
+    }
   ],
-  "launch": { "view": "canvas" }
+  "launch": {
+    "view": "canvas"
+  }
 }
