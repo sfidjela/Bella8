@@ -11,6 +11,14 @@
     {
       "id": "page-3",
       "name": "Bekreftelsessløyfa"
+    },
+    {
+      "id": "page-4",
+      "name": "Uten onboarding"
+    },
+    {
+      "id": "page-5",
+      "name": "Delt hverdag"
     }
   ],
   "artboards": [
@@ -184,6 +192,78 @@
       "w": 390,
       "h": 844,
       "page": "page-3"
+    },
+    {
+      "file": "Start.dc.html",
+      "title": "1 · Første melding",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-4"
+    },
+    {
+      "file": "Sporsmal.dc.html",
+      "title": "2 · Den spør",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-4"
+    },
+    {
+      "file": "Vokser.dc.html",
+      "title": "3 · Minnet vokser",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-4"
+    },
+    {
+      "file": "Hjelp.dc.html",
+      "title": "4 · Hjelp uten telefon",
+      "x": 1470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-4"
+    },
+    {
+      "file": "Skifte.dc.html",
+      "title": "1 · Ukeskiftet",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-5"
+    },
+    {
+      "file": "Begge.dc.html",
+      "title": "2 · Begge får det",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-5"
+    },
+    {
+      "file": "Bytte.dc.html",
+      "title": "3 · Bytteforespørsel",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-5"
+    },
+    {
+      "file": "SmsPappa.dc.html",
+      "title": "4 · Thomas' SMS",
+      "x": 1470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-5"
     }
   ],
   "annotations": [
@@ -217,7 +297,7 @@
       "x": 0,
       "y": -200,
       "w": 900,
-      "text": "Disse seks er valgt ut fra forskning, ikke magefølelse.\n\nOsloMet/BFD 2021 (N=1035) rangerer stressituasjonene: jobb, så MORGENEN, så MIDDAGEN, så LEGGETIDEN.\nDet tredje skiftet (NIFU/OsloMet 2025, N=602) er planlegging og overvåking — skjevt fordelt selv i par som deler likt på oppgavene.\nNavngitte oppgaver i forskningen: bursdager og gaver, Spond-varsler, turdager, foreldremøter, klær, legetimer, sommerferie.\n\nMiddagen var den jeg ba deg kutte. Det var feil — 1 av 2 sliter med å bestemme hva de skal ha."
+      "text": "Disse seks er valgt ut fra forskning, ikke magefølelse.\n\nOsloMet/BFD 2021 (N=1035) rangerer stressituasjonene: jobb, så MORGENEN, så MIDDAGEN, så LEGGETIDEN.\nDet tredje skiftet (NIFU/OsloMet 2025, N=602) er planlegging og overvåking — skjevt fordelt selv i par som deler likt på oppgavene.\n\nMiddagen var den jeg ba deg kutte. Det var feil — 1 av 2 sliter med å bestemme hva de skal ha."
     },
     {
       "id": "kanal",
@@ -225,7 +305,7 @@
       "x": 0,
       "y": -220,
       "w": 900,
-      "text": "Kanalvalget er ikke fritt.\n\nSMS er den eneste som faktisk går: en tjenestemelding hun har bedt om er ikke markedsføring, så mfl. §15 sperrer ikke.\nWhatsApp krever at MOTTAKEREN har gitt eksplisitt opt-in til deg først — at hun oppgir nummeret hans teller ikke.\nMessenger og Instagram krever at han sender første melding. Kald utsending er umulig.\n\nDerfor ser skjermene til Marius og mormor ut som vanlig SMS, ikke som produktet."
+      "text": "Kanalvalget er ikke fritt.\n\nSMS er den eneste som faktisk går: en tjenestemelding mottakeren er bedt om er ikke markedsføring, så mfl. §15 sperrer ikke.\nWhatsApp krever at MOTTAKEREN har gitt eksplisitt opt-in til deg først — at hun oppgir nummeret hans teller ikke.\nMessenger og Instagram krever at han sender første melding. Kald utsending er umulig.\n\nDerfor ser skjermene til Marius og mormor ut som vanlig SMS, ikke som produktet."
     },
     {
       "id": "gdpr",
@@ -234,10 +314,26 @@
       "y": 870,
       "w": 430,
       "text": "Marius og mormor er tredjepersoner som ikke er kunder.\nFørste SMS må si hvem som sender, på oppdrag fra hvem,\nog hvordan de sier nei. Det er GDPR art. 14, ikke høflighet."
+    },
+    {
+      "id": "ingen-onboarding",
+      "page": "page-4",
+      "x": 0,
+      "y": -200,
+      "w": 900,
+      "text": "Ingen samtale, ingen skjema. Minnet bygges gjennom bruk.\n\nRegelen er: den spør bare når den mangler noe som gjør svaret målbart bedre, ett spørsmål av gangen, og aldri to ganger om det samme.\nDen merker sine egne gjetninger i stedet for å presentere dem som fakta — det er billigere enn å ta feil én gang.\n\nSupporttelefonen står nederst på hjelpeskjermen, ikke øverst."
+    },
+    {
+      "id": "skilt",
+      "page": "page-5",
+      "x": 0,
+      "y": -220,
+      "w": 900,
+      "text": "Skilte foreldre er trolig et skarpere marked enn kjernefamilien.\n\n25 % av barn etter samlivsbrudd har delt bosted (SSB). Rundt en tredel av samværsforeldre oppgir konflikt med den andre i noen eller stor grad.\nSmerten er en annen: ikke «han husker ikke», men «vi må snakke sammen for å få hverdagen til å gå opp».\n\nProduktet blir en nøytral tredjepart som holder sannheten. Verdien er at ingen av dem må ta kontakt.\nDerfor er tonen i disse skjermene flat og faktuell — ingen vurdering av den andre, ingen «husk å si ifra til»."
     }
   ],
   "launch": {
     "view": "canvas",
-    "page": "page-3"
+    "page": "page-5"
   }
 }

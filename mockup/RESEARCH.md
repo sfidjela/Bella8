@@ -93,3 +93,43 @@ mottakeren har svart første gang på SMS — da kan du be om opt-in i den samme
 - [Infobip: WhatsApp opt-in og samtykke](https://www.infobip.com/docs/whatsapp/compliance/user-opt-ins)
 - [Meta: Messenger Platform policy](https://developers.facebook.com/documentation/business-messaging/messenger-platform/policy)
 - [Bergen kommune om Vigilo](https://www.bergen.kommune.no/innbyggerhjelpen/barnehage-og-skole/grunnskole/personvern-og-digitalisering/vigilo-for-kommunikasjon-mellom-hjem-barnehage-sfo-og-skole)
+
+## Skilte foreldre — trolig et skarpere marked enn kjernefamilien
+
+Andelen barn med delt bosted etter samlivsbrudd steg fra 10 % i 2004 til 25 % i 2012 (SSB).
+Ved inngangen til 2022 bodde 23 % av alle barn 0–17 år med bare én av foreldrene.
+
+Rundt en tredel av samværsforeldre oppgir konflikt med den andre forelderen i noen eller stor grad
+(33 % av fedre, 35 % av mødre), og 16–17 % i stor grad. Konflikt rapporteres **sjeldnere** blant dem
+som har delt bosted — det er i utgangspunktet de med lavest konfliktnivå som velger den ordningen.
+
+**Hvorfor dette er et bedre marked:**
+
+Smerten er en annen, og skarpere. I kjernefamilien er den «han husker ikke». Her er den «vi må snakke
+sammen for å få hverdagen til å gå opp» — og det er en samtale mange helst vil slippe. Produktet blir
+en nøytral tredjepart som holder sannheten, og verdien er at ingen av dem må ta kontakt.
+
+Det gjør SMS-sløyfa til kjernefunksjonalitet i stedet for en ekstrafunksjon. Den andre forelderen
+trenger ingen app, ingen konto og ingen velvilje — han svarer med ett tegn.
+
+**Konsekvens for tone:** skjermene for delt hverdag er bevisst flate og faktuelle. Ingen vurdering av
+den andre forelderen, ingen «husk å si ifra til». Systemet tar ikke parti, og det er ikke høflighet —
+det er hele produktløftet.
+
+## Uten menneskelig onboarding
+
+Prisen ligger mellom 99 og 399 kr/mnd. Det utelukker 45 minutters samtale og menneskelig chat-støtte:
+to timers arbeid koster mer enn tre måneders abonnement.
+
+Regelen som erstatter samtalen: **den spør når den mangler noe som gjør svaret målbart bedre.**
+Ett spørsmål av gangen, i tråden, når det er relevant — aldri to ganger om det samme. Og den merker
+sine egne gjetninger i stedet for å presentere dem som fakta. Å si «jeg gjetter» er billigere enn
+å ta feil én gang.
+
+Supporttelefonen finnes, men står nederst på hjelpeskjermen, ikke øverst.
+
+## Flere kilder
+
+- [SSB: Delt bosted for barn etter samlivsbrudd — nye utviklingstrekk og kjennetegn (RAPP 2022/53)](https://www.ssb.no/befolkning/barn-familier-og-husholdninger/artikler/delt-bosted-for-barn-etter-samlivsbrudd.nye-utviklingstrekk-og-kjennetegn/)
+- [SSB: Når barnet har to foreldrehjem](https://www.ssb.no/befolkning/artikler-og-publikasjoner/nar-barnet-har-to-foreldrehjem)
+- [Bufdir: Statistikk om barn og samlivsbrudd](https://www.bufdir.no/statistikk-og-analyse/statistikk-om-familievernet/barn-og-samlivsbrudd/)
