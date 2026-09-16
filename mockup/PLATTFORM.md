@@ -1,5 +1,17 @@
 # Én motor, flere vertikaler — og rekkefølgen som avgjør om det går
 
+## Besluttet rekkefølge
+
+1. **Mor i tidsklemma** — vertikal én, eget merke, all fokus
+2. **Pårørende** — vertikal to, eget merke, samme motor
+3. **Skilte foreldre** — tillegg inne i vertikal én, ikke eget merke
+4. **Skjerm på kjøkkenveggen** — senere, og for familien, ikke for hotellrommet
+
+**Merk at 2 og 3 ikke konkurrerer om samme plass.** Skilte foreldre er fire skjermer og ett
+spørsmål i oppstarten inne i produktet som allerede finnes — det kan skipes når som helst uten å
+åpne en ny front. Pårørende er et nytt merke, en ny ordbok og en ny salgsjobb.
+Den venter på porten lenger nede i notatet.
+
 ## Instinktet er riktig
 
 Motoren er ikke familiespesifikk. Den er:
@@ -184,3 +196,38 @@ Den finnes allerede i produktet ditt, på skjermen som heter Ukeskiftet:
 *«Emma er hos deg fra i dag. Dette skjedde i uka som var.»*
 
 Samme mekanikk. Behold den. Drop vertikalen.
+
+---
+
+# Tillegg: kan AI lese skjermen i nettleseren i stedet?
+
+Steffens poeng: mye av API-problemet kan omgås ved at modellen leser brukerens egen skjerm,
+og Airbnb kan ikke ha monopol på hvordan en vert ønsker gjester velkommen.
+
+## Der det holder: brukerens egne data i brukerens egen nettleser
+
+For **kjerneproduktet** er dette en reell mulighet å ha i bakhodet. En mor som lar systemet lese
+sin egen Vigilo, i sin egen pålogging, til eget husholdningsbruk — det er hennes data, hun har
+tilgangen, og det er ingen kommersiell høsting av en konkurrents plattform.
+Risikoprofilen er en helt annen enn server-til-server-integrasjon, og ingen kommune har
+kommersiell interesse av å utestenge en forelder.
+
+Det endrer ikke MVP-en. Skjermbilde-innslippet virker i dag, uten avhengigheter.
+Men det er en oppgradering som kan gjøre innslippet automatisk senere, og det er verdt å vite.
+
+## Der det ikke holder: Airbnb
+
+Tre grunner, i stigende alvorlighet:
+
+1. **Teknisk skjørt.** Pålogging, 2FA, layoutendringer, CAPTCHA. Det ryker jevnlig og støyer for kunden.
+2. **Mot vilkårene.** Airbnbs brukervilkår forbyr automatisert tilgang. `hiQ mot LinkedIn` gjorde
+   skraping av *åpne* data mindre risikabelt — dette er innlogget data bak vilkår, en annen sak.
+3. **Du ber kunden risikere levebrødet sitt.** Sanksjonen er utestengelse av kontoen.
+   For en vert er Airbnb-kontoen hele inntekten. Ingen profesjonell vert tar den risikoen for
+   et verktøy til noen hundrelapper, og du vil ikke være den som ba dem om det.
+
+Punkt 3 er det som avgjør. Argumentet om at Airbnb ikke bør ha monopol på vertens velkomst er
+rimelig som prinsipp, men det beskytter ikke kunden når kontoen stenges.
+
+Veien inn i korttidsutleie går fortsatt gjennom PMS-ene, som allerede har partnertilgang.
+
