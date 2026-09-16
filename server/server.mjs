@@ -58,14 +58,19 @@ async function utfor(fam, handlinger) {
   return gjort;
 }
 
-async function kjorTur(fam, tekst, bilder) {
-  db.leggTur(fam.id, "user", tekst || "(sendte skjermbilde)");
+async function kjorTur(fam, tekst, bilder, medlem = null) {
+  const speiling = !!fam.speiling;
+  db.leggTur(fam.id, "user", tekst || "(sendte skjermbilde)", medlem?.id ?? null, medlem?.navn ?? null);
   const raa = await svar({
-    turer: db.siste(fam.id), minneliste: db.minne(fam.id),
-    rutineliste: db.rutiner(fam.id), bilder,
+    turer: db.siste(fam.id, { medlem: medlem?.id ?? null, speiling }),
+    minneliste: db.minne(fam.id),
+    rutineliste: db.rutiner(fam.id),
+    hvem: medlem?.navn ?? null,
+    iTraden: db.medlemmer(fam.id).map((m) => m.navn),
+    bilder,
   });
   const { tekst: synlig, handlinger } = delOpp(raa);
-  db.leggTur(fam.id, "assistant", synlig);
+  db.leggTur(fam.id, "assistant", synlig, medlem?.id ?? null, null);
   const gjort = await utfor(fam, handlinger);
   return { tekst: synlig, gjort };
 }
@@ -84,21 +89,44 @@ const server = createServer(async (req, res) => {
       return json(res, 200, { ...f, kalender: `${BASE}/kal/${f.kal_token}.ics` });
     }
 
-    if (req.method === "POST" && p === "/api/melding") {
+    if (req.method === "POST" && p === "/api/medlem") {
       const b = await lesJson(req);
       const fam = db.familie(b.familie);
       if (!fam) return json(res, 404, { feil: "ukjent familie" });
-      const ut = await kjorTur(fam, (b.tekst ?? "").trim(), b.bilder ?? []);
+      if (!b.navn) return json(res, 400, { feil: "navn mangler" });
+      const m = db.nyttMedlem(fam.id, b.navn, b.telefon);
+      return json(res, 200, { ...m, lenke: `${BASE}/?t=${m.token}` });
+    }
+
+    if (req.method === "POST" && p === "/api/speiling") {
+      const b = await lesJson(req);
+      const m = db.medlemVedToken(b.token);
+      if (!m) return json(res, 401, { feil: "ukjent token" });
+      db.settSpeiling(m.familie, !!b.paa);
+      return json(res, 200, { ok: true, speiling: !!b.paa });
+    }
+
+    if (req.method === "POST" && p === "/api/melding") {
+      const b = await lesJson(req);
+      const medlem = b.token ? db.medlemVedToken(b.token) : null;
+      const fam = medlem ? db.familie(medlem.familie) : db.familie(b.familie);
+      if (!fam) return json(res, 401, { feil: "ukjent token" });
+      const ut = await kjorTur(fam, (b.tekst ?? "").trim(), b.bilder ?? [], medlem);
       return json(res, 200, ut);
     }
 
     if (req.method === "GET" && p === "/api/tilstand") {
-      const fam = db.familie(u.searchParams.get("familie"));
-      if (!fam) return json(res, 404, { feil: "ukjent familie" });
+      const tok = u.searchParams.get("t");
+      const medlem = tok ? db.medlemVedToken(tok) : null;
+      const fam = medlem ? db.familie(medlem.familie) : db.familie(u.searchParams.get("familie"));
+      if (!fam) return json(res, 401, { feil: "ukjent token" });
       return json(res, 200, {
         familie: fam.navn,
+        meg: medlem?.navn ?? null,
+        speiling: !!fam.speiling,
+        medlemmer: db.medlemmer(fam.id).map((m) => m.navn),
+        trad: db.tradFor(fam.id, medlem?.id ?? null, !!fam.speiling),
         kalender: `${BASE}/kal/${fam.kal_token}.ics`,
-        turer: db.siste(fam.id),
         minne: db.minne(fam.id),
         hendelser: db.hendelser(fam.id),
         rutiner: db.rutiner(fam.id),

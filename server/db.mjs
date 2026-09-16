@@ -8,11 +8,17 @@ db.exec("PRAGMA journal_mode = WAL");
 db.exec(`
 CREATE TABLE IF NOT EXISTS familier (
   id TEXT PRIMARY KEY, navn TEXT NOT NULL, telefon TEXT,
-  kal_token TEXT NOT NULL UNIQUE, opprettet TEXT NOT NULL
+  kal_token TEXT NOT NULL UNIQUE, opprettet TEXT NOT NULL,
+  speiling INTEGER NOT NULL DEFAULT 1
+);
+CREATE TABLE IF NOT EXISTS medlemmer (
+  id TEXT PRIMARY KEY, familie TEXT NOT NULL, navn TEXT NOT NULL,
+  telefon TEXT, token TEXT NOT NULL UNIQUE, opprettet TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS turer (
   id INTEGER PRIMARY KEY AUTOINCREMENT, familie TEXT NOT NULL,
-  rolle TEXT NOT NULL, innhold TEXT NOT NULL, tid TEXT NOT NULL
+  rolle TEXT NOT NULL, innhold TEXT NOT NULL, tid TEXT NOT NULL,
+  medlem TEXT, skrevet_av TEXT
 );
 CREATE TABLE IF NOT EXISTS minne (
   id INTEGER PRIMARY KEY AUTOINCREMENT, familie TEXT NOT NULL,
@@ -28,6 +34,7 @@ CREATE TABLE IF NOT EXISTS foresporsler (
   svar TEXT, hendelse TEXT, sendt TEXT NOT NULL, besvart TEXT
 );
 CREATE INDEX IF NOT EXISTS i_turer ON turer(familie, id);
+CREATE INDEX IF NOT EXISTS i_medl ON medlemmer(familie);
 CREATE INDEX IF NOT EXISTS i_fore ON foresporsler(telefon, status);
 CREATE TABLE IF NOT EXISTS sperre (telefon TEXT PRIMARY KEY, tid TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS rutiner (
@@ -51,18 +58,45 @@ export const familie = (id) => q("SELECT * FROM familier WHERE id=?").get(id);
 export const familieVedToken = (t) => q("SELECT * FROM familier WHERE kal_token=?").get(t);
 export const alleFamilier = () => q("SELECT * FROM familier").all();
 
-export function leggTur(familie, rolle, innhold) {
-  q("INSERT INTO turer (familie,rolle,innhold,tid) VALUES (?,?,?,?)").run(familie, rolle, innhold, na());
+export function nyttMedlem(familie, navn, telefon) {
+  const id = randomUUID(), token = randomUUID().replace(/-/g, "");
+  q("INSERT INTO medlemmer (id,familie,navn,telefon,token,opprettet) VALUES (?,?,?,?,?,?)")
+    .run(id, familie, navn, telefon ?? null, token, na());
+  return { id, familie, navn, telefon, token };
 }
-export function siste(familie, maksTegn = 40000) {
-  const rader = q("SELECT rolle,innhold FROM turer WHERE familie=? ORDER BY id DESC LIMIT 80").all(familie);
+export const medlemVedToken = (t) => q("SELECT * FROM medlemmer WHERE token=?").get(t);
+export const medlemmer = (familie) =>
+  q("SELECT id,navn,telefon FROM medlemmer WHERE familie=? ORDER BY opprettet").all(familie);
+export const settSpeiling = (familie, paa) =>
+  q("UPDATE familier SET speiling=? WHERE id=?").run(paa ? 1 : 0, familie);
+
+export function leggTur(familie, rolle, innhold, medlem = null, skrevetAv = null) {
+  q("INSERT INTO turer (familie,rolle,innhold,tid,medlem,skrevet_av) VALUES (?,?,?,?,?,?)")
+    .run(familie, rolle, innhold, na(), medlem, skrevetAv);
+}
+// Speiling på: begge ser alt, og hver tur er merket med hvem som skrev den.
+// Speiling av: hver sin tråd, men samme minne og samme kalender.
+export function siste(familie, { medlem = null, speiling = true, maksTegn = 40000 } = {}) {
+  const rader = speiling
+    ? q("SELECT rolle,innhold,skrevet_av FROM turer WHERE familie=? ORDER BY id DESC LIMIT 80").all(familie)
+    : q("SELECT rolle,innhold,skrevet_av FROM turer WHERE familie=? AND (medlem=? OR medlem IS NULL) ORDER BY id DESC LIMIT 80")
+        .all(familie, medlem);
   const ut = []; let n = 0;
   for (const r of rader) {                       // nyeste først, så vi kan stoppe når budsjettet er brukt
     n += r.innhold.length;
     if (n > maksTegn && ut.length) break;
-    ut.unshift({ role: r.rolle, content: r.innhold });
+    const merket = r.rolle === "user" && r.skrevet_av ? `${r.skrevet_av}: ${r.innhold}` : r.innhold;
+    ut.unshift({ role: r.rolle, content: merket });
   }
   return ut;
+}
+// Det hun og han ser i appen — med avsender, så tråden er lesbar for begge.
+export function tradFor(familie, medlem, speiling) {
+  const rader = speiling
+    ? q("SELECT rolle,innhold,tid,skrevet_av FROM turer WHERE familie=? ORDER BY id LIMIT 300").all(familie)
+    : q("SELECT rolle,innhold,tid,skrevet_av FROM turer WHERE familie=? AND (medlem=? OR medlem IS NULL) ORDER BY id LIMIT 300")
+        .all(familie, medlem);
+  return rader.filter((r) => !r.innhold.startsWith("[systemnotat]"));
 }
 
 export function leggMinne(familie, faktum, kilde, gjetning = false) {

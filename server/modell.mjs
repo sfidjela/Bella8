@@ -67,13 +67,20 @@ function rutinetekst(liste) {
   return "\n\n## Rutiner\n" + l.join("\n");
 }
 
-export async function svar({ turer, minneliste, rutineliste = [], bilder = [] }) {
+export async function svar({ turer, minneliste, rutineliste = [], bilder = [], hvem = null, iTraden = [] }) {
   const fakta = minneliste.length
     ? "\n\n## Dette vet jeg om familien\n" +
       minneliste.map((m) => `- ${m.faktum}${m.gjetning ? " (gjetning — bekreft ved anledning)" : ""}`).join("\n")
     : "";
 
-  const instruks = (await systemprompt()) + HANDLINGER + fakta + rutinetekst(rutineliste) +
+  const folk = iTraden.length
+    ? `\n\n## Hvem som er i tråden\n${iTraden.map((n) => "- " + n).join("\n")}\n` +
+      `De er INNENFOR. Skriv til dem her, aldri på SMS. SMS er bare for folk utenfor tråden — ` +
+      `besteforeldre, barnepasser, barnehagen, en annen forelder som ikke er med her.` +
+      (hvem ? `\n\nDet er ${hvem} som skriver akkurat nå. Svar til ${hvem}, men husk at begge leser med.` : "")
+    : "";
+
+  const instruks = (await systemprompt()) + HANDLINGER + fakta + rutinetekst(rutineliste) + folk +
     `\n\nI dag er det ${new Intl.DateTimeFormat("nb-NO", { dateStyle: "full", timeZone: "Europe/Oslo" }).format(new Date())}.`;
 
   const meldinger = [{ role: "system", content: instruks }, ...turer];
