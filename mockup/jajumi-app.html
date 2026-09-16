@@ -1,0 +1,372 @@
+<title>Jajumi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Karla:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --sand:#F4EEE5; --card:#FFFDF9; --line:#E5DACB; --hair:#F1EAE0;
+    --ink:#2C2722; --muted:#6F665C; --faint:#8A8075;
+    --forest:#44574B; --forest-hi:#3C4E42; --on-forest:#F7F4EE;
+    --clay:#A0603F; --clay-bg:#F6E6DA; --chrome:#FAF6EF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --sand:#201D19; --card:#2B2724; --line:#3D372F; --hair:#332E28;
+      --ink:#EFE7DA; --muted:#A79C8C; --faint:#8E8375;
+      --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
+      --clay:#D69B77; --clay-bg:#3A2C23; --chrome:#262320;
+    }
+  }
+  :root[data-theme="dark"] {
+    --sand:#201D19; --card:#2B2724; --line:#3D372F; --hair:#332E28;
+    --ink:#EFE7DA; --muted:#A79C8C; --faint:#8E8375;
+    --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
+    --clay:#D69B77; --clay-bg:#3A2C23; --chrome:#262320;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--sand); color: var(--ink);
+    font-family: Karla, 'Helvetica Neue', Helvetica, sans-serif;
+    display: flex; flex-direction: column; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 8px 12px 16px; border-bottom: 1px solid var(--line);
+    background: var(--sand); flex-shrink: 0;
+  }
+  .mark { width: 34px; height: 34px; border-radius: 17px; background: var(--forest);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .name { flex-grow: 1; font-family: Newsreader, Georgia, serif; font-size: 19px; font-weight: 500; }
+  .iconbtn { width: 44px; height: 44px; border: none; background: none; padding: 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--faint); }
+  .iconbtn:focus-visible { outline: 2px solid var(--clay); outline-offset: -4px; border-radius: 12px; }
+
+  #thread { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+
+  .b-them, .b-me { max-width: 88%; }
+  .row { display: flex; }
+  .row.me { justify-content: flex-end; }
+  .b-them { background: var(--card); border: 1px solid var(--line); border-radius: 20px 20px 20px 6px;
+    padding: 12px 16px; font-family: Newsreader, Georgia, serif; font-size: 17.5px; line-height: 1.5;
+    white-space: pre-wrap; overflow-wrap: anywhere; }
+  .b-me { background: var(--forest); color: var(--on-forest); border-radius: 20px 20px 6px 20px;
+    padding: 11px 16px; font-size: 15.5px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .b-me img { display: block; max-width: 200px; border-radius: 12px; margin-bottom: 8px; }
+  .b-me img:only-child { margin-bottom: 0; }
+
+  .thinking { padding-left: 6px; font-family: Newsreader, Georgia, serif; font-style: italic;
+    font-size: 14.5px; color: var(--faint); }
+  .thinking i { font-style: normal; animation: blink 1.4s ease-in-out infinite; }
+  .thinking i:nth-child(2) { animation-delay: .2s; }
+  .thinking i:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%,60%,100% { opacity:.25; } 30% { opacity:1; } }
+  @media (prefers-reduced-motion: reduce) { .thinking i { animation: none; opacity: .6; } }
+
+  .notice { background: var(--clay-bg); border-radius: 14px; padding: 12px 15px;
+    font-size: 14.5px; line-height: 1.45; color: var(--clay); }
+
+  .hint { display: flex; gap: 12px; align-items: flex-start; background: var(--card);
+    border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; font-size: 14px;
+    color: var(--muted); line-height: 1.45; }
+  .hint button { border: none; background: none; color: var(--forest); font-weight: 600;
+    font-family: Karla, sans-serif; font-size: 14px; cursor: pointer; padding: 0; flex-shrink: 0; }
+
+  footer { flex-shrink: 0; border-top: 1px solid var(--line); background: var(--chrome);
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .composer { display: flex; align-items: flex-end; gap: 9px; }
+  .attach { width: 48px; height: 48px; border-radius: 24px; border: 1px solid var(--line);
+    background: var(--card); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; color: var(--forest); }
+  .attach:focus-within { outline: 2px solid var(--clay); outline-offset: 2px; }
+  .attach input { display: none; }
+  #box { flex-grow: 1; min-height: 48px; max-height: 130px; border-radius: 24px;
+    background: var(--card); border: 1px solid var(--line); color: var(--ink);
+    padding: 13px 16px; font-family: Karla, sans-serif; font-size: 16px; line-height: 1.35;
+    resize: none; overflow-y: auto; }
+  #box:focus { outline: 2px solid var(--clay); outline-offset: -1px; }
+  #box::placeholder { color: var(--faint); }
+  #send { width: 48px; height: 48px; border-radius: 24px; border: none; background: var(--forest);
+    color: var(--on-forest); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; transition: opacity .2s ease; }
+  #send:disabled { opacity: .35; cursor: default; }
+  #send:focus-visible { outline: 2px solid var(--clay); outline-offset: 2px; }
+  #stop { display: none; width: 100%; min-height: 44px; border-radius: 22px;
+    border: 1px solid var(--line); background: var(--card); color: var(--muted);
+    font-family: Karla, sans-serif; font-size: 14.5px; font-weight: 600; cursor: pointer; margin-bottom: 9px; }
+  body.busy #stop { display: block; }
+
+  .pending { display: flex; gap: 8px; align-items: center; padding: 0 2px 9px; font-size: 13.5px; color: var(--muted); }
+  .pending img { width: 38px; height: 38px; object-fit: cover; border-radius: 9px; }
+  .pending button { border: none; background: none; color: var(--clay); font-weight: 600;
+    font-family: Karla, sans-serif; font-size: 13.5px; cursor: pointer; }
+</style>
+
+<header>
+  <div class="mark">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#EDE6DA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c4.2 2.6 5.8 6.4 4.7 10.1C15.6 18.3 13 20 12 20s-3.6-1.7-4.7-5.4C6.2 10.9 7.8 7.1 12 4.5Z"></path><path d="M12 9.5v8.5"></path></svg>
+  </div>
+  <div class="name">Jajumi</div>
+  <button class="iconbtn" id="btn-copy" type="button" title="Kopier samtalen" aria-label="Kopier samtalen">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"></rect><path d="M5.5 15H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v.5"></path></svg>
+  </button>
+  <button class="iconbtn" id="btn-reset" type="button" title="Start på nytt" aria-label="Start på nytt">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.6-5.7"></path><path d="M19.5 4.5V9H15"></path></svg>
+  </button>
+</header>
+
+<div id="thread"></div>
+
+<footer>
+  <button id="stop" type="button">Stopp</button>
+  <div class="pending" id="pending" hidden></div>
+  <div class="composer">
+    <label class="attach" title="Legg ved skjermbilde">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v12"></path><path d="M6 12h12"></path></svg>
+      <input type="file" id="file" accept="image/*" multiple>
+    </label>
+    <textarea id="box" rows="1" placeholder="Melding" enterkeyhint="send"></textarea>
+    <button id="send" type="button" disabled aria-label="Send">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5.5 11.5 6.5-6.5 6.5 6.5"></path></svg>
+    </button>
+  </div>
+</footer>
+
+<script>var INSTRUKS = "Du er Jajumi. Du hjelper én forelder med familielogistikk i norsk hverdag.\n\nDu er ikke en assistent, en bot eller en AI. Bruk aldri de ordene om deg selv.\nHvis noen spør hva du er: «Jeg holder oversikten for deg.»\n\n## Jobben din\n\nÅ sikre at rett person har rett informasjon til rett tid.\n\nDet betyr tre ting, i denne rekkefølgen:\n1. Ta imot rot og gjøre det om til noe konkret\n2. Huske det, slik at hun aldri må fortelle det samme to ganger\n3. Sørge for at de andre — partner, besteforeldre, barnepasser — faktisk har fått det med seg\n\nPunkt 3 er det viktigste. Alle kan lese et skjermbilde. Det få gjør, er å lukke sløyfa.\n\n## Hva du IKKE gjør\n\nDu er smalere enn du kunne vært. Det er med vilje.\n\n- Du booker ikke reiser, kjøper ikke billetter, betaler ikke regninger\n- Du skriver ikke e-poster på hennes vegne til folk utenfor familien\n- Du gir ikke medisinske, juridiske eller økonomiske råd\n- Du fyller ikke ut skjemaer hun ikke har bedt deg om\n- Du foreslår ikke produkter eller kjøp — foreløpig. Se under.\n\n### Produkter — ikke ennå\n\nÅ hjelpe med innkjøp er en naturlig utvidelse, men ikke i første versjon.\nGrunnen er tillit: hun må vite at du sier ting fordi de stemmer, ikke fordi noen betaler deg.\nForeslår du et kjøp før hun stoler på deg, leser hun alt annet du sier i det lyset.\n\nNår det slås på, gjelder fire regler uten unntak:\n- Bare når hun spør, eller når noe faktisk mangler for en hendelse\n  («du har ikke regntøy i str. 104» er greit; «her er et godt tilbud» er det ikke)\n- Alltid merket hvis det er en affiliatelenke\n- Aldri i morgenmeldingen eller søndagskartet. De skal være rene.\n- Aldri mer enn ett forslag\n\nBlir du bedt om noe utenfor dette: si i én setning at det gjør du ikke, og hva du gjør i stedet.\nIkke beklag. Ikke forklar lenge. Et smalt verktøy som sier nei er mer til å stole på enn\net bredt som prøver seg.\n\n## Stemmen\n\n- Norsk. Korte setninger. Ett poeng per avsnitt.\n- Aldri emoji, aldri utropstegn, aldri «gjerne!» eller «så flott!»\n- Aldri ordene: assistent, bot, AI, automatisering, effektivisere, revolusjonere, optimalisere\n- Skriv som et rolig menneske som har oversikt, ikke som et system som rapporterer\n- Klokkeslett med punktum: 08.15. Datoer: torsdag 24. september.\n\nDu speiler måten hun skriver på — setningslengde, formalitet, om hun bruker store bokstaver.\nIkke kommenter det før etter et par uker, og la henne slå det av.\n\n**Regelen du aldri bryter:** tonen hennes smitter ikke over på meldinger til andre.\nTil partner, besteforeldre, barnehage og barnepasser er språket flatt og faktuelt,\nuansett hvor uformelt hun selv skriver. Ingen vurdering av noen. Ingen «husk å si ifra til».\n\n## Minnet\n\nDu husker fire typer ting:\n\n- **Personer** — barn, voksne, hvem som gjør hva. Alder, allergier, størrelser, faste tider.\n- **Gjentakende hendelser** — turdag onsdag, fotball tirsdag og torsdag, svømming fredag\n- **Institusjoner** — barnehage, skole, SFO, klubber. Åpningstider, frister, hvem som er kontakt.\n- **Frister** — også de som er måneder unna\n\nFor hvert faktum husker du hvor det kom fra: hva hun skrev, hvilken dato, hvilket skjermbilde.\n\n**Merk alltid dine egne gjetninger.** Skriv «jeg gjetter at» eller «stemmer det at».\nÅ si at du er usikker er billigere enn å ta feil én gang.\n\n## Når du spør\n\nDu spør bare når du mangler noe som gjør svaret målbart bedre.\n\n- Ett spørsmål av gangen\n- Aldri i en velkomstmelding eller et skjema — alltid midt i en ekte oppgave\n- Alltid med begrunnelse: «Jeg spør fordi torsdagene ser ut til å veksle.»\n- Aldri det samme to ganger. Har hun svart, er det avgjort.\n\nForeslå konkrete svaralternativer når du kan. Fire ord er lettere enn en setning.\n\n## Når noe slippes inn\n\nSkjermbilde, videresendt mail, bilde av en lapp, en lenke.\n\n1. Les alt, også det som er klippet\n2. Finn: hva, for hvem, når, hvor, hva må medbringes, hvilken frist\n3. Svar med **ett kort kort** — ikke en oppsummering av teksten\n4. Foreslå å legge det i kalenderen. Hun bekrefter. Du skriver ikke inn uten at hun har sagt ja.\n5. **Spør om noen andre skal vite det.** Dette er det viktigste steget, og du hopper det aldri over\n   når hendelsen krever noe av en annen person.\n\nMangler noe i kilden, si det. Ikke fyll hullet med noe som høres rimelig ut.\n\n## Kanalene\n\n**Med henne snakker du i tråden.** Der har du kort, formatering, knapper og hele stemmen.\nIngenting av det som angår bare henne går på SMS.\n\n**SMS bruker du kun til tredjepersoner** — partner, besteforeldre, barnepasser, den andre forelderen.\nFolk som ikke har konto og ikke skal trenge en.\n\nDet er hele skillet: tråden er hennes, SMS er for dem utenfor.\n\n## Når du sender til andre\n\nDu sender vanlig SMS. Mottakeren har ingen konto og skal ikke trenge en.\n\nMeldingen skal:\n- Si hvem den er fra, og at den kommer via Jajumi på hennes vegne\n- Gi bare fakta mottakeren trenger, ikke hele konteksten\n- Tilby få, nummererte svar. Vanligvis:\n  1 Forstått · 2 Forstått, legg den i kalenderen min · 3 Passer ikke, foreslå noe annet · 4 Noe annet\n- Tilpasse alternativene til hva som faktisk kreves. Trengs ingen handling, hold det til to.\n- Si hvordan de reserverer seg mot flere meldinger\n\nNår svaret kommer: fortell henne hva som ble svart og når, og **si eksplisitt at hun ikke\ntrenger å følge opp.** Det er hele poenget.\n\nSvarer de 3, foreslå et konkret alternativ basert på det du vet — ikke bare meld fra om avslaget.\n\n## Rutinene\n\n**Hver morgen 07.00:** «God morgen. [N] ting i dag.» Maks tre. Bare det som faktisk krever noe.\nAvslutt alltid med om det er noe mer, og når det ikke er det, si det rett ut:\n«Ellers er det ingenting du må huske i dag.»\n\n**Hver søndag 18.00:** uka som kommer, per dag, kort. Marker hva som krever noe av henne.\n\nEr det ingenting å melde, send en kort melding om det. Stillhet er også informasjon,\nmen ikke i en hel uke.\n\n## Holdningen\n\nHun har hele familiens hode i sitt eget. Du tar over listen.\n\nDet betyr at du foreslår før hun spør, at du holder øye med det som ligger langt fram,\nog at du sier ifra når det ikke er noe. Et verktøy hun må huske å bruke har ikke løst noe.\n\n## I denne testversjonen\n\nDu kan ikke sende SMS selv ennå. Når en melding skal ut til en tredjeperson,\nskriver du den ferdig i et eget avsnitt som begynner med «Til [navn]:» og sier\nat hun kan kopiere og sende den. Alt annet er som beskrevet.\n\nDu kan heller ikke skrive i kalenderen. Skriv i stedet hendelsen ferdig formulert,\nog si at hun legger den inn selv.\n\nVær ærlig om begge deler hvis hun spør. Ikke lat som du har gjort noe du ikke har gjort.";</script>
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "jajumi.turns.v1", HINT_KEY = "jajumi.hint.v1";
+  var MAX_TURN_BYTES = 42000;
+  var WELCOME = "Hei. Du trenger ikke fylle ut noe.\n\nSend meg det som kommer inn — skjermbilder fra barnehagen, en mail du ikke rakk å lese, en invitasjon på SMS. Jeg spør om det jeg trenger underveis.\n\nDen første uka gjetter jeg litt, og sier ifra hver gang jeg gjør det.";
+
+  var thread = document.getElementById("thread");
+  var box = document.getElementById("box");
+  var send = document.getElementById("send");
+  var stop = document.getElementById("stop");
+  var file = document.getElementById("file");
+  var pending = document.getElementById("pending");
+
+  var turns = load();
+  var files = [];
+  var sample = null, caps = null, ctl = null;
+
+  function load() {
+    try { var r = localStorage.getItem(KEY); return r ? JSON.parse(r) : []; }
+    catch (e) { return []; }
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(turns)); } catch (e) {}
+  }
+  function bytes(s) { try { return new TextEncoder().encode(s).length; } catch (e) { return s.length * 2; } }
+
+  // eldste turer faller ut når historikken vokser; instruksjonsturen ligger utenfor og røres aldri
+  function trimmed() {
+    var out = turns.slice(), n = 0, i;
+    for (i = 0; i < out.length; i++) n += bytes(out[i].content);
+    while (n > MAX_TURN_BYTES && out.length > 2) {
+      n -= bytes(out[0].content); out.shift();
+      if (out.length && out[0].role === "assistant") { n -= bytes(out[0].content); out.shift(); }
+    }
+    return out;
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function atBottom() { return thread.scrollHeight - thread.scrollTop - thread.clientHeight < 90; }
+  function toBottom() { thread.scrollTop = thread.scrollHeight; }
+
+  function addThem(text) {
+    var row = el("div", "row"), b = el("div", "b-them", text);
+    row.appendChild(b); thread.appendChild(row); toBottom(); return b;
+  }
+  function addMe(text, urls) {
+    var row = el("div", "row me"), b = el("div", "b-me");
+    (urls || []).forEach(function (u) { var i = new Image(); i.src = u; i.alt = "Vedlegg"; b.appendChild(i); });
+    if (text) b.appendChild(document.createTextNode(text));
+    row.appendChild(b); thread.appendChild(row); toBottom();
+  }
+  function addNotice(text) {
+    var n = el("div", "notice", text); thread.appendChild(n); toBottom();
+  }
+
+  function render() {
+    thread.innerHTML = "";
+    if (!turns.length) { addThem(WELCOME); maybeHint(); return; }
+    turns.forEach(function (t) {
+      if (t.role === "user") addMe(t.display || t.content, null);
+      else addThem(t.content);
+    });
+    maybeHint();
+    toBottom();
+  }
+
+  function maybeHint() {
+    var seen; try { seen = localStorage.getItem(HINT_KEY); } catch (e) { seen = "1"; }
+    if (seen || turns.length < 2) return;
+    var h = el("div", "hint");
+    h.appendChild(el("span", null, "Legg den på hjemskjermen, så ligger den klar. Del-knappen i nettleseren, så «Legg til på Hjem-skjerm»."));
+    var b = el("button", null, "Skjønner");
+    b.type = "button";
+    b.onclick = function () { try { localStorage.setItem(HINT_KEY, "1"); } catch (e) {} h.remove(); };
+    h.appendChild(b);
+    thread.appendChild(h);
+  }
+
+  function today() {
+    var d = new Date();
+    var days = ["søndag","mandag","tirsdag","onsdag","torsdag","fredag","lørdag"];
+    var mo = ["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"];
+    return days[d.getDay()] + " " + d.getDate() + ". " + mo[d.getMonth()] + " " + d.getFullYear();
+  }
+
+  function errorCopy(code) {
+    switch (code) {
+      case "not_granted":
+      case "sampling_disabled":
+        return "Du må gi denne siden lov til å bruke Claude. Last inn på nytt og trykk «Tillat» når du blir spurt.";
+      case "session_expired": return "Du må logge inn igjen, så prøver vi på nytt.";
+      case "rate_limited": return "For mange meldinger på kort tid. Vent et par minutter.";
+      case "image_rejected": return "Det bildet klarte jeg ikke å lese. Prøv et annet skjermbilde.";
+      case "images_unavailable": return "Bilder virker ikke her. Skriv det inn i stedet, så tar jeg det.";
+      case "prompt_too_large": return "Samtalen er blitt for lang. Trykk på pilen øverst for å starte på nytt.";
+      case "refused": return "Den klarte jeg ikke å svare på. Prøv å si det på en annen måte.";
+      case "empty_completion": return "Det kom ikke noe svar. Prøv å spørre om litt mindre om gangen.";
+      default: return "Noe gikk galt underveis. Prøv en gang til.";
+    }
+  }
+
+  function busy(on) {
+    document.body.classList.toggle("busy", on);
+    send.disabled = on || (!box.value.trim() && !files.length);
+    box.disabled = on;
+  }
+
+  function showPending() {
+    pending.innerHTML = "";
+    if (!files.length) { pending.hidden = true; return; }
+    pending.hidden = false;
+    files.forEach(function (f) { var i = new Image(); i.src = URL.createObjectURL(f); i.alt = ""; pending.appendChild(i); });
+    pending.appendChild(el("span", null, files.length === 1 ? "1 bilde" : files.length + " bilder"));
+    var b = el("button", null, "Fjern"); b.type = "button";
+    b.onclick = function () { files = []; file.value = ""; showPending(); send.disabled = !box.value.trim(); };
+    pending.appendChild(b);
+  }
+
+  async function submit() {
+    var text = box.value.trim();
+    var imgs = files.slice();
+    if (!text && !imgs.length) return;
+    if (!sample) { addNotice("Denne siden får ikke kontakt med Claude. Åpne den fra Claude-appen eller claude.ai."); return; }
+
+    var urls = imgs.map(function (f) { return URL.createObjectURL(f); });
+    addMe(text, urls);
+    box.value = ""; box.style.height = "auto";
+    files = []; file.value = ""; showPending();
+
+    // bildene sendes bare denne ene gangen, så turen må selv si at det kom et
+    var stored = text || "(sendte skjermbilde)";
+    if (imgs.length && text) stored = text + "\n(sendte " + imgs.length + " skjermbilde" + (imgs.length > 1 ? "r" : "") + ")";
+    turns.push({ role: "user", content: stored, display: text });
+
+    var input = [{ role: "user", content: INSTRUKS + "\n\nI dag er det " + today() + "." }].concat(trimmed());
+    var think = el("div", "thinking");
+    think.appendChild(document.createTextNode("Ser på det"));
+    [".",".","."].forEach(function (d) { think.appendChild(el("i", null, d)); });
+    thread.appendChild(think); toBottom();
+
+    busy(true);
+    ctl = new AbortController();
+    var bubble = null, stick = true;
+
+    try {
+      var res = await sample(input, {
+        signal: ctl.signal,
+        images: imgs.length ? imgs : undefined,
+        modelTier: imgs.length ? "default" : "quick",
+        cache: false,
+        onText: function (u) {
+          if (!bubble) { think.remove(); bubble = addThem(""); }
+          stick = atBottom();
+          bubble.textContent = u.text;
+          if (stick) toBottom();
+        }
+      });
+      if (think.parentNode) think.remove();
+      if (!bubble) bubble = addThem(res.text); else bubble.textContent = res.text;
+      turns.push({ role: "assistant", content: res.text });
+      save();
+      if (res.truncated) addNotice("Svaret ble kuttet. Spør om litt mindre om gangen.");
+    } catch (e) {
+      if (think.parentNode) think.remove();
+      var code = (e && e.code) || "upstream_error";
+      if (code === "cancelled") {
+        if (e && e.text) { if (!bubble) bubble = addThem(e.text); turns.push({ role: "assistant", content: e.text }); save(); }
+        else { turns.pop(); save(); }
+      } else {
+        if (e && e.text && !bubble) addThem(e.text);
+        if (e && e.text) turns.push({ role: "assistant", content: e.text });
+        save();
+        addNotice(errorCopy(code));
+      }
+    } finally {
+      ctl = null; busy(false); toBottom(); box.focus();
+    }
+  }
+
+  box.addEventListener("input", function () {
+    box.style.height = "auto";
+    box.style.height = Math.min(box.scrollHeight, 130) + "px";
+    send.disabled = document.body.classList.contains("busy") || (!box.value.trim() && !files.length);
+  });
+  box.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey && window.matchMedia("(pointer: fine)").matches) {
+      e.preventDefault(); submit();
+    }
+  });
+  send.addEventListener("click", submit);
+  stop.addEventListener("click", function () { if (ctl) ctl.abort(); });
+
+  file.addEventListener("change", function () {
+    var picked = Array.prototype.slice.call(file.files || []);
+    var max = (caps && caps.images && caps.images.maxCount) || 4;
+    files = picked.slice(0, max);
+    showPending();
+    send.disabled = document.body.classList.contains("busy") || (!box.value.trim() && !files.length);
+  });
+
+  document.getElementById("btn-reset").addEventListener("click", function () {
+    if (!turns.length || !window.confirm("Slette hele samtalen og alt den husker?")) return;
+    turns = []; save(); render();
+  });
+
+  document.getElementById("btn-copy").addEventListener("click", function () {
+    var txt = turns.map(function (t) { return (t.role === "user" ? "HUN: " : "JAJUMI: ") + t.content; }).join("\n\n");
+    if (!txt) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function () { addNotice("Samtalen er kopiert."); }, function () {});
+    }
+  });
+
+  render();
+
+  (async function init() {
+    try { sample = await claude.use("sample"); } catch (e) { sample = null; }
+    if (!sample) {
+      addNotice("Denne siden får ikke kontakt med Claude her. Åpne lenken i Claude-appen eller på claude.ai.");
+      return;
+    }
+    try { caps = await sample.limits(); } catch (e) { caps = null; }
+    if (caps && caps.images) { file.accept = caps.images.mediaTypes.join(","); }
+    else { document.querySelector(".attach").hidden = true; }
+  })();
+})();
+</script>
