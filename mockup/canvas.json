@@ -347,7 +347,7 @@
       "x": 0,
       "y": -220,
       "w": 900,
-      "text": "Skilte foreldre er trolig et skarpere marked enn kjernefamilien.\n\n25 % av barn etter samlivsbrudd har delt bosted (SSB). Rundt en tredel av samværsforeldre oppgir konflikt med den andre i noen eller stor grad.\nSmerten er en annen: ikke «han husker ikke», men «vi må snakke sammen for å få hverdagen til å gå opp».\n\nProduktet blir en nøytral tredjepart som holder sannheten. Verdien er at ingen av dem må ta kontakt.\nDerfor er tonen i disse skjermene flat og faktuell — ingen vurdering av den andre, ingen «husk å si ifra til»."
+      "text": "Dette er et TILLEGG, ikke hovedmålgruppen. Mor i tidsklemma er kjernen.\n\nMen segmentet er reelt: 25 % av barn etter samlivsbrudd har delt bosted (SSB), og andelen er doblet i alle tre skandinaviske land på ti år.\nSmerten er en annen — ikke «han husker ikke», men «vi må snakke sammen for å få hverdagen til å gå opp».\n\nFire skjermer er nok til å teste om det bærer. Samme produkt, samme tråd, ett spørsmål i oppstarten som slår det på."
     },
     {
       "id": "tone-regel",
@@ -368,6 +368,6 @@
   ],
   "launch": {
     "view": "canvas",
-    "page": "page-4"
+    "page": "page-1"
   }
 }
