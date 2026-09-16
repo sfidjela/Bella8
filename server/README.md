@@ -38,10 +38,45 @@ så `MODELL_URL` avgjør hvem du bruker. Ferdige linjer for begge ligger i `.env
 De åpner en lenke, og det er alt.
 
 ### 4. Et sted å kjøre det
-Den trenger en maskin som er på hele tiden og et domene med HTTPS —
-gatewayen må nå webhooken din, og telefonen hennes må nå kalenderfeeden.
+En maskin som er på hele tiden og et domene med HTTPS. Gatewayen må nå webhooken din,
+og telefonen hennes må nå kalenderfeeden. En liten VPS holder lenge.
 
-En liten VPS holder lenge. Databasen er én fil ved siden av koden.
+Raskeste vei, omtrent en time:
+
+```bash
+# på serveren
+git clone <repoet> && cd Bella8/server
+cp .env.example .env && nano .env      # MODELL_URL, MODELL_NAVN, MODELL_NOKKEL
+node server.mjs                        # sjekk at den svarer
+
+# hold den i live
+sudo tee /etc/systemd/system/jajumi.service > /dev/null <<'UNIT'
+[Unit]
+Description=Jajumi
+After=network.target
+[Service]
+WorkingDirectory=/root/Bella8/server
+EnvironmentFile=/root/Bella8/server/.env
+ExecStart=/usr/bin/node server.mjs
+Restart=always
+[Install]
+WantedBy=multi-user.target
+UNIT
+sudo systemctl enable --now jajumi
+```
+
+HTTPS via Caddy er to linjer:
+
+```
+jajumi.example.no {
+  reverse_proxy localhost:8080
+}
+```
+
+Caddy henter sertifikatet selv. **HTTPS er ikke valgfritt** — kalenderabonnement over
+`webcal://` krever gyldig sertifikat, og gatewayen nekter som regel å poste til http.
+
+Databasen er én fil ved siden av koden. Ta backup av den.
 
 ---
 
@@ -71,6 +106,24 @@ Det er gjort slik i stedet for leverandørens verktøykall fordi det virker likt
 er lett å lese i loggen, og er lett å bytte ut senere.
 
 ---
+
+## Sette opp en familie
+
+```bash
+# 1. Familien
+curl -X POST $BASE/api/familie -H 'Content-Type: application/json' \
+  -d '{"navn":"Familien Nyhus"}'
+
+# 2. Ett medlem per person. Hver får sin egen lenke.
+curl -X POST $BASE/api/medlem -H 'Content-Type: application/json' \
+  -d '{"familie":"<id fra steg 1>","navn":"Kristin"}'
+```
+
+Send henne `lenke` fra steg 2. Hun åpner den, tokenet legger seg i nettleseren,
+og lenken forsvinner ut av adressefeltet. Deretter: del-knappen → **Legg til på Hjem-skjerm**.
+
+**Hun trenger ingen konto.** Ingen innlogging, ingen e-post, ingen passord.
+Lenken *er* tilgangen — behandle den som et passord.
 
 ## Rutene
 

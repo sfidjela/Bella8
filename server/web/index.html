@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jajumi">
+<meta name="theme-color" content="#F4EEE5">
+<title>Jajumi</title>
+<style>
+  :root {
+    --sand:#F4EEE5; --card:#FFFDF9; --line:#E5DACB; --hair:#F1EAE0;
+    --ink:#2C2722; --muted:#6F665C; --faint:#8A8075;
+    --forest:#44574B; --forest-hi:#3C4E42; --on-forest:#F7F4EE;
+    --clay:#A0603F; --clay-bg:#F6E6DA; --chrome:#FAF6EF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --sand:#201D19; --card:#2B2724; --line:#3D372F; --hair:#332E28;
+      --ink:#EFE7DA; --muted:#A79C8C; --faint:#8E8375;
+      --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
+      --clay:#D69B77; --clay-bg:#3A2C23; --chrome:#262320;
+    }
+  }
+  :root[data-theme="dark"] {
+    --sand:#201D19; --card:#2B2724; --line:#3D372F; --hair:#332E28;
+    --ink:#EFE7DA; --muted:#A79C8C; --faint:#8E8375;
+    --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
+    --clay:#D69B77; --clay-bg:#3A2C23; --chrome:#262320;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--sand); color: var(--ink);
+    font-family: Karla, 'Helvetica Neue', Helvetica, sans-serif;
+    display: flex; flex-direction: column; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 8px 12px 16px; border-bottom: 1px solid var(--line);
+    background: var(--sand); flex-shrink: 0;
+  }
+  .mark { width: 34px; height: 34px; border-radius: 17px; background: var(--forest);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .name { flex-grow: 1; font-family: Newsreader, Georgia, serif; font-size: 19px; font-weight: 500; }
+  .iconbtn { width: 44px; height: 44px; border: none; background: none; padding: 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--faint); }
+  .iconbtn:focus-visible { outline: 2px solid var(--clay); outline-offset: -4px; border-radius: 12px; }
+
+  #thread { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+
+  .b-them, .b-me { max-width: 88%; }
+  .row { display: flex; }
+  .row.me { justify-content: flex-end; }
+  .b-them { background: var(--card); border: 1px solid var(--line); border-radius: 20px 20px 20px 6px;
+    padding: 12px 16px; font-family: Newsreader, Georgia, serif; font-size: 17.5px; line-height: 1.5;
+    white-space: pre-wrap; overflow-wrap: anywhere; }
+  .b-me { background: var(--forest); color: var(--on-forest); border-radius: 20px 20px 6px 20px;
+    padding: 11px 16px; font-size: 15.5px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .b-me img { display: block; max-width: 200px; border-radius: 12px; margin-bottom: 8px; }
+  .b-me img:only-child { margin-bottom: 0; }
+
+  .thinking { padding-left: 6px; font-family: Newsreader, Georgia, serif; font-style: italic;
+    font-size: 14.5px; color: var(--faint); }
+  .thinking i { font-style: normal; animation: blink 1.4s ease-in-out infinite; }
+  .thinking i:nth-child(2) { animation-delay: .2s; }
+  .thinking i:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%,60%,100% { opacity:.25; } 30% { opacity:1; } }
+  @media (prefers-reduced-motion: reduce) { .thinking i { animation: none; opacity: .6; } }
+
+  .notice { background: var(--clay-bg); border-radius: 14px; padding: 12px 15px;
+    font-size: 14.5px; line-height: 1.45; color: var(--clay); }
+
+  .hint { display: flex; gap: 12px; align-items: flex-start; background: var(--card);
+    border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; font-size: 14px;
+    color: var(--muted); line-height: 1.45; }
+  .hint button { border: none; background: none; color: var(--forest); font-weight: 600;
+    font-family: Karla, sans-serif; font-size: 14px; cursor: pointer; padding: 0; flex-shrink: 0; }
+
+  footer { flex-shrink: 0; border-top: 1px solid var(--line); background: var(--chrome);
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .composer { display: flex; align-items: flex-end; gap: 9px; }
+  .attach { min-height: 48px; padding: 0 14px 0 12px; gap: 7px; border-radius: 24px;
+    border: 1px solid var(--line); background: var(--card); display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; cursor: pointer; color: var(--forest);
+    font-family: Karla, sans-serif; font-size: 14.5px; font-weight: 600; }
+  .attach span { line-height: 1; }
+  .attach:focus-within { outline: 2px solid var(--clay); outline-offset: 2px; }
+  .attach input { display: none; }
+  #box { flex-grow: 1; min-height: 48px; max-height: 130px; border-radius: 24px;
+    background: var(--card); border: 1px solid var(--line); color: var(--ink);
+    padding: 13px 16px; font-family: Karla, sans-serif; font-size: 16px; line-height: 1.35;
+    resize: none; overflow-y: auto; }
+  #box:focus { outline: 2px solid var(--clay); outline-offset: -1px; }
+  #box::placeholder { color: var(--faint); }
+  #send { width: 48px; height: 48px; border-radius: 24px; border: none; background: var(--forest);
+    color: var(--on-forest); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; transition: opacity .2s ease; }
+  #send:disabled { opacity: .35; cursor: default; }
+  #send:focus-visible { outline: 2px solid var(--clay); outline-offset: 2px; }
+  #stop { display: none; width: 100%; min-height: 44px; border-radius: 22px;
+    border: 1px solid var(--line); background: var(--card); color: var(--muted);
+    font-family: Karla, sans-serif; font-size: 14.5px; font-weight: 600; cursor: pointer; margin-bottom: 9px; }
+  body.busy #stop { display: block; }
+
+  .pending { display: flex; gap: 8px; align-items: center; padding: 0 2px 9px; font-size: 13.5px; color: var(--muted); }
+  .pending img { width: 38px; height: 38px; object-fit: cover; border-radius: 9px; }
+  .pending button { border: none; background: none; color: var(--clay); font-weight: 600;
+    font-family: Karla, sans-serif; font-size: 13.5px; cursor: pointer; }
+</style>
+</head>
+<body>
+<header>
+  <div class="mark">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#EDE6DA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c4.2 2.6 5.8 6.4 4.7 10.1C15.6 18.3 13 20 12 20s-3.6-1.7-4.7-5.4C6.2 10.9 7.8 7.1 12 4.5Z"></path><path d="M12 9.5v8.5"></path></svg>
+  </div>
+  <div class="name">Jajumi</div>
+  <button class="iconbtn" id="btn-copy" type="button" title="Kopier samtalen" aria-label="Kopier samtalen">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"></rect><path d="M5.5 15H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v.5"></path></svg>
+  </button>
+  <button class="iconbtn" id="btn-reset" type="button" title="Start på nytt" aria-label="Start på nytt">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.6-5.7"></path><path d="M19.5 4.5V9H15"></path></svg>
+  </button>
+</header>
+
+<div id="thread"></div>
+
+<footer>
+  <button id="stop" type="button">Stopp</button>
+  <div class="pending" id="pending" hidden></div>
+  <div class="composer">
+    <label class="attach" title="Legg ved bilde eller skjermbilde">
+      <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><circle cx="8.5" cy="10" r="1.6"></circle><path d="m4 17 4.5-4.2a2 2 0 0 1 2.7 0L16 17"></path><path d="m14 14.5 1.8-1.6a2 2 0 0 1 2.7 0L20 14.3"></path></svg>
+      <span>Bilde</span>
+      <input type="file" id="file" accept="image/*" multiple>
+    </label>
+    <textarea id="box" rows="1" placeholder="Melding" enterkeyhint="send"></textarea>
+    <button id="send" type="button" disabled aria-label="Send">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5.5 11.5 6.5-6.5 6.5 6.5"></path></svg>
+    </button>
+  </div>
+</footer>
+<script>
+(function () {
+  "use strict";
+  var TOKEN_KEY = "jajumi.token";
+  var thread = document.getElementById("thread");
+  var box = document.getElementById("box");
+  var send = document.getElementById("send");
+  var stop = document.getElementById("stop");
+  var file = document.getElementById("file");
+  var pending = document.getElementById("pending");
+
+  var token = null, files = [], ctl = null, meg = null;
+
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function bunn() { thread.scrollTop = thread.scrollHeight; }
+  function fraDem(t) { var r = el("div", "row"), b = el("div", "b-them", t); r.appendChild(b); thread.appendChild(r); bunn(); return b; }
+  function fraMeg(t, urls, hvem) {
+    var r = el("div", "row me"), b = el("div", "b-me");
+    if (hvem && hvem !== meg) { var n = el("div", null, hvem); n.style.cssText = "font-size:12px;opacity:.72;margin-bottom:4px;font-weight:600"; b.appendChild(n); }
+    (urls || []).forEach(function (u) { var i = new Image(); i.src = u; i.alt = "Vedlegg"; b.appendChild(i); });
+    if (t) b.appendChild(document.createTextNode(t));
+    r.appendChild(b); thread.appendChild(r); bunn();
+  }
+  function merknad(t) { thread.appendChild(el("div", "notice", t)); bunn(); }
+
+  function travel(p) {
+    document.body.classList.toggle("busy", p);
+    send.disabled = p || (!box.value.trim() && !files.length);
+    box.disabled = p;
+  }
+
+  function visValgte() {
+    pending.innerHTML = "";
+    if (!files.length) { pending.hidden = true; return; }
+    pending.hidden = false;
+    files.forEach(function (f) { var i = new Image(); i.src = URL.createObjectURL(f); i.alt = ""; pending.appendChild(i); });
+    pending.appendChild(el("span", null, files.length === 1 ? "1 bilde" : files.length + " bilder"));
+    var b = el("button", null, "Fjern"); b.type = "button";
+    b.onclick = function () { files = []; file.value = ""; visValgte(); send.disabled = !box.value.trim(); };
+    pending.appendChild(b);
+  }
+
+  function lesFil(f) {
+    return new Promise(function (ok, nei) {
+      var r = new FileReader();
+      r.onload = function () { ok(r.result); };
+      r.onerror = nei;
+      r.readAsDataURL(f);
+    });
+  }
+
+  async function hentTilstand() {
+    var r = await fetch("/api/tilstand?t=" + encodeURIComponent(token));
+    if (!r.ok) throw new Error(r.status === 401 ? "ukjent" : "feil");
+    return r.json();
+  }
+
+  function tegn(t) {
+    thread.innerHTML = "";
+    meg = t.meg;
+    document.querySelector(".name").textContent = t.familie || "Jajumi";
+    if (!t.trad.length) {
+      fraDem("Hei" + (t.meg ? " " + t.meg : "") + ". Du trenger ikke fylle ut noe.\n\n" +
+        "Send meg det som kommer inn — skjermbilder fra barnehagen, en mail du ikke rakk å lese, " +
+        "en invitasjon på SMS. Jeg spør om det jeg trenger underveis.\n\n" +
+        "Den første uka gjetter jeg litt, og sier ifra hver gang jeg gjør det.");
+    } else {
+      t.trad.forEach(function (m) {
+        if (m.rolle === "user") fraMeg(m.innhold, null, m.skrevet_av);
+        else fraDem(m.innhold);
+      });
+    }
+    if (t.kalender) {
+      var k = el("div", "hint");
+      k.appendChild(el("span", null, "Trykk her én gang, så havner alt jeg legger inn i kalenderen din automatisk."));
+      var a = document.createElement("a");
+      a.href = t.kalender.replace(/^https?:/, "webcal:");
+      a.textContent = "Koble til"; a.style.cssText = "color:var(--forest);font-weight:600;flex-shrink:0";
+      k.appendChild(a);
+      thread.appendChild(k);
+    }
+    bunn();
+  }
+
+  async function submit() {
+    var tekst = box.value.trim(), valgte = files.slice();
+    if (!tekst && !valgte.length) return;
+
+    var urls = valgte.map(function (f) { return URL.createObjectURL(f); });
+    fraMeg(tekst, urls, meg);
+    box.value = ""; box.style.height = "auto";
+    files = []; file.value = ""; visValgte();
+
+    var tenker = el("div", "thinking");
+    tenker.appendChild(document.createTextNode("Ser på det"));
+    [".", ".", "."].forEach(function (d) { tenker.appendChild(el("i", null, d)); });
+    thread.appendChild(tenker); bunn();
+
+    travel(true);
+    ctl = new AbortController();
+    try {
+      var bilder = await Promise.all(valgte.map(lesFil));
+      var r = await fetch("/api/melding", {
+        method: "POST", signal: ctl.signal,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: token, tekst: tekst, bilder: bilder }),
+      });
+      tenker.remove();
+      if (!r.ok) {
+        var f = await r.json().catch(function () { return {}; });
+        merknad(r.status === 401 ? "Lenken virker ikke lenger. Be om en ny." :
+          "Noe gikk galt underveis. Prøv en gang til." + (f.feil ? " (" + f.feil + ")" : ""));
+        return;
+      }
+      var d = await r.json();
+      fraDem(d.tekst);
+      var g = d.gjort || {};
+      if (g.hendelser && g.hendelser.length) merknad("Lagt i kalenderen: " + g.hendelser.map(function (h) { return h.tittel; }).join(", "));
+      if (g.sporsmal && g.sporsmal.length) {
+        g.sporsmal.forEach(function (s) {
+          if (s.status === "sendt") merknad("Sendt til " + (s.navn || "mottakeren") + ". Jeg sier ifra når det kommer svar.");
+          if (s.status === "sperret") merknad((s.navn || "Mottakeren") + " har reservert seg mot meldinger fra oss.");
+          if (s.status === "feilet") merknad("Meldingen til " + (s.navn || "mottakeren") + " gikk ikke gjennom.");
+        });
+      }
+      if (g.rutiner && g.rutiner.length) {
+        g.rutiner.forEach(function (rr) {
+          merknad(rr.aktiv ? "Avtalt: " + rr.type + " kl. " + rr.klokke + "." : "Skrudd av: " + rr.type + ".");
+        });
+      }
+    } catch (e) {
+      tenker.remove();
+      if (e.name !== "AbortError") merknad("Fikk ikke kontakt. Sjekk nettet og prøv igjen.");
+    } finally {
+      ctl = null; travel(false); bunn();
+    }
+  }
+
+  box.addEventListener("input", function () {
+    box.style.height = "auto";
+    box.style.height = Math.min(box.scrollHeight, 130) + "px";
+    send.disabled = document.body.classList.contains("busy") || (!box.value.trim() && !files.length);
+  });
+  box.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey && window.matchMedia("(pointer: fine)").matches) { e.preventDefault(); submit(); }
+  });
+  send.addEventListener("click", submit);
+  stop.addEventListener("click", function () { if (ctl) ctl.abort(); });
+  file.addEventListener("change", function () {
+    files = Array.prototype.slice.call(file.files || []).slice(0, 4);
+    visValgte();
+    send.disabled = document.body.classList.contains("busy") || (!box.value.trim() && !files.length);
+  });
+  document.getElementById("btn-reset").addEventListener("click", function () { location.reload(); });
+  document.getElementById("btn-copy").addEventListener("click", function () {
+    var t = Array.prototype.map.call(thread.querySelectorAll(".b-them,.b-me"), function (b) { return b.textContent; }).join("\n\n");
+    if (navigator.clipboard && t) navigator.clipboard.writeText(t).then(function () { merknad("Samtalen er kopiert."); }, function () {});
+  });
+
+  (async function start() {
+    var fra = new URL(location.href).searchParams.get("t");
+    if (fra) {
+      try { localStorage.setItem(TOKEN_KEY, fra); } catch (e) {}
+      history.replaceState(null, "", location.pathname);   // ta lenken ut av adressefeltet
+    }
+    try { token = fra || localStorage.getItem(TOKEN_KEY); } catch (e) { token = fra; }
+    if (!token) { fraDem("Denne lenken mangler noe. Be om en ny."); travel(true); return; }
+    try { tegn(await hentTilstand()); }
+    catch (e) {
+      fraDem(e.message === "ukjent" ? "Lenken virker ikke lenger. Be om en ny."
+        : "Får ikke kontakt akkurat nå. Prøv å laste siden på nytt.");
+      travel(true);
+    }
+  })();
+})();
+</script>
+
+</body>
+</html>

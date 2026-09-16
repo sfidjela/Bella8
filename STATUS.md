@@ -33,12 +33,15 @@ Ingen server involvert. Derfor kan den ikke sende SMS — en artefakt har ingen 
 Den er testet og kjører. Men ingenting er koblet til den —
 appen over snakker med Claude direkte, ikke med serveren.
 
-## Hullet mellom dem
+## Hullet er lukket
 
-**Appen må peke på serveren i stedet for på Claude.** Det er én dags arbeid.
-Da får du SMS, kalender og rutiner inn i den samme flaten hun allerede bruker.
+`server/web/index.html` er den samme flaten, men den snakker med serveren i stedet for med Claude.
+Serveren serverer den selv på `/`.
 
-Det er den neste tingen å bygge. Ikke før du har sett at hun faktisk bruker appen.
+**Ingen konto for brukeren.** Hun får en lenke, åpner den, og tokenet legger seg i nettleseren.
+Modellen kjører på din nøkkel — Grok, Gemini, hva du vil.
+
+Det som gjenstår før hun kan bruke den er ikke kode. Det er en maskin, et domene og en modellnøkkel.
 
 ---
 

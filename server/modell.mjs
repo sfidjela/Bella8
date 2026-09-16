@@ -93,6 +93,9 @@ export async function svar({ turer, minneliste, rutineliste = [], bilder = [], h
     ];
   }
 
+  if (!process.env.MODELL_URL || !process.env.MODELL_NOKKEL) {
+    throw new Error("MODELL_URL eller MODELL_NOKKEL mangler i .env — se .env.example");
+  }
   const r = await fetch(process.env.MODELL_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + process.env.MODELL_NOKKEL },

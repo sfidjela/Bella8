@@ -1,6 +1,7 @@
 // Jajumi-server. Ingen pakker å installere — alt er innebygd i Node 22.
 //   node server.mjs
 import { createServer } from "node:http";
+import { readFile } from "node:fs/promises";
 import * as db from "./db.mjs";
 import * as sms from "./sms.mjs";
 import { feed } from "./ics.mjs";
@@ -176,7 +177,13 @@ const server = createServer(async (req, res) => {
       return res.end(feed(fam, db.hendelser(fam.id)));
     }
 
-    if (p === "/" || p === "/helse") return json(res, 200, { ok: true, tid: new Date().toISOString() });
+    if (req.method === "GET" && p === "/helse") return json(res, 200, { ok: true, tid: new Date().toISOString() });
+
+    if (req.method === "GET" && (p === "/" || p === "/index.html")) {
+      const html = await readFile(new URL("./web/index.html", import.meta.url));
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-cache" });
+      return res.end(html);
+    }
     json(res, 404, { feil: "ukjent rute" });
   } catch (e) {
     console.error(e);
