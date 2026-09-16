@@ -2,7 +2,16 @@
 
 ## Hva produktet er nå
 
-**Et minne for familielogistikk som svarer i én tråd, og som får svar ut av folk som ikke er kunder.**
+> **Å sikre at rett person har rett informasjon til rett tid.**
+
+Det er Steffens formulering, og den er bedre enn min. Den navngir jobben i stedet for mekanismen,
+den gjelder uendret for kjernefamilien, for delt bosted og for pårørende, og den forklarer hvorfor
+sløyfa er kjernen og ikke en tilleggsfunksjon: uten de utenforstående har du bare halve jobben gjort.
+
+Den sier heller ikke «assistent» — som nå er kommersielt viktig, ikke bare et tonevalg.
+
+Teknisk sagt: *et minne for familielogistikk som svarer i én tråd, og som får svar ut av folk
+som ikke er kunder.*
 
 Tre deler, i stigende rekkefølge etter hvor vanskelige de er å kopiere:
 

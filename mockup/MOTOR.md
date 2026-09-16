@@ -83,3 +83,46 @@ konkurrentene ikke kan kopiere med penger.
 3. **Rut per oppgave**, cache minnet, sett en grense for halen.
 4. **Velg leverandør etter om du tåler å nevne den**, ikke bare etter pris og kvalitet.
 5. Kostnaden er lavere enn jeg først sa. **Marginen er ikke problemet — churn er det fortsatt.**
+
+---
+
+## Muse Glimmer — den løser tillitsfella
+
+Meta slapp **Muse Glimmer** i august 2026: 30 milliarder parametere, **åpne vekter under Apache 2.0**,
+bygget for agenter, håndterer bilder og skjermbilder, trent på over 100 språk,
+og laget for å kjøre lokalt på én vanlig GPU — også uten internett.
+
+Den er i praksis en åpen versjon av Muse Spark.
+
+**Dette er avgjørende, og det motsier delvis det jeg skrev over.** Åpne vekter betyr at du kan
+kjøre Metas modell **på dine egne servere i Norge eller EU**. Metas modell, men ikke Metas maskiner,
+ikke Metas API, ingen data til Meta.
+
+Da kan du skrive i personvernerklæringen: *modellen kjører på våre servere i Norge, og dataene
+forlater dem ikke.* Det er det sterkeste personvernløftet noen i denne kategorien kan gi —
+og det er sterkere enn noe Meta selv kan si om Muse.
+
+### Men det er ikke gratis
+
+| | |
+|---|---|
+| **Kvalitet** | 30B er ikke frontlinje. Uskarpe norske skjermbilder og resonnering om frister er det vanskeligste du gjør, og der vil en frontmodell være bedre. Dette må måles, ikke antas. |
+| **Drift** | Selvhosting betyr GPU-er, kapasitetsplanlegging og en fast kostnad som ikke skalerer ned. |
+| **Volum** | Ved 1 500 abonnenter er API billigere. Ved 25 000 snur det. |
+
+### Den rette rekkefølgen
+
+1. **Start på et frontmodell-API.** Best kvalitet, null drift, og billig når volumet er lavt.
+2. **Bygg adapterlaget uansett.** Modellen skal være konfigurasjon fra dag én.
+3. **Hold Glimmer som suverenitetsopsjonen.** Når volumet forsvarer det, eller den dagen en kunde
+   eller et tilsyn krever ren EU-behandling, kan du flytte uten å skrive om noe.
+4. **Vurder hybrid.** Rut det sensitive og høyfrekvente — klassifisering, ruting, formulering av
+   morgenmeldingen — til selvhostet Glimmer, og send bare de virkelig vanskelige uttrekkene
+   til et frontmodell-API, med identifiserende detaljer fjernet først.
+
+Punkt 4 er det interessante: du kan minimere hva som i det hele tatt forlater infrastrukturen din,
+i stedet for å velge alt eller ingenting.
+
+**Kilder:** [TechCrunch](https://techcrunch.com/2026/08/10/metas-new-glimmer-ai-model-offers-a-hint-at-zuckerbergs-personal-intelligence-vision/) ·
+[VentureBeat](https://venturebeat.com/technology/meta-returns-to-open-source-with-muse-glimmer-an-apache-2-0-licensed-30b-parameter-ai-model-optimized-for-agents-available-now) ·
+[CNBC](https://www.cnbc.com/2026/08/10/meta-muse-glimmer-open-weight-ai.html)
