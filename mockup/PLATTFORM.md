@@ -104,3 +104,83 @@ ikke når du velger feil vertikal.
 - Hotell, Airbnb og toppledere er distraksjoner der sløyfa — din eneste vollgrav — knapt finnes.
 - **Bygg motoren uten å anta familie fra første linje kode.** Det er hele plattformambisjonen,
   til null kostnad, i dag.
+
+---
+
+# Tillegg: skjermen på veggen
+
+Presisering fra Steffen: hotell og Airbnb handlet ikke om sløyfa, men om en **ambient flate**.
+Verten kobler profil og chat, systemet vet hvem som kommer, all info ligger der, gjesten kan
+snakke med den, og den dytter ut tips, taxi og bordbestilling når det er relevant.
+
+Det er en annen produktform enn resten av notatet, og den fortjener sin egen vurdering.
+
+## Flaten er ekte — og den står allerede i lanseringsmateriellet ditt
+
+`lansering/01-tilbud-og-pris.md` har den under «ikke inkludert»:
+
+> **E-ink-skjerm på veggen.** Selges som oppgradering når 20 kunder har spurt om den.
+
+Instinktet er altså allerede der. Spørsmålet er bare hvilken vertikal som fortjener den først.
+
+## Skjermen er lettere å forsvare for familien enn for gjesten
+
+| | Familie | Hotell- eller Airbnb-gjest |
+|---|---|---|
+| Hvem ser den | **Alle i huset, hele tiden** | Én person, alene i et rom |
+| Hvor lenge | År | To netter |
+| Hva den løser | At hun er den eneste som vet | Ingenting telefonen ikke løser |
+| Læringskurve verdt det? | Ja — den betaler seg hver dag | Nei — hvem lærer et nytt grensesnitt for én natt? |
+
+**Dette er inversjonen:** hele produktproblemet ditt er at *én person holder informasjonen*.
+En delt, passiv flate i gangen angriper det direkte — ingen må åpne noe, alle ser det samme.
+Det er en ekte grunn til en skjerm.
+
+En gjest har ikke det problemet. Hun er alene, hun har telefonen i hånda, og hun drar om to dager.
+Skjermen gir henne ingenting SMS ikke gir, og koster deg maskinvare for å levere det.
+
+Dine egne ord fra lanseringsteksten gjelder like mye her:
+*«Hun får det via kanaler hun allerede bruker. Ingen ny app å laste ned er et salgsargument, ikke en mangel.»*
+
+## Airbnb-døra er låst, og det er ikke et tidsspørsmål
+
+- Airbnb har **ingen offentlig API**. Tilgang gis kun til godkjente partnere, og de sluttet å ta imot
+  de fleste nye søknader for flere år siden.
+- Godkjenningskriteriene er blant annet **lønnsomheten i forretningsmodellen din** og
+  **evnen til å betjene en brukerbase delt med Airbnbs verter**. Et selskap uten inntekter kommer ikke inn.
+- **Gjestemeldinger er den mest restriktive delen** — og det er nøyaktig det du trenger for at
+  «hosten gir tilgang til sin profil og chat» skal virke.
+
+Dette er samme felle som Vigilo, men verre: Airbnb konkurrerer selv i dette rommet.
+
+**Hvis du en gang skal inn i korttidsutleie, går veien gjennom PMS-ene** — Guesty, Hostaway, Lodgify
+og de andre som allerede *har* partnertilgang. Du integrerer med dem, ikke med Airbnb.
+Det er en helt annen salgsjobb enn den du planlegger nå, men det er den eneste som faktisk er åpen.
+
+## Maskinvare er et annet selskap
+
+En skjerm i et rom du ikke kontrollerer betyr enheter, frakt, montering, strøm, WiFi-oppsett,
+knusing, tyveri, fastvareoppdateringer og support på stedet. Og enhetskost som skal ut av et
+abonnement på 299 kr.
+
+Det er ikke en funksjonsoppgradering. Det er en andre virksomhet med varelager og balanse.
+
+## Slik tester du flaten uten å kjøpe én eneste enhet
+
+Den ambiente familieflaten er **en nettside**. Kjør den på en gammel iPad, en Nest Hub eller
+hva som helst som står i ladestativ på kjøkkenbenken.
+
+- Null maskinvarekostnad
+- Null logistikk
+- Du får svaret på det eneste spørsmålet som betyr noe: **brukes den daglig av noen som ikke er deg?**
+
+Får du 20 familier til å bruke den hver dag på en arvet nettbrett, har du bevist etterspørselen
+før du bestiller en eneste e-ink-skjerm. Det er nøyaktig testen notatet ditt allerede foreslo.
+
+## Det jeg ville beholdt fra Airbnb-ideen
+
+Mekanikken **«systemet vet hvem som kommer og laster konteksten på forhånd»** er god.
+Den finnes allerede i produktet ditt, på skjermen som heter Ukeskiftet:
+*«Emma er hos deg fra i dag. Dette skjedde i uka som var.»*
+
+Samme mekanikk. Behold den. Drop vertikalen.
