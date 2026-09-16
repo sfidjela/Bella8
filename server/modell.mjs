@@ -27,6 +27,9 @@ helt til slutt i svaret. Hun ser aldri blokken — den fjernes før teksten vise
   "minne": [
     {"faktum": "Emma har melkeproteinallergi", "kilde": "hun skrev det", "gjetning": false}
   ],
+  "rutine": [
+    {"type": "morgen", "aktiv": true, "klokke": "07:00", "dager": "man,tir,ons,tor,fre"}
+  ],
   "sporsmal": [
     {"navn": "Marius", "telefon": "+4791234567",
      "melding": "Emma: høsttur torsdag 24.9, oppmøte 08.15. Kristin spør om du kan levere.",
@@ -36,15 +39,41 @@ helt til slutt i svaret. Hun ser aldri blokken — den fjernes før teksten vise
 \`\`\`
 
 Ta bare med feltene du faktisk bruker. Har du ingen handlinger, dropp blokken helt.
-Legg aldri en hendelse inn uten at hun har sagt ja. Send aldri et spørsmål hun ikke har bedt om.`;
+Legg aldri en hendelse inn uten at hun har sagt ja. Send aldri et spørsmål hun ikke har bedt om.
 
-export async function svar({ turer, minneliste, bilder = [] }) {
+## Rutiner — slå dem aldri på selv
+
+Typene er "morgen" og "uke". Begge er AV til hun har sagt ja.
+
+- **Foreslå** i vanlig tekst, med et konkret klokkeslett: «Vil du at jeg sier fra hver morgen
+  rundt sju, med de tingene som faktisk krever noe av deg?»
+- Foreslå tidligst når hun har sendt inn noen ting, aldri i første samtale, og **bare én gang**.
+  Sier hun nei eller lar det ligge, spør du ikke igjen.
+- **Skriv rutine-handlingen først når hun har svart ja**, med klokkeslettet hun ga.
+  Sa hun bare «ja», bruk det du foreslo.
+- Vil hun endre noe — «ikke i helgene», «heller halv åtte», «dropp søndagene» —
+  skriv ny rutine-handling med de nye verdiene og bekreft i én setning.
+- «Slutt med det» settes som "aktiv": false. Ingen overtalelse.
+
+Dager: man, tir, ons, tor, fre, lør, søn — kommaseparert.`;
+
+function rutinetekst(liste) {
+  if (!liste?.length) return "\n\n## Rutiner\nIngen er satt opp. Ingen er foreslått ennå.";
+  const l = liste.map((r) => {
+    if (r.aktiv) return `- ${r.type}: PÅ, ${r.klokke}${r.dager ? " (" + r.dager + ")" : ""}`;
+    if (r.foreslatt) return `- ${r.type}: AV. Du har allerede foreslått den én gang — ikke spør igjen.`;
+    return `- ${r.type}: AV, aldri foreslått.`;
+  });
+  return "\n\n## Rutiner\n" + l.join("\n");
+}
+
+export async function svar({ turer, minneliste, rutineliste = [], bilder = [] }) {
   const fakta = minneliste.length
     ? "\n\n## Dette vet jeg om familien\n" +
       minneliste.map((m) => `- ${m.faktum}${m.gjetning ? " (gjetning — bekreft ved anledning)" : ""}`).join("\n")
     : "";
 
-  const instruks = (await systemprompt()) + HANDLINGER + fakta +
+  const instruks = (await systemprompt()) + HANDLINGER + fakta + rutinetekst(rutineliste) +
     `\n\nI dag er det ${new Intl.DateTimeFormat("nb-NO", { dateStyle: "full", timeZone: "Europe/Oslo" }).format(new Date())}.`;
 
   const meldinger = [{ role: "system", content: instruks }, ...turer];

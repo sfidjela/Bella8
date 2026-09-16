@@ -78,7 +78,18 @@ er lett å lese i loggen, og er lett å bytte ut senere.
 | `POST /sms/inn` | Webhook fra gatewayen |
 | `GET /kal/<token>.ics` | Kalenderfeeden hun abonnerer på |
 
-Rutinene går av seg selv: **morgenmelding 07 hver dag, ukekart søndag 18.** Oslo-tid.
+### Rutinene går ikke av seg selv
+
+De er **av** til hun har sagt ja. Botten foreslår dem i vanlig tekst, tidligst når hun har
+sendt inn noen ting, aldri i første samtale, og bare én gang. Sier hun nei, spør den ikke igjen.
+
+Først når hun svarer ja, skriver modellen rutine-handlingen med klokkeslettet hun ga.
+Vil hun endre noe senere — «ikke i helgene», «heller halv åtte», «slutt med det» —
+er det bare å si det.
+
+Planleggeren ser hvert femte minutt etter rutiner som **er slått på**, treffer klokkeslettet
+hennes innenfor ti minutter, gjelder i dag, og ikke er kjørt allerede.
+Er ingen slått på, skjer ingenting. Det er hele meningen.
 
 ---
 

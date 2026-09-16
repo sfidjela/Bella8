@@ -30,6 +30,12 @@ CREATE TABLE IF NOT EXISTS foresporsler (
 CREATE INDEX IF NOT EXISTS i_turer ON turer(familie, id);
 CREATE INDEX IF NOT EXISTS i_fore ON foresporsler(telefon, status);
 CREATE TABLE IF NOT EXISTS sperre (telefon TEXT PRIMARY KEY, tid TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS rutiner (
+  familie TEXT NOT NULL, type TEXT NOT NULL,
+  aktiv INTEGER NOT NULL DEFAULT 0, klokke TEXT, dager TEXT,
+  foreslatt TEXT, endret TEXT, sist_kjort TEXT,
+  PRIMARY KEY (familie, type)
+);
 `);
 
 const na = () => new Date().toISOString();
@@ -93,6 +99,30 @@ export function besvar(id, svar) {
 }
 export const foresporsler = (familie) =>
   q("SELECT * FROM foresporsler WHERE familie=? ORDER BY sendt DESC LIMIT 20").all(familie);
+
+// Rutiner er av til hun sier ja. Ingenting går ut av seg selv.
+export const rutiner = (familie) =>
+  q("SELECT * FROM rutiner WHERE familie=?").all(familie);
+
+export function settRutine(familie, type, { aktiv, klokke, dager }) {
+  const f = q("SELECT * FROM rutiner WHERE familie=? AND type=?").get(familie, type);
+  if (!f) {
+    q("INSERT INTO rutiner (familie,type,aktiv,klokke,dager,endret) VALUES (?,?,?,?,?,?)")
+      .run(familie, type, aktiv ? 1 : 0, klokke ?? null, dager ?? null, na());
+  } else {
+    q("UPDATE rutiner SET aktiv=?, klokke=?, dager=?, endret=? WHERE familie=? AND type=?")
+      .run(aktiv ? 1 : 0, klokke ?? f.klokke, dager ?? f.dager, na(), familie, type);
+  }
+}
+export function merkForeslatt(familie, type) {
+  q("INSERT INTO rutiner (familie,type,foreslatt) VALUES (?,?,?) ON CONFLICT(familie,type) DO UPDATE SET foreslatt=excluded.foreslatt")
+    .run(familie, type, na());
+}
+export const aktiveRutiner = () =>
+  q("SELECT r.*, f.navn FROM rutiner r JOIN familier f ON f.id=r.familie WHERE r.aktiv=1").all();
+export function merkKjort(familie, type, dato) {
+  q("UPDATE rutiner SET sist_kjort=? WHERE familie=? AND type=?").run(dato, familie, type);
+}
 
 export const sperret = (telefon) => !!q("SELECT 1 FROM sperre WHERE telefon=?").get(telefon);
 export const sperr = (telefon) =>

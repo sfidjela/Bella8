@@ -35,6 +35,12 @@ async function utfor(fam, handlinger) {
   for (const m of handlinger.minne ?? []) {
     if (m?.faktum) db.leggMinne(fam.id, m.faktum, m.kilde, !!m.gjetning);
   }
+  for (const r of handlinger.rutine ?? []) {
+    if (r?.type !== "morgen" && r?.type !== "uke") continue;
+    db.settRutine(fam.id, r.type, { aktiv: !!r.aktiv, klokke: r.klokke, dager: r.dager });
+    gjort.rutiner = gjort.rutiner ?? [];
+    gjort.rutiner.push({ type: r.type, aktiv: !!r.aktiv, klokke: r.klokke });
+  }
   for (const s of handlinger.sporsmal ?? []) {
     if (!s?.telefon || !s?.melding) continue;
     if (db.sperret(s.telefon)) { gjort.sporsmal.push({ navn: s.navn, status: "sperret" }); continue; }
@@ -54,7 +60,10 @@ async function utfor(fam, handlinger) {
 
 async function kjorTur(fam, tekst, bilder) {
   db.leggTur(fam.id, "user", tekst || "(sendte skjermbilde)");
-  const raa = await svar({ turer: db.siste(fam.id), minneliste: db.minne(fam.id), bilder });
+  const raa = await svar({
+    turer: db.siste(fam.id), minneliste: db.minne(fam.id),
+    rutineliste: db.rutiner(fam.id), bilder,
+  });
   const { tekst: synlig, handlinger } = delOpp(raa);
   db.leggTur(fam.id, "assistant", synlig);
   const gjort = await utfor(fam, handlinger);
@@ -92,6 +101,7 @@ const server = createServer(async (req, res) => {
         turer: db.siste(fam.id),
         minne: db.minne(fam.id),
         hendelser: db.hendelser(fam.id),
+        rutiner: db.rutiner(fam.id),
         foresporsler: db.foresporsler(fam.id),
       });
     }
@@ -146,31 +156,41 @@ const server = createServer(async (req, res) => {
   }
 });
 
-// --- rutinene ---------------------------------------------------------------
-const oslo = () => {
-  const d = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Oslo", hour: "2-digit",
-    minute: "2-digit", weekday: "short", hour12: false }).formatToParts(new Date());
-  const f = Object.fromEntries(d.map((x) => [x.type, x.value]));
-  return { time: Number(f.hour), minutt: Number(f.minute), dag: f.weekday };
-};
-let sist = "";
-async function rutiner() {
-  const { time, minutt, dag } = oslo();
-  const naa = new Date().toISOString().slice(0, 13);
-  if (minutt > 9) return;
-  const hva = time === 7 ? "morgen" : (time === 18 && dag === "Sun") ? "uke" : null;
-  if (!hva || sist === naa + hva) return;
-  sist = naa + hva;
+// --- rutinene ------------------------------------------------------------
+// Ingenting går ut av seg selv. Kun rutiner hun har sagt ja til, på tiden hun ga.
+const DAGER = { Mon: "man", Tue: "tir", Wed: "ons", Thu: "tor", Fri: "fre", Sat: "lør", Sun: "søn" };
 
-  for (const fam of db.alleFamilier()) {
-    const fra = new Date().toISOString();
-    const til = new Date(Date.now() + (hva === "morgen" ? 2 : 8) * 864e5).toISOString();
-    const liste = db.kommende(fam.id, fra, til)
+function oslo() {
+  const f = Object.fromEntries(new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Oslo", hour: "2-digit", minute: "2-digit", weekday: "short",
+    year: "numeric", month: "2-digit", day: "2-digit", hour12: false,
+  }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+  return {
+    minutter: Number(f.hour) * 60 + Number(f.minute),
+    dag: DAGER[f.weekday],
+    dato: `${f.year}-${f.month}-${f.day}`,
+  };
+}
+
+async function rutiner() {
+  const { minutter, dag, dato } = oslo();
+  for (const r of db.aktiveRutiner()) {
+    if (r.sist_kjort === dato) continue;
+    if (r.dager && !r.dager.split(",").map((d) => d.trim()).includes(dag)) continue;
+    const [t, m] = String(r.klokke ?? "07:00").split(":").map(Number);
+    const mal = t * 60 + (m || 0);
+    if (minutter < mal || minutter > mal + 9) continue;   // ti minutters vindu
+
+    db.merkKjort(r.familie, r.type, dato);                 // merk før kallet, så en feil ikke gir dobbel sending
+    const fam = db.familie(r.familie);
+    const dager = r.type === "morgen" ? 2 : 8;
+    const liste = db.kommende(fam.id, new Date().toISOString(), new Date(Date.now() + dager * 864e5).toISOString())
       .map((h) => `- ${h.tittel} (${h.start})${h.notat ? " — " + h.notat : ""}`).join("\n") || "(ingenting i kalenderen)";
-    const be = hva === "morgen"
-      ? `[systemnotat] Det er morgen. Send morgenmeldingen: maks tre ting, bare det som faktisk krever noe av henne i dag. Kommende:\n${liste}`
-      : `[systemnotat] Det er søndag kveld. Send ukekartet for uka som kommer, per dag, kort. Kommende:\n${liste}`;
-    try { await kjorTur(fam, be, []); } catch (e) { console.error("Rutine feilet:", e.message); }
+    const be = r.type === "morgen"
+      ? `[systemnotat] Rutinen hun har bedt om, kl. ${r.klokke}. Send morgenmeldingen: maks tre ting, bare det som faktisk krever noe av henne i dag. Er det ingenting, si det rett ut. Kommende:\n${liste}`
+      : `[systemnotat] Rutinen hun har bedt om, kl. ${r.klokke}. Send ukekartet for uka som kommer, per dag, kort. Kommende:\n${liste}`;
+    try { await kjorTur(fam, be, []); }
+    catch (e) { console.error(`Rutine ${r.type} feilet for ${fam.navn}:`, e.message); }
   }
 }
 setInterval(rutiner, 5 * 60 * 1000);
