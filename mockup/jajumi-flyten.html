@@ -193,7 +193,7 @@
 
 <div class="masthead">
   <h1>Jajumi-flyten</h1>
-  <p>9:16 · ca. 20 sek · går i loop</p>
+  <p>9:16 · ca. 24 sek · går i loop</p>
 </div>
 
 <div class="stage" id="stage">
@@ -333,6 +333,41 @@
             <div class="from-them"><div class="bubble-them">Ellers er det ingenting du må huske i dag.</div></div>
           </div></div>
 
+          <div class="row" id="r-dinnerday"><div class="in">
+            <div class="day"><span>Onsdag 16. september · 16.40</span></div>
+          </div></div>
+
+          <div class="row" id="r-ask2"><div class="in">
+            <div class="from-me"><div class="bubble-me">hva skal vi ha til middag</div></div>
+          </div></div>
+
+          <div class="row" id="r-answer"><div class="in">
+            <div class="from-them"><div class="bubble-them">Fiskegrateng. Du har alt hjemme bortsett fra rømme.</div></div>
+          </div></div>
+
+          <div class="row" id="r-dish"><div class="in">
+            <div class="card">
+              <div class="card-head">
+                <div class="card-title">Fiskegrateng</div>
+                <div class="card-sub">25 minutter · uten melkeprotein</div>
+              </div>
+              <div class="card-body">
+                <div class="fact" id="d1">
+                  <div class="fact-label">Emma</div>
+                  <div class="fact-value">Hun har spist den før og likt den</div>
+                </div>
+                <div class="fact" id="d2">
+                  <div class="fact-label">Mangler</div>
+                  <div class="fact-value">Rømme — den laktosefrie</div>
+                </div>
+              </div>
+              <div class="actions" id="acts2">
+                <div class="btn-primary"><span class="swap label-do">Legg i handlelista</span></div>
+                <div class="btn-ghost">Noe annet</div>
+              </div>
+            </div>
+          </div></div>
+
         </div>
       </div>
 
@@ -350,7 +385,8 @@
     <p id="c1">Send det videre.</p>
     <p id="c2">Få det tilbake som en avtale.</p>
     <p id="c3">Og dagen din, om morgenen.</p>
-    <p id="c4">Noen andre husker det nå.</p>
+    <p id="c4">Og hva det blir til middag.</p>
+    <p id="c5">Noen andre husker det nå.</p>
   </div>
 
   <div class="progress" id="progress"></div>
@@ -365,9 +401,9 @@
 
 <script>
   var $ = function (id) { return document.getElementById(id); };
-  var LOOP = 21000;
+  var LOOP = 24500;
 
-  var CAPTIONS = ['c1', 'c2', 'c3', 'c4'];
+  var CAPTIONS = ['c1', 'c2', 'c3', 'c4', 'c5'];
 
   function show(id) { $(id).classList.add('on'); }
   function hide(id) { $(id).classList.remove('on'); }
@@ -379,37 +415,46 @@
   var steps = [
     [0,     function () { caption('c1'); }],
     [700,   function () { show('r-today'); }],
-    [1300,  function () { show('r-shot'); }],
-    [3100,  function () { show('r-ask'); }],
-    [4300,  function () { show('r-think'); }],
-    [5600,  function () { caption('c2'); hide('r-think'); show('r-intro'); }],
-    [6500,  function () { show('r-card'); }],
-    [7000,  function () { show('f1'); }],
-    [7450,  function () { show('f2'); }],
-    [7900,  function () { show('f3'); }],
-    [8500,  function () { show('f4'); }],
-    [9200,  function () { show('acts'); }],
-    [10400, function () { $('acts').classList.add('press'); }],
-    [10750, function () { $('acts').classList.remove('press'); $('acts').classList.add('done'); }],
-    [11600, function () { show('r-aside'); }],
-    [12900, function () { caption('c3'); show('r-morningday'); }],
-    [13600, function () { show('r-greet'); }],
-    [14300, function () { show('r-morning'); }],
-    [14700, function () { show('t1'); }],
-    [15200, function () { show('t2'); }],
-    [15700, function () { show('t3'); }],
-    [16800, function () { show('r-close'); }],
-    [18400, function () { caption('c4'); }]
+    [1250,  function () { show('r-shot'); }],
+    [2900,  function () { show('r-ask'); }],
+    [3950,  function () { show('r-think'); }],
+    [5100,  function () { caption('c2'); hide('r-think'); show('r-intro'); }],
+    [5900,  function () { show('r-card'); }],
+    [6350,  function () { show('f1'); }],
+    [6750,  function () { show('f2'); }],
+    [7150,  function () { show('f3'); }],
+    [7650,  function () { show('f4'); }],
+    [8250,  function () { show('acts'); }],
+    [9300,  function () { $('acts').classList.add('press'); }],
+    [9650,  function () { $('acts').classList.remove('press'); $('acts').classList.add('done'); }],
+    [10450, function () { show('r-aside'); }],
+    [11600, function () { caption('c3'); show('r-morningday'); }],
+    [12300, function () { show('r-greet'); }],
+    [12950, function () { show('r-morning'); }],
+    [13350, function () { show('t1'); }],
+    [13800, function () { show('t2'); }],
+    [14250, function () { show('t3'); }],
+    [15300, function () { show('r-close'); }],
+    [16800, function () { caption('c4'); show('r-dinnerday'); }],
+    [17500, function () { show('r-ask2'); }],
+    [18500, function () { show('r-answer'); }],
+    [19500, function () { show('r-dish'); }],
+    [19950, function () { show('d1'); }],
+    [20350, function () { show('d2'); }],
+    [20950, function () { show('acts2'); }],
+    [22100, function () { caption('c5'); }]
   ];
 
   var TRANSIENT = ['r-today','r-shot','r-ask','r-think','r-intro','r-card','r-aside',
                    'r-morningday','r-greet','r-morning','r-close',
-                   'f1','f2','f3','f4','acts','t1','t2','t3'];
+                   'r-dinnerday','r-ask2','r-answer','r-dish',
+                   'f1','f2','f3','f4','acts','t1','t2','t3','d1','d2','acts2'];
 
   function reset() {
     TRANSIENT.forEach(hide);
     CAPTIONS.forEach(hide);
     $('acts').classList.remove('press', 'done');
+    $('acts2').classList.remove('press', 'done');
   }
 
   var t0 = performance.now();
