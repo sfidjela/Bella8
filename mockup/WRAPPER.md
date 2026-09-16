@@ -55,12 +55,21 @@ Mindre enn du tror, og du eier alt:
 | Stripe og en enkel webpåmelding | Noen dager |
 | **Tråden hennes** | **Se under** |
 
-**Og her er snarveien:** i piloten er hennes flate også bare SMS.
-Ingen app, ingen widget, ingen delingsmeny. Hun sender skjermbilder på MMS eller WhatsApp til ett
-nummer, og får svar der.
+**Rettelse:** jeg foreslo først at hennes flate også kunne være SMS i piloten. Det var feil.
 
-Da er hele produktet: ett telefonnummer, ett modell-API, ett minne per familie, én planlegger.
-Appen, widgeten og delingsmenyen kommer når det er bevist at noen betaler.
+SMS hos henne river bort hele overflaten — ingen kort, ingen formatering, ingen knapper,
+ingen stemme. Det ville føles som en tjeneste fra 2005, og det er den ene delen av produktet
+som skal føles nydelig. SMS er dessuten den dyreste kanalen på den mest trafikkerte strekningen.
+
+**Skillet er:** tråden er hennes, SMS er kun for dem utenfor.
+
+Den billigste rike flaten i piloten er en **webapp hun legger på hjemskjermen**.
+Ingen App Store, ingen godkjenning, virker på iOS og Android, og gir kort og formatering.
+Det hun ikke får før det finnes en ekte app er delingsutvidelsen og widgeten —
+i piloten limer hun inn i stedet. Det er en akseptabel kostnad i tre uker.
+
+Da er piloten: én webapp, ett SMS-nummer for utgående, ett modell-API,
+ett minne per familie, én planlegger.
 
 ## Botten for én brukertype og ett tema
 
