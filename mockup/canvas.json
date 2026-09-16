@@ -264,6 +264,24 @@
       "w": 390,
       "h": 844,
       "page": "page-5"
+    },
+    {
+      "file": "Tone.dc.html",
+      "title": "5 · Tonen",
+      "x": 1960,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-4"
+    },
+    {
+      "file": "Speil.dc.html",
+      "title": "6 · Den speiler deg",
+      "x": 2450,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-4"
     }
   ],
   "annotations": [
@@ -330,10 +348,26 @@
       "y": -220,
       "w": 900,
       "text": "Skilte foreldre er trolig et skarpere marked enn kjernefamilien.\n\n25 % av barn etter samlivsbrudd har delt bosted (SSB). Rundt en tredel av samværsforeldre oppgir konflikt med den andre i noen eller stor grad.\nSmerten er en annen: ikke «han husker ikke», men «vi må snakke sammen for å få hverdagen til å gå opp».\n\nProduktet blir en nøytral tredjepart som holder sannheten. Verdien er at ingen av dem må ta kontakt.\nDerfor er tonen i disse skjermene flat og faktuell — ingen vurdering av den andre, ingen «husk å si ifra til»."
+    },
+    {
+      "id": "tone-regel",
+      "page": "page-4",
+      "x": 2450,
+      "y": -200,
+      "w": 860,
+      "text": "Tonen læres to veier: den spør én gang, og den ser hvordan du faktisk skriver — men bare i denne tråden.\n\nÉn regel den aldri bryter: tonen din smitter ikke over på meldingene til andre.\nTil den andre forelderen er språket flatt og faktuelt uansett hvor uformelt du selv skriver.\nÅ lese e-posten din for å lære tone er en stor forespørsel for liten gevinst — den ber ikke om det selv."
+    },
+    {
+      "id": "omfang",
+      "page": "page-1",
+      "x": 980,
+      "y": -168,
+      "w": 860,
+      "text": "Omfanget er mindre enn de 27 skjermene ser ut som.\n\n23 av dem er SAMME tråd. To er en side du når fra tråden. To er vanlig SMS på en annen telefon — ikke vår flate i det hele tatt.\nProduktet er én tråd, ett minne, fire verktøy (lese det som slippes inn, kalender, SMS ut, påminnelser) og to rutiner (morgen og søndag).\n\nAlt annet på lerretet er innhold, ikke ny overflate."
     }
   ],
   "launch": {
     "view": "canvas",
-    "page": "page-5"
+    "page": "page-4"
   }
 }
