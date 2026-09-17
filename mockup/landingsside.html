@@ -1,24 +1,23 @@
-<title>Noen andre husker det nå</title>
+<title>Jajumi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Karla:wght@400;500;600&display=swap">
 <style>
   :root {
-    --ground:#F4EEE5; --band:#EFE7DA; --card:#FFFDF9; --line:#E2D7C6; --hair:#EDE4D6;
+    --ground:#F4EEE5; --band:#EDE5D8; --card:#FFFDF9; --line:#E2D7C6; --hair:#EDE4D6;
     --ink:#2C2722; --ink-2:#3A342D; --muted:#6F665C; --faint:#8A8075;
     --forest:#44574B; --forest-hi:#3C4E42; --on-forest:#F7F4EE;
     --clay:#A0603F; --clay-ink:#7E4A30; --clay-bg:#F6E6DA;
-    --sms-bg:#EDEDF0; --sms-card:#FFFFFF; --sms-ink:#1C1C1E; --sms-out:#4C5A67; --sms-faint:#8E8E96;
+    --sms-bg:#EDEDF0; --sms-card:#FFF; --sms-ink:#1C1C1E; --sms-out:#4C5A67; --sms-faint:#8E8E96;
+    --ease:cubic-bezier(.2,.7,.2,1);
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ground:#201D19; --band:#262320; --card:#2B2724; --line:#3D372F; --hair:#332E28;
-      --ink:#EFE7DA; --ink-2:#E2D9CA; --muted:#A79C8C; --faint:#8E8375;
-      --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
-      --clay:#D69B77; --clay-ink:#E5B294; --clay-bg:#3A2C23;
-      --sms-bg:#2A2A2E; --sms-card:#35353A; --sms-ink:#EDEDF0; --sms-out:#6C7A87; --sms-faint:#9A9AA2;
-    }
-  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --ground:#201D19; --band:#262320; --card:#2B2724; --line:#3D372F; --hair:#332E28;
+    --ink:#EFE7DA; --ink-2:#E2D9CA; --muted:#A79C8C; --faint:#8E8375;
+    --forest:#7E9583; --forest-hi:#8CA391; --on-forest:#17201A;
+    --clay:#D69B77; --clay-ink:#E5B294; --clay-bg:#3A2C23;
+    --sms-bg:#2A2A2E; --sms-card:#35353A; --sms-ink:#EDEDF0; --sms-out:#6C7A87; --sms-faint:#9A9AA2;
+  } }
   :root[data-theme="dark"] {
     --ground:#201D19; --band:#262320; --card:#2B2724; --line:#3D372F; --hair:#332E28;
     --ink:#EFE7DA; --ink-2:#E2D9CA; --muted:#A79C8C; --faint:#8E8375;
@@ -26,310 +25,484 @@
     --clay:#D69B77; --clay-ink:#E5B294; --clay-bg:#3A2C23;
     --sms-bg:#2A2A2E; --sms-card:#35353A; --sms-ink:#EDEDF0; --sms-out:#6C7A87; --sms-faint:#9A9AA2;
   }
-
   * { box-sizing: border-box; }
-  body {
-    margin: 0; background: var(--ground); color: var(--ink);
-    font-family: Karla, 'Helvetica Neue', Helvetica, sans-serif;
-    font-size: 17px; line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: var(--clay); } a:hover { color: var(--clay-ink); }
+  body { margin:0; background:var(--ground); color:var(--ink);
+    font-family:Karla,'Helvetica Neue',Helvetica,sans-serif; font-size:17px; line-height:1.6;
+    -webkit-font-smoothing:antialiased; }
+  a { color:var(--clay); } a:hover { color:var(--clay-ink); }
+  .wrap { max-width:680px; margin:0 auto; padding-inline:20px; }
+  section { padding-block:60px; }
+  .band { background:var(--band); }
+  h1,h2,h3 { font-family:Newsreader,Georgia,serif; font-weight:500; margin:0; line-height:1.14; text-wrap:balance; }
+  h1 { font-size:clamp(32px,7vw,50px); letter-spacing:-.015em; }
+  h2 { font-size:clamp(25px,5vw,35px); }
+  h3 { font-size:20px; line-height:1.25; }
+  p { margin:0; max-width:34em; }
+  .lede { font-family:Newsreader,Georgia,serif; font-size:clamp(18px,3.3vw,21px); line-height:1.55; color:var(--ink-2); }
+  .eyebrow { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); font-weight:600; }
+  .stack { display:flex; flex-direction:column; gap:20px; }
+  .stack-s { display:flex; flex-direction:column; gap:10px; }
 
-  .wrap { max-width: 660px; margin: 0 auto; padding-inline: 20px; }
-  section { padding-block: 64px; }
-  .band { background: var(--band); }
+  .cta { display:inline-flex; align-items:center; justify-content:center; min-height:56px;
+    padding:0 30px; border-radius:28px; background:var(--forest); color:var(--on-forest);
+    font-size:16.5px; font-weight:600; text-decoration:none; border:none; cursor:pointer;
+    font-family:Karla,sans-serif; transition:background .2s ease; }
+  .cta:hover { background:var(--forest-hi); color:var(--on-forest); }
+  .cta:focus-visible { outline:2px solid var(--clay); outline-offset:3px; }
+  .fine { font-family:Newsreader,Georgia,serif; font-style:italic; font-size:14.5px; color:var(--muted); }
 
-  h1, h2, h3 { font-family: Newsreader, Georgia, serif; font-weight: 500; margin: 0; text-wrap: balance; line-height: 1.12; }
-  h1 { font-size: clamp(38px, 8.5vw, 62px); letter-spacing: -.015em; }
-  h2 { font-size: clamp(27px, 5.2vw, 38px); letter-spacing: -.01em; }
-  h3 { font-size: 21px; line-height: 1.25; }
-  p { margin: 0; max-width: 34em; }
-  .lede { font-family: Newsreader, Georgia, serif; font-size: clamp(19px, 3.4vw, 22px); line-height: 1.55; color: var(--ink-2); }
-  .eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
-  .stack { display: flex; flex-direction: column; gap: 22px; }
-  .stack-sm { display: flex; flex-direction: column; gap: 12px; }
+  /* ---------- telefonen ---------- */
+  .stage { display:flex; justify-content:center; padding-block:4px 20px; }
+  .phone { width:min(330px,86vw); aspect-ratio:390/760; border-radius:40px; background:#15120F;
+    padding:8px; box-shadow:0 22px 50px rgba(44,39,34,.22), 0 0 0 1px rgba(44,39,34,.07); position:relative; }
+  .screen { width:100%; height:100%; border-radius:33px; overflow:hidden; background:var(--ground);
+    display:flex; flex-direction:column; }
+  .bar { display:flex; align-items:center; gap:10px; padding:16px 14px 11px; border-bottom:1px solid var(--line); flex-shrink:0; }
+  .mark { width:28px; height:28px; border-radius:14px; background:var(--forest); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .bar-n { font-family:Newsreader,Georgia,serif; font-size:16px; font-weight:500; }
+  .thread { flex-grow:1; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:0 12px 10px; min-height:0; }
+  .stackt { display:flex; flex-direction:column; }
 
-  .cta {
-    display: inline-flex; align-items: center; justify-content: center;
-    min-height: 56px; padding: 0 30px; border-radius: 28px;
-    background: var(--forest); color: var(--on-forest);
-    font-size: 16.5px; font-weight: 600; text-decoration: none;
-    transition: background .2s ease, transform .15s ease;
-  }
-  .cta:hover { background: var(--forest-hi); color: var(--on-forest); transform: translateY(-1px); }
-  .cta:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
-  .under-cta { font-size: 14px; color: var(--muted); font-style: italic; font-family: Newsreader, Georgia, serif; }
+  .row { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s var(--ease); }
+  .row > .in { overflow:hidden; opacity:0; transform:translateY(8px); transition:opacity .5s var(--ease), transform .5s var(--ease); padding-top:8px; }
+  .row.on { grid-template-rows:1fr; }
+  .row.on > .in { opacity:1; transform:none; }
+  .reduced .row { transition:none; } .reduced .row > .in { transition:none; }
 
-  .steps { display: flex; flex-direction: column; gap: 0; }
-  .step { display: grid; grid-template-columns: 34px 1fr; gap: 18px; padding-block: 24px; border-top: 1px solid var(--hair); }
-  .step:last-child { border-bottom: 1px solid var(--hair); }
-  .step-n { font-family: Newsreader, Georgia, serif; font-size: 19px; color: var(--faint); padding-top: 1px; }
+  .day { text-align:center; font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#9A9086; font-weight:600; padding:3px 0; }
+  .them, .me { display:flex; }
+  .me { justify-content:flex-end; }
+  .b-them { max-width:88%; background:var(--card); border:1px solid var(--line); border-radius:16px 16px 16px 5px;
+    padding:9px 12px; font-family:Newsreader,Georgia,serif; font-size:14.5px; line-height:1.45; white-space:pre-wrap; }
+  .b-me { max-width:84%; background:var(--forest); color:var(--on-forest); border-radius:16px 16px 5px 16px;
+    padding:8px 12px; font-size:13px; line-height:1.4; white-space:pre-wrap; }
+  .think { padding-left:5px; font-family:Newsreader,Georgia,serif; font-style:italic; font-size:12.5px; color:#9A9086; }
+  .think i { font-style:normal; animation:bl 1.4s var(--ease) infinite; }
+  .think i:nth-child(2){animation-delay:.2s} .think i:nth-child(3){animation-delay:.4s}
+  @keyframes bl { 0%,60%,100%{opacity:.25} 30%{opacity:1} }
+  .aside { padding:2px 5px 0; font-family:Newsreader,Georgia,serif; font-style:italic; font-size:12.5px; line-height:1.45; color:var(--faint); }
 
-  /* beviset: hans telefon, bevisst nøytral */
-  .proof { background: var(--sms-bg); border-radius: 20px; padding: 20px; margin-top: 8px; }
-  .proof-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-  .proof-who { font-size: 13px; font-weight: 600; color: var(--sms-ink); }
-  .proof-when { font-size: 12px; color: var(--sms-faint); }
-  .sms-in {
-    background: var(--sms-card); color: var(--sms-ink); border-radius: 16px 16px 16px 5px;
-    padding: 13px 15px; font-size: 14.5px; line-height: 1.45;
-    font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    display: flex; flex-direction: column; gap: 3px; max-width: 330px;
-  }
-  .sms-gap { height: 8px; }
-  .sms-out {
-    align-self: flex-end; background: var(--sms-out); color: #fff;
-    border-radius: 16px 16px 5px 16px; padding: 9px 16px; font-size: 15px; font-weight: 500;
-    margin-top: 10px; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  }
-  .proof-row { display: flex; flex-direction: column; }
+  .shot { width:200px; border-radius:13px; overflow:hidden; border:1px solid #DCD0BF; background:#fff; }
+  .shot-h { background:#EFEAE1; padding:7px 10px; border-bottom:1px solid #E2D9CB; }
+  .shot-k { font-size:8.5px; letter-spacing:.08em; text-transform:uppercase; color:#8A8075; font-weight:600; }
+  .shot-s { font-size:9.5px; color:#6F665C; margin-top:2px; }
+  .shot-b { position:relative; padding:10px; font-family:Newsreader,Georgia,serif; font-size:10.5px; line-height:1.5; color:#3A342D; display:flex; flex-direction:column; gap:6px; }
+  .shot-f { position:absolute; left:0; right:0; bottom:0; height:30px; background:linear-gradient(to bottom,rgba(255,255,255,0),#fff); }
 
-  .price { display: flex; flex-wrap: wrap; gap: 14px; }
-  .price-card { flex: 1 1 240px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
-  .price-num { font-family: Newsreader, Georgia, serif; font-size: 34px; line-height: 1; }
-  .price-unit { font-size: 14px; color: var(--muted); margin-top: 6px; }
-  .price-note { font-size: 14.5px; color: var(--muted); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hair); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .card-h { padding:12px 13px 10px; border-bottom:1px solid var(--hair); }
+  .card-t { font-family:Newsreader,Georgia,serif; font-size:17px; line-height:1.2; }
+  .card-s { font-size:11px; color:var(--muted); margin-top:3px; }
+  .card-b { padding:4px 13px 10px; }
+  .fact { padding:6px 0; border-bottom:1px solid var(--hair); }
+  .fact:last-child { border-bottom:none; }
+  .f-l { font-size:8.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--faint); font-weight:600; }
+  .f-v { font-family:Newsreader,Georgia,serif; font-size:13px; line-height:1.3; margin-top:2px; }
+  .alert { background:var(--clay-bg); border-radius:9px; padding:8px 10px; margin-top:6px; }
+  .alert .f-l { color:var(--clay); } .alert .f-v { color:var(--clay-ink); }
+  .btn { margin:0 13px 13px; height:36px; border-radius:18px; background:var(--forest); color:var(--on-forest);
+    display:flex; align-items:center; justify-content:center; gap:6px; font-size:12.5px; font-weight:600; }
+  .task { display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--hair); }
+  .task:last-child { border-bottom:none; }
+  .num { width:20px; height:20px; border-radius:10px; border:1px solid #C5B9A6; color:var(--muted);
+    display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:600; flex-shrink:0; }
+  .num.w { background:var(--clay-bg); border-color:#E3C6B0; color:var(--clay); }
+  .t-t { font-family:Newsreader,Georgia,serif; font-size:13.5px; line-height:1.25; }
+  .t-s { font-size:10.5px; color:var(--muted); margin-top:2px; }
+  .t-s.w { color:var(--clay); }
+  .st { display:flex; align-items:center; gap:9px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:9px 11px; margin-top:6px; }
+  .st:first-child { margin-top:0; }
+  .dot { width:16px; height:16px; border-radius:8px; background:#C8B79E; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .dot.ok { background:var(--forest); }
+  .s-l { font-size:8.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--faint); font-weight:600; }
+  .s-v { font-family:Newsreader,Georgia,serif; font-size:12.5px; line-height:1.3; margin-top:2px; }
 
-  .incl { display: flex; flex-direction: column; gap: 11px; margin: 0; padding: 0; list-style: none; }
-  .incl li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 16px; }
-  .incl svg { margin-top: 5px; }
+  /* Hans telefon — bevisst nøytral, systemfont og grått */
+  .sms { background:var(--sms-bg); border-radius:13px; padding:10px; margin-top:2px;
+    font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .sms-l { font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:var(--sms-faint); font-weight:700; margin-bottom:7px; }
+  .sms-in { background:var(--sms-card); color:var(--sms-ink); border-radius:12px 12px 12px 4px; padding:8px 10px;
+    font-size:11px; line-height:1.4; display:flex; flex-direction:column; gap:1px; }
+  .sms-g { height:5px; }
+  .sms-out { align-self:flex-end; background:var(--sms-out); color:#fff; border-radius:12px 12px 4px 12px;
+    padding:6px 13px; font-size:12px; font-weight:600; margin-top:6px; width:fit-content; margin-left:auto; }
 
-  details { border-top: 1px solid var(--hair); }
-  details:last-of-type { border-bottom: 1px solid var(--hair); }
-  summary {
-    cursor: pointer; list-style: none; padding-block: 18px;
-    font-family: Newsreader, Georgia, serif; font-size: 19px;
-    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
-  }
-  summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; color: var(--faint); font-size: 21px; flex-shrink: 0; }
-  details[open] summary::after { content: "−"; }
-  details p { padding-bottom: 20px; color: var(--muted); font-size: 16px; }
+  /* ---------- velger ---------- */
+  .picker { display:flex; gap:7px; flex-wrap:wrap; justify-content:center; padding-top:4px; }
+  .chip { font-family:Karla,sans-serif; font-size:13.5px; font-weight:600; color:var(--muted);
+    background:var(--card); border:1px solid var(--line); border-radius:19px; min-height:38px;
+    padding:0 14px; cursor:pointer; transition:all .18s ease; }
+  .chip:hover { border-color:#CFC2AF; color:var(--ink); }
+  .chip[aria-pressed="true"] { background:var(--forest); border-color:var(--forest); color:var(--on-forest); }
+  .chip:focus-visible { outline:2px solid var(--clay); outline-offset:2px; }
 
-  footer { padding-block: 48px 64px; border-top: 1px solid var(--hair); }
-  .fine { font-size: 13.5px; color: var(--faint); }
+  /* ---------- sandkasse ---------- */
+  .sand { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; }
+  .sand-sub { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; margin-bottom:10px; }
+  .qs { display:flex; flex-direction:column; gap:7px; }
+  .q { text-align:left; font-family:Karla,sans-serif; font-size:15px; color:var(--ink);
+    background:var(--ground); border:1px solid var(--line); border-radius:13px; padding:12px 14px;
+    cursor:pointer; transition:all .18s ease; min-height:46px; }
+  .q:hover { border-color:#CFC2AF; }
+  .q[aria-pressed="true"] { background:var(--forest); border-color:var(--forest); color:var(--on-forest); }
+  .q:focus-visible { outline:2px solid var(--clay); outline-offset:2px; }
+  .ups { display:flex; gap:7px; flex-wrap:wrap; }
+  .up { flex:1 1 150px; display:flex; flex-direction:column; align-items:center; gap:7px;
+    background:var(--ground); border:1px dashed #CFC2AF; border-radius:13px; padding:13px 10px;
+    cursor:pointer; font-family:Karla,sans-serif; font-size:13px; font-weight:600; color:var(--ink); min-height:88px;
+    transition:all .18s ease; }
+  .up:hover { border-color:var(--forest); border-style:solid; }
+  .up[aria-pressed="true"] { background:var(--forest); border-color:var(--forest); border-style:solid; color:var(--on-forest); }
+  .up:focus-visible { outline:2px solid var(--clay); outline-offset:2px; }
+  .up svg { opacity:.6; }
+  .up[aria-pressed="true"] svg { opacity:1; }
+  .out { margin-top:16px; padding-top:16px; border-top:1px solid var(--hair); }
+  .tag { display:inline-block; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    font-weight:700; color:var(--clay); background:var(--clay-bg); padding:4px 9px; border-radius:6px; margin-bottom:11px; }
+  .reply { font-family:Newsreader,Georgia,serif; font-size:17px; line-height:1.5; white-space:pre-wrap; }
+  .placeholder { color:var(--faint); font-family:Newsreader,Georgia,serif; font-style:italic; font-size:15.5px; }
+
+  .steps { display:flex; flex-direction:column; }
+  .step { display:grid; grid-template-columns:30px 1fr; gap:15px; padding-block:18px; border-top:1px solid var(--hair); }
+  .step:last-child { border-bottom:1px solid var(--hair); }
+  .step-n { font-family:Newsreader,Georgia,serif; font-size:18px; color:var(--faint); }
+  details { border-top:1px solid var(--hair); }
+  details:last-of-type { border-bottom:1px solid var(--hair); }
+  summary { cursor:pointer; list-style:none; padding-block:16px; font-family:Newsreader,Georgia,serif; font-size:18px;
+    display:flex; align-items:baseline; justify-content:space-between; gap:14px; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:"+"; color:var(--faint); font-size:20px; }
+  details[open] summary::after { content:"−"; }
+  details p { padding-bottom:18px; color:var(--muted); font-size:15.5px; }
+  .bleed { width:100%; margin-block:0; }
+  .bleed img { display:block; width:100%; height:clamp(220px,34vw,380px); object-fit:cover; }
+  .bleed .venter { display:flex; align-items:center; justify-content:center; text-align:center;
+    height:clamp(220px,34vw,380px); background:linear-gradient(160deg,#E6DBC9,#D9C9B2);
+    color:#6F665C; font-size:13px; line-height:1.5; padding:24px; }
+  :root[data-theme="dark"] .bleed .venter, :root:not([data-theme="light"]) .bleed .venter { background:linear-gradient(160deg,#332E28,#262320); }
+  footer { padding-block:44px 60px; border-top:1px solid var(--hair); font-size:13.5px; color:var(--faint); }
 </style>
 
-<section class="wrap">
-  <div class="stack">
-    <div class="eyebrow">Jajumi</div>
-    <h1>Noen andre husker det nå</h1>
-    <p class="lede">
-      Turnklær på torsdag. Foreldremøtet. Påmeldingsfristen som gikk ut i går.
-      At melken er tom. Du har hele familiens hode i ditt eget.
-    </p>
-    <p class="lede">Jajumi tar over listen.</p>
-    <div class="stack-sm" style="margin-top: 6px;">
-      <div><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
-      <div class="under-cta">Ingen binding. Ingen som ringer deg. Og han trenger ikke laste ned noe.</div>
+<section class="wrap" style="padding-top:34px;padding-bottom:40px">
+  <div class="stack" style="gap:16px">
+    <div class="eyebrow" style="text-align:center">Jajumi</div>
+
+    <div class="stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="bar">
+            <div class="mark">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EDE6DA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c4.2 2.6 5.8 6.4 4.7 10.1C15.6 18.3 13 20 12 20s-3.6-1.7-4.7-5.4C6.2 10.9 7.8 7.1 12 4.5Z"></path><path d="M12 9.5v8.5"></path></svg>
+            </div>
+            <div class="bar-n">Jajumi</div>
+          </div>
+          <div class="thread"><div class="stackt" id="stackt"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="picker" id="picker"></div>
+
+    <div class="stack-s" style="text-align:center;align-items:center;padding-top:22px">
+      <h1>Noen andre husker det nå</h1>
+      <p class="lede" style="max-width:26em">
+        Slipp inn beskjeden du ikke rakk å lese. Få den tilbake som en avtale —
+        og få de andre til å bekrefte at de har fått den med seg.
+      </p>
+      <div style="padding-top:8px"><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
+      <div class="fine">Ingen binding. Ingen som ringer deg. Og han trenger ikke laste ned noe.</div>
     </div>
   </div>
 </section>
 
 <section class="band">
   <div class="wrap stack">
-    <h2>Slik virker det</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">1</div>
-        <div class="stack-sm">
-          <h3>Du slipper inn kaoset</h3>
-          <p>Skjermbildet fra barnehagen. Mailen du ikke rakk å lese. Invitasjonen som kom på SMS.
-             Send den videre uten å lese den — du får den tilbake som en avtale, med dato, oppmøte og hva som må pakkes.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <div class="stack-sm">
-          <h3>Du får dagen om morgenen</h3>
-          <p>Tre ting. Ikke tjue. Det som faktisk må skje i dag — og beskjed om at det ikke er noe mer.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <div class="stack-sm">
-          <h3>Og han bekrefter at han har fått det med seg</h3>
-          <p>Du skriver «si fra til Marius». Han får en vanlig SMS og svarer med ett tall.
-             Du får beskjed når han har svart — ikke før.</p>
-        </div>
+    <div class="stack-s">
+      <div class="eyebrow">Prøv den</div>
+      <h2>Spør om noe, eller slipp inn et rot</h2>
+      <p style="color:var(--muted)">Svarene under er ekte eksempler fra produktet, ikke levende. Du får det ordentlige når du starter.</p>
+    </div>
+
+    <div class="sand">
+      <div class="sand-sub">Spør om noe</div>
+      <div class="qs" id="qs"></div>
+
+      <div class="sand-sub" style="margin-top:20px">Eller slipp inn et skjermbilde</div>
+      <div class="ups" id="ups"></div>
+
+      <div class="out" id="out">
+        <p class="placeholder">Trykk på noe over, så svarer den.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="wrap stack">
-  <div class="eyebrow">Slik ser det ut for ham</div>
-  <h2>Han trenger ingen app</h2>
-  <p>Ingen konto, ingen nedlasting, ingen god vilje. Bare en melding han kan svare på med ett tegn.</p>
+<div class="bleed">
+  <!-- Legg bildet her: hendene som legger telefonen fra seg. Filnavn: telefonen-legges-fra-seg.jpg
+       <img src="telefonen-legges-fra-seg.jpg" alt="En hånd legger en telefon med skjermen ned på en kjøkkenbenk">  -->
+  <div class="venter">Her går bildet av hendene som legger telefonen fra seg</div>
+</div>
 
-  <div class="proof">
-    <div class="proof-head">
-      <span class="proof-who">Marius sin telefon</span>
-      <span class="proof-when">i dag 11.58</span>
-    </div>
-    <div class="proof-row">
-      <div class="sms-in">
-        <div>Fra Kristin, via Jajumi.</div>
-        <div class="sms-gap"></div>
-        <div>Emma: høsttur til Sognsvann.</div>
-        <div>Torsdag 24.9, oppmøte i barnehagen 08.15.</div>
-        <div>Matpakke, drikkeflaske, regntøy, skift.</div>
-        <div class="sms-gap"></div>
-        <div>Kristin spør om du kan levere.</div>
-        <div class="sms-gap"></div>
-        <div>Svar med ett tall:</div>
-        <div>1 — Forstått</div>
-        <div>2 — Forstått, legg den i kalenderen min</div>
-        <div>3 — Passer ikke, foreslå noe annet</div>
-        <div>4 — Noe annet (skriv fritt)</div>
-      </div>
-      <div class="sms-out">2</div>
-    </div>
-  </div>
-
-  <p style="color: var(--muted); font-size: 15.5px;">
-    Samme melding går til mormor, barnepasseren eller den som henter på fredag.
-    Du slipper å minne noen på noe.
-  </p>
-</section>
-
-<section class="band">
-  <div class="wrap stack">
-    <h2>Det er ikke tid du mangler</h2>
-    <p class="lede">Det er at du er den eneste som holder alt i hodet samtidig.</p>
-    <p class="lede">Den jobben har ingen gitt deg. Den bare ble din.</p>
-    <p>Jajumi er ikke enda et sted du må logge inn og fylle ut. Det er at noen andre har oversikten,
-       og gir deg beskjed.</p>
-  </div>
+<section class="wrap stack" style="padding-top:52px">
+  <h2>Det er ikke tid du mangler</h2>
+  <p class="lede">Det er at du er den eneste som holder alt i hodet samtidig.</p>
+  <p class="lede">Den jobben har ingen gitt deg. Den bare ble din.</p>
 </section>
 
 <section class="wrap stack">
   <h2>Du trenger ikke fylle ut noe</h2>
   <div class="steps">
-    <div class="step">
-      <div class="step-n">1</div>
-      <div class="stack-sm">
-        <h3>Du starter</h3>
-        <p>Betaler første måned. Ingen samtale, ingen skjema, ingen som ringer.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-n">2</div>
-      <div class="stack-sm">
-        <h3>Du sender det første skjermbildet</h3>
-        <p>Hva som helst som ligger og venter. Det holder som start.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-n">3</div>
-      <div class="stack-sm">
-        <h3>Den spør om det den mangler</h3>
-        <p>Ett spørsmål av gangen, når det er relevant. «Hvem henter Emma på torsdager?»
-           Svarer du én gang, blir du aldri spurt igjen.</p>
-      </div>
-    </div>
+    <div class="step"><div class="step-n">1</div><div class="stack-s" style="gap:4px">
+      <h3>Du starter</h3><p style="color:var(--muted)">Betaler første måned. Ingen samtale, ingen skjema, ingen som ringer.</p></div></div>
+    <div class="step"><div class="step-n">2</div><div class="stack-s" style="gap:4px">
+      <h3>Du sender det første skjermbildet</h3><p style="color:var(--muted)">Hva som helst som ligger og venter. Det holder som start.</p></div></div>
+    <div class="step"><div class="step-n">3</div><div class="stack-s" style="gap:4px">
+      <h3>Den spør om det den mangler</h3><p style="color:var(--muted)">Ett spørsmål av gangen, når det er relevant. Svarer du én gang, blir du aldri spurt igjen.</p></div></div>
   </div>
-  <p style="color: var(--muted); font-size: 15.5px;">
-    Den første uka gjetter den litt — og sier ifra hver gang den gjør det.
-  </p>
+  <p class="fine">Den første uka gjetter den litt — og sier ifra hver gang den gjør det.</p>
 </section>
 
 <section class="band" id="pris">
   <div class="wrap stack">
-    <h2>Pris</h2>
-    <div class="price">
-      <div class="price-card">
-        <div class="price-num">299 kr</div>
-        <div class="price-unit">per måned</div>
-        <div class="price-note">Ingen binding. Si opp med en melding.</div>
-      </div>
-      <div class="price-card">
-        <div class="price-num">14 dager</div>
-        <div class="price-unit">angrefrist</div>
-        <div class="price-note">Passer det ikke, får du pengene tilbake. Uten spørsmål.</div>
-      </div>
-    </div>
-
-    <div class="stack-sm" style="margin-top: 10px;">
-      <div class="eyebrow">Inkludert</div>
-      <ul class="incl">
-        <li>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
-          <span>Alt du slipper inn blir til avtaler i kalenderen du allerede bruker</span>
-        </li>
-        <li>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
-          <span>Dagens tre ting hver morgen, og uka som kommer hver søndag</span>
-        </li>
-        <li>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
-          <span>Beskjeder til partner, besteforeldre og barnepasser — med bekreftelse tilbake</span>
-        </li>
-        <li>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
-          <span>Frister den holder øye med, også de som er måneder unna</span>
-        </li>
-        <li>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--forest);"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
-          <span>Ingen reklame inne i produktet. Aldri.</span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="stack-sm" style="margin-top: 12px;">
+    <h2>299 kr i måneden</h2>
+    <p class="lede">Ingen binding. Si opp med en melding. 14 dagers angrefrist.</p>
+    <div class="stack-s" style="padding-top:6px">
       <div><a class="cta" href="#">Start i dag</a></div>
     </div>
+    <p style="color:var(--muted);font-size:15.5px">
+      Inkludert: alt du slipper inn blir til avtaler i kalenderen du allerede bruker · dagens tre ting
+      hver morgen · beskjeder til partner, besteforeldre og barnepasser med bekreftelse tilbake ·
+      frister den holder øye med, også de som er måneder unna · ingen reklame inne i produktet, aldri.
+    </p>
   </div>
 </section>
 
 <section class="wrap stack">
   <h2>Spørsmål</h2>
   <div>
-    <details>
-      <summary>Er dette en app?</summary>
-      <p>Du får en liten app med en widget som viser dagens tre ting rett på hjemskjermen, og du sender skjermbilder rett inn fra delingsmenyen. Men de du sender beskjeder til — partner, besteforeldre, barnepasser — trenger ingenting. De får vanlig SMS.</p>
-    </details>
-    <details>
-      <summary>Må mannen min være med?</summary>
-      <p>Nei, og han trenger ikke laste ned noe. Han får en vanlig SMS og svarer med ett tall.
-         Det samme gjelder besteforeldre og barnepasser.</p>
-    </details>
-    <details>
-      <summary>Hvem ser kalenderen vår?</summary>
-      <p>Vi, for å holde den i gang. Ingenting deles videre, ingenting selges.
-         Du kan be om at alt slettes, når som helst — og du ser selv hva vi vet om dere.</p>
-    </details>
-    <details>
-      <summary>Hva med de andre som får meldinger fra dere?</summary>
-      <p>Den første meldingen sier hvem som sender, på oppdrag fra hvem, og hvordan de sier nei.
-         De kan reservere seg når som helst, og da sender vi ikke mer.</p>
-    </details>
-    <details>
-      <summary>Hva om den tar feil?</summary>
-      <p>Da retter du det ved å si ifra i meldingen. Den spør ikke om det samme to ganger.
-         Er den usikker, sier den det i stedet for å gjette i stillhet.</p>
-    </details>
-    <details>
-      <summary>Hvor mye jobb er det for meg?</summary>
-      <p>Å sende videre det du allerede får. Noen meldinger i uka.</p>
-    </details>
+    <details><summary>Må mannen min være med?</summary>
+      <p>Nei, og han trenger ikke laste ned noe. Han får en vanlig SMS og svarer med ett tall. Det samme gjelder besteforeldre og barnepasser.</p></details>
+    <details><summary>Hvem ser kalenderen vår?</summary>
+      <p>Vi, for å holde den i gang. Ingenting deles videre, ingenting selges. Du ser selv hva vi vet om dere, og kan be om at alt slettes når som helst.</p></details>
+    <details><summary>Hva med de andre som får meldinger fra dere?</summary>
+      <p>Første melding sier hvem som sender, på oppdrag fra hvem, og hvordan de sier nei. Reserverer de seg, sender vi ikke mer.</p></details>
+    <details><summary>Hva om den tar feil?</summary>
+      <p>Du retter det ved å si ifra i meldingen. Den spør ikke om det samme to ganger. Er den usikker, sier den det i stedet for å gjette i stillhet.</p></details>
+    <details><summary>Hvor mye jobb er det for meg?</summary>
+      <p>Å sende videre det du allerede får. Noen meldinger i uka.</p></details>
   </div>
 </section>
 
-<section class="band">
-  <div class="wrap stack">
-    <h2>Fortsatt den eneste som husker alt?</h2>
-    <div class="stack-sm">
-      <div><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
-      <div class="under-cta">Ingen binding. 14 dagers angrefrist.</div>
-    </div>
-  </div>
-</section>
+<footer class="wrap">Jajumi · Org.nr. [SETT INN] · [E-POST] · <a href="#">Personvern</a> · <a href="#">Vilkår</a></footer>
 
-<footer class="wrap">
-  <p class="fine">
-    Jajumi · Org.nr. [SETT INN] · [E-POST] ·
-    <a href="#">Personvern</a> · <a href="#">Vilkår</a>
-  </p>
-</footer>
+<script>
+(function () {
+  "use strict";
+  var E = function (h) { var d = document.createElement("div"); d.innerHTML = h.trim(); return d.firstChild; };
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+
+  // ---- byggeklosser --------------------------------------------------------
+  var K = {
+    dag: function (t) { return '<div class="day">' + esc(t) + "</div>"; },
+    dem: function (t) { return '<div class="them"><div class="b-them">' + esc(t) + "</div></div>"; },
+    meg: function (t) { return '<div class="me"><div class="b-me">' + esc(t) + "</div></div>"; },
+    tenker: function () { return '<div class="think">Ser på det<i>.</i><i>.</i><i>.</i></div>'; },
+    notat: function (t) { return '<div class="aside">' + esc(t) + "</div>"; },
+    shot: function (k, s, l) {
+      return '<div class="me"><div class="shot"><div class="shot-h"><div class="shot-k">' + esc(k) +
+        '</div><div class="shot-s">' + esc(s) + '</div></div><div class="shot-b">' +
+        l.map(function (x) { return "<div>" + esc(x) + "</div>"; }).join("") +
+        '<div class="shot-f"></div></div></div></div>';
+    },
+    kort: function (o) {
+      var f = (o.fakta || []).map(function (x) {
+        return '<div class="fact"><div class="f-l">' + esc(x[0]) + '</div><div class="f-v">' + esc(x[1]) + "</div></div>";
+      }).join("");
+      var a = o.frist ? '<div class="alert"><div class="f-l">' + esc(o.frist[0]) + '</div><div class="f-v">' + esc(o.frist[1]) + "</div></div>" : "";
+      var b = o.knapp ? '<div class="btn">' + esc(o.knapp) + "</div>" : "";
+      return '<div class="card"><div class="card-h"><div class="card-t">' + esc(o.tittel) +
+        '</div><div class="card-s">' + esc(o.under) + '</div></div><div class="card-b">' + f + a + "</div>" + b + "</div>";
+    },
+    liste: function (rader) {
+      return '<div class="card" style="padding:4px 13px">' + rader.map(function (r, i) {
+        return '<div class="task"><div class="num' + (r[2] ? " w" : "") + '">' + (i + 1) +
+          '</div><div><div class="t-t">' + esc(r[0]) + '</div><div class="t-s' + (r[2] ? " w" : "") + '">' + esc(r[1]) + "</div></div></div>";
+      }).join("") + "</div>";
+    },
+    status: function (rader) {
+      var v = '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F7F4EE" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>';
+      return rader.map(function (r) {
+        return '<div class="st"><div class="dot' + (r[2] ? " ok" : "") + '">' + (r[2] ? v : "") +
+          '</div><div><div class="s-l">' + esc(r[0]) + '</div><div class="s-v">' + esc(r[1]) + "</div></div></div>";
+      }).join("");
+    },
+    sms: function (linjer, svar) {
+      var b = linjer.map(function (x) { return x === "" ? '<div class="sms-g"></div>' : "<div>" + esc(x) + "</div>"; }).join("");
+      return '<div class="sms"><div class="sms-l">Marius sin telefon</div><div class="sms-in">' + b + "</div>" +
+        (svar ? '<div class="sms-out">' + esc(svar) + "</div>" : "") + "</div>";
+    }
+  };
+
+  // ---- seks situasjoner ----------------------------------------------------
+  var S = [
+    { navn: "Beskjeden fra barnehagen", steg: [
+      [0, K.dag("I dag")],
+      [400, K.shot("Bekkeblomen barnehage", "Avdeling Maurtua · 11. september", [
+        "Hei alle sammen!",
+        "Torsdag 24. september tar vi høsttur til Sognsvann. Vi går fra barnehagen kl. 08.30, så vær her senest 08.15.",
+        "Barna må ha med matpakke, drikkeflaske, regntøy og et ekstra skift."])],
+      [1900, K.meg("kan du ta denne?")],
+      [2700, K.tenker()],
+      [4100, K.dem("Dette gjelder Emma, om åtte dager."), "fjern-tenker"],
+      [4800, K.kort({ tittel: "Høsttur til Sognsvann", under: "Emma · Bekkeblomen barnehage",
+        fakta: [["Når", "Torsdag 24. september, 08.30–14.00"], ["Oppmøte", "Barnehagen, senest 08.15"],
+                ["Ta med", "Matpakke, drikke, regntøy, skift"]],
+        frist: ["Frist", "Påmelding i Vigilo innen mandag"], knapp: "Legg i kalenderen" })],
+    ]},
+
+    { navn: "Bursdagsinvitasjonen", steg: [
+      [0, K.dag("I dag · 13.42")],
+      [400, K.shot("Melding fra Hanne", "Sofias mamma", [
+        "Hei! Sofia fyller 5 år og vi feirer i Sagene bad lørdag 3. oktober kl. 13–15.30.",
+        "Si ifra innen onsdag om Emma kommer, så booker jeg antall."])],
+      [1900, K.meg("er ikke Emma på svømming da?")],
+      [2700, K.tenker()],
+      [4000, K.dem("Nei. Svømmingen er torsdager — lørdagen er fri."), "fjern-tenker"],
+      [4700, K.kort({ tittel: "Sofias bursdag", under: "Emma · lørdag 3. oktober",
+        fakta: [["Når", "13.00–15.30"], ["Hvor", "Sagene bad"]],
+        frist: ["Svarfrist", "Onsdag, til Hanne"], knapp: "Svar ja" })],
+      [5900, K.notat("Gaven sier jeg ifra om torsdag, så du rekker butikken. Emma har badedrakt som passer.")],
+    ]},
+
+    { navn: "Si fra til Marius", steg: [
+      [0, K.dag("I dag · 11.52")],
+      [400, K.meg("og si fra til Marius at han må levere — jeg vil vite at han faktisk har fått det med seg")],
+      [1600, K.dem("Sendt. Jeg sier ifra når han har svart — ikke før.")],
+      [2600, K.sms(["Fra Kristin, via Jajumi.", "", "Emma: høsttur til Sognsvann.",
+        "Torsdag 24.9, oppmøte i barnehagen 08.15.", "", "Kristin spør om du kan levere.", "",
+        "Svar med ett tall:", "1 — Forstått", "2 — Forstått, legg den i kalenderen min",
+        "3 — Passer ikke, foreslå noe annet", "4 — Noe annet"])],
+      [4600, K.sms(["Fra Kristin, via Jajumi.", "", "Emma: høsttur til Sognsvann.",
+        "Torsdag 24.9, oppmøte i barnehagen 08.15.", "", "Kristin spør om du kan levere.", "",
+        "Svar med ett tall:", "1 — Forstått", "2 — Forstått, legg den i kalenderen min",
+        "3 — Passer ikke, foreslå noe annet", "4 — Noe annet"], "2"), "erstatt-forrige"],
+      [5800, K.status([["Din kalender", "Høsttur — torsdag 24.9", true],
+                       ["Marius", "Svarte 2 kl. 12.04 — lagt i hans kalender", true]])],
+      [6800, K.dem("Du trenger ikke følge opp. Jeg minner ham onsdag kveld.")],
+    ]},
+
+    { navn: "Morgenmeldingen", steg: [
+      [0, K.dag("Onsdag 16. september · 07.02")],
+      [400, K.dem("God morgen. Tre ting i dag.")],
+      [1300, K.liste([["Turdag i barnehagen", "Gummistøvler og skift i sekken", false],
+                      ["Jakob har fotball 17.00", "Marius kjører", false],
+                      ["Meld på høstturen", "Fristen går ut mandag", true]])],
+      [3000, K.dem("Ellers er det ingenting du må huske i dag.")],
+    ]},
+
+    { navn: "Hva blir det til middag", steg: [
+      [0, K.dag("I dag · 16.40")],
+      [400, K.meg("hva skal vi ha til middag")],
+      [1200, K.tenker()],
+      [2400, K.dem("Fiskegrateng. Du har alt hjemme bortsett fra rømme."), "fjern-tenker"],
+      [3100, K.kort({ tittel: "Fiskegrateng", under: "25 minutter · uten melkeprotein",
+        fakta: [["Emma", "Hun har spist den før og likt den"], ["Mangler", "Rømme — den laktosefrie"]],
+        knapp: "Legg i handlelista" })],
+      [4200, K.notat("Rekker du ikke butikken: pasta med laks og erter. Da har du alt.")],
+    ]},
+
+    { navn: "Fristen i april", steg: [
+      [0, K.dag("Torsdag 12. februar · 09.15")],
+      [400, K.dem("En ting som ikke haster ennå, men som blir vond hvis den ryker.")],
+      [1500, K.kort({ tittel: "Sommer-SFO", under: "Jakob · påmelding i Visma",
+        fakta: [["Stengt", "Uke 28 og 29"], ["Ferien deres", "Uke 29 og 30 — uke 28 står åpen"]],
+        frist: ["Frist", "1. april, og den forlenges ikke"], knapp: "Minn meg 20. mars" })],
+      [3000, K.notat("Jeg tar den opp igjen i midten av mars. Du trenger ikke tenke på den før det.")],
+    ]},
+  ];
+
+  var stackt = document.getElementById("stackt");
+  var picker = document.getElementById("picker");
+  var timers = [], rolig = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (rolig) document.body.classList.add("reduced");
+
+  function spill(i) {
+    timers.forEach(clearTimeout); timers = [];
+    stackt.innerHTML = "";
+    Array.prototype.forEach.call(picker.children, function (b, n) { b.setAttribute("aria-pressed", String(n === i)); });
+
+    var sisteSms = null;
+    S[i].steg.forEach(function (st) {
+      var vis = function () {
+        if (st[2] === "fjern-tenker") {
+          var t = stackt.querySelector(".think");
+          if (t) t.closest(".row").remove();
+        }
+        if (st[2] === "erstatt-forrige" && sisteSms) { sisteSms.remove(); }
+        var rad = E('<div class="row"><div class="in">' + st[1] + "</div></div>");
+        stackt.appendChild(rad);
+        if (st[1].indexOf('class="sms"') > -1) sisteSms = rad;
+        if (rolig) rad.classList.add("on");
+        else requestAnimationFrame(function () { requestAnimationFrame(function () { rad.classList.add("on"); }); });
+      };
+      if (rolig) vis(); else timers.push(setTimeout(vis, st[0] + 500));
+    });
+  }
+
+  S.forEach(function (s, i) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = s.navn;
+    b.setAttribute("aria-pressed", "false");
+    b.onclick = function () { spill(i); };
+    picker.appendChild(b);
+  });
+  spill(0);
+
+  // ---- sandkassen ----------------------------------------------------------
+  var SPM = [
+    ["Hva skjer i morgen?",
+     "Torsdag: Jakob har fotball 17.00, og Marius kjører.\n\nEmma har ingenting spesielt — vanlig dag i barnehagen.\n\nDet er alt. Du trenger ikke pakke noe ekstra."],
+    ["Når er det foreldremøte?",
+     "Tirsdag 7. oktober kl. 18.00 på Bjørnsletta, for Jakobs klasse.\n\nDere har ikke sagt hvem som går. Skal jeg spørre Marius?"],
+    ["Kan du minne meg på å melde på svømming?",
+     "Ja. Påmeldingen åpner 15. januar og pleier å bli full i løpet av et døgn.\n\nJeg sier fra kvelden før, og igjen på formiddagen hvis du ikke har gjort det.\n\nDu trenger ikke huske datoen."],
+    ["Hva må Emma ha med på turdagen?",
+     "Gummistøvler, regntøy og et skift i sekken. Matpakke og drikkeflaske som vanlig.\n\nHun har ikke skift i barnehagen nå — det ble sendt hjem forrige uke."],
+    ["Si fra til mormor at hun henter fredag",
+     "Sendt til mormor 14.06.\n\nHun fikk med seg at Emma ikke tåler melkeprotein, og at hun må hentes senest 16.45.\n\nJeg sier ifra når hun svarer. Du trenger ikke følge opp."],
+  ];
+
+  var OPP = [
+    { navn: "En invitasjon", ikon: "M4 6h16v12H4z M4 8l8 5 8-5",
+      svar: "Sofias bursdag, lørdag 3. oktober kl. 13–15.30 i Sagene bad.\n\nSvarfrist onsdag, til Hanne. Emma har ikke svømming den lørdagen, så det går.\n\nSkal jeg svare ja og legge den inn?" },
+    { navn: "En huskeliste", ikon: "M5 4h14v16H5z M9 9h7 M9 13h7 M9 17h4",
+      svar: "Sju ting på lista. Tre av dem har en frist:\n\n— Betal turen innen fredag\n— Lever inn samtykkeskjema før 1. oktober\n— Meld deg på foreldremøtet innen søndag\n\nDe fire andre er ting til sekken. Jeg tar dem med i morgenmeldingen på riktig dag.\n\nSkal jeg sette påminnelser på de tre fristene?" },
+    { navn: "En håndskrevet lapp", ikon: "M5 3h11l4 4v14H5z M16 3v5h5 M9 12h6 M9 16h4",
+      svar: "Lappen er litt uklar, men jeg leser tre ting:\n\n— Gymtøy på torsdag. Det er torsdag 25. september.\n— Dugnad lørdag 4. oktober, dere trenger to foreldre.\n— Si fra til Anne.\n\nJeg er ikke sikker på om det står «to foreldre» eller «to timer» — sjekk den. Resten står trygt.\n\nSkal jeg spørre Marius om dugnaden?" },
+  ];
+
+  var qs = document.getElementById("qs"), ups = document.getElementById("ups"), out = document.getElementById("out");
+
+  function svar(tekst) {
+    out.innerHTML = '<span class="tag">Eksempel</span><div class="reply"></div>';
+    out.querySelector(".reply").textContent = tekst;
+    Array.prototype.forEach.call(document.querySelectorAll(".q,.up"), function (b) { b.setAttribute("aria-pressed", "false"); });
+  }
+
+  SPM.forEach(function (p) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "q"; b.textContent = p[0]; b.setAttribute("aria-pressed", "false");
+    b.onclick = function () { svar(p[1]); b.setAttribute("aria-pressed", "true"); };
+    qs.appendChild(b);
+  });
+
+  OPP.forEach(function (o) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "up"; b.setAttribute("aria-pressed", "false");
+    b.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="' + o.ikon + '"></path></svg><span>' + o.navn + "</span>";
+    b.onclick = function () { svar(o.svar); b.setAttribute("aria-pressed", "true"); };
+    ups.appendChild(b);
+  });
+})();
+</script>
