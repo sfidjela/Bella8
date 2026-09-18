@@ -255,7 +255,7 @@
         Send inn beskjeden du ikke rakk å lese. Få den tilbake som en avtale —
         og få de andre til å bekrefte at de har fått den med seg.
       </p>
-      <div style="padding-top:6px"><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
+      <div style="padding-top:6px"><a class="cta" id="cta-hero" href="#pris">Start i dag — 299 kr/mnd</a></div>
       <div class="fine">Ingen binding. Ingen som ringer deg. Og han trenger ikke laste ned noe.</div>
     </div>
   </div>
@@ -360,9 +360,11 @@
 <section class="band" id="pris">
   <div class="wrap stack">
     <h2>299 kr i måneden</h2>
-    <p class="lede">Ingen binding. Si opp med en melding. 14 dagers angrefrist.</p>
+    <p class="lede" id="apen-fin">Ingen binding. Si opp med en melding. 14 dagers angrefrist.</p>
+    <p class="lede" id="apner" hidden>Den er ikke åpen for alle ennå. Skriv deg på lista, så sier vi fra
+      når det er din tur. Ingen binding når den åpner.</p>
     <div class="stack-s" style="padding-top:6px">
-      <div><a class="cta" href="#">Start i dag</a></div>
+      <div><a class="cta" id="cta-pris" href="#">Start i dag</a></div>
     </div>
     <p style="color:var(--muted);font-size:15.5px">
       Inkludert: alt du slipper inn blir til avtaler i kalenderen du allerede bruker · dagens tre ting
@@ -390,6 +392,10 @@
       <p>Du retter det ved å si ifra i meldingen. Den spør ikke om det samme to ganger. Er den usikker, sier den det i stedet for å gjette i stillhet.</p></details>
     <details><summary>Hvor mye jobb er det for meg?</summary>
       <p>Å sende videre det du allerede får. Noen meldinger i uka.</p></details>
+    <details><summary>Hvorfor ikke bare bruke en vanlig chatbot?</summary>
+      <p>Du kan det. Den vil lese skjermbildet ditt fint. Men den sender ingen SMS til mannen din,
+        den får ingen bekreftelse tilbake, den husker ikke at Emma ikke tåler nøtter, og den sier
+        ikke fra om fristen i april. Det er den delen som er jobben.</p></details>
     <details><summary>Leser den e-posten og meldingene mine?</summary>
       <p>Nei. Den leser bare det du sender den. Det er derfor du kan sende den hva som helst.</p></details>
   </div>
@@ -400,6 +406,13 @@
 <script>
 (function () {
   "use strict";
+
+  // Sett denne til true den dagen betaling faktisk virker.
+  // Så lenge den er false sier siden «sett meg på lista» i stedet for
+  // «start i dag», fordi det siste ikke er sant ennå.
+  var APEN = false;
+  var EPOST = "hei@jajumi.no";
+
   var E = function (h) { var d = document.createElement("div"); d.innerHTML = h.trim(); return d.firstChild; };
   var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
 
@@ -577,14 +590,41 @@
     });
   }
 
+  // ---- knappene: hva de sier, og hvor de går --------------------------------
+  (function () {
+    var tekst = APEN ? "Start i dag" : "Sett meg på lista";
+    var hero = document.getElementById("cta-hero");
+    var pris = document.getElementById("cta-pris");
+    hero.textContent = APEN ? "Start i dag — 299 kr/mnd" : "Sett meg på lista";
+    pris.textContent = tekst;
+    if (!APEN) {
+      var lenke = "mailto:" + EPOST + "?subject=" + encodeURIComponent("Sett meg på lista");
+      pris.href = lenke;
+      document.getElementById("apner").hidden = false;
+      document.getElementById("apen-fin").hidden = true;
+    }
+  })();
+
+  var naa = 0;
   S.forEach(function (s, i) {
     var b = document.createElement("button");
     b.type = "button"; b.className = "chip"; b.textContent = s.navn;
     b.setAttribute("aria-pressed", "false");
-    b.onclick = function () { spill(i); };
+    b.onclick = function () { naa = i; spill(i); };
     picker.appendChild(b);
   });
   spill(0);
+
+  // Den som scroller forbi og kommer tilbake skal se den gå, ikke se slutten.
+  if (!rolig && window.IntersectionObserver) {
+    var var_ute = false;
+    new IntersectionObserver(function (poster) {
+      poster.forEach(function (p) {
+        if (!p.isIntersecting) { var_ute = true; }
+        else if (var_ute) { var_ute = false; spill(naa); }
+      });
+    }, { threshold: 0.35 }).observe(document.querySelector(".stage"));
+  }
 
   // ---- sandkassen ----------------------------------------------------------
   var SPM = [
@@ -611,10 +651,25 @@
 
   var qs = document.getElementById("qs"), ups = document.getElementById("ups"), out = document.getElementById("out");
 
+  var skriving = null;
+
   function svar(tekst) {
+    if (skriving) { clearInterval(skriving); skriving = null; }
     out.innerHTML = '<span class="tag">Eksempel</span><div class="reply"></div>';
-    out.querySelector(".reply").textContent = tekst;
+    var felt = out.querySelector(".reply");
     Array.prototype.forEach.call(document.querySelectorAll(".q,.up"), function (b) { b.setAttribute("aria-pressed", "false"); });
+
+    if (rolig) { felt.textContent = tekst; return; }
+
+    // Svaret skrives fram. Det er ikke pynt — det er forskjellen på
+    // å lese et eksempel og å se noe skje.
+    felt.textContent = "";
+    var i = 0;
+    skriving = setInterval(function () {
+      i = Math.min(tekst.length, i + 3);
+      felt.textContent = tekst.slice(0, i);
+      if (i >= tekst.length) { clearInterval(skriving); skriving = null; }
+    }, 16);
   }
 
   SPM.forEach(function (p) {
