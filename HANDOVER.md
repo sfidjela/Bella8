@@ -222,6 +222,12 @@ Eieren har ikke landet disse. Ikke lat som de er avgjort.
 - **Kutte middag fra produktet.** Feil. Undersøkelsene setter matlaging som
   tredje største stressfaktor, og det er den eneste saken som kommer hver dag.
   Uten en daglig grunn dør abonnementet i tredje måned.
+- **Sende SMS fra brukerens egen telefon og lese svaret der.** Umulig på
+  iPhone (ingen API for å lese innkommende SMS), sperret av Google Play på
+  Android, og det river ned løftet om at den bare leser det hun sender den.
+  Verdien forsvinner også: kommer svaret i hennes egen innboks, må hun følge
+  med igjen. Ferdig utfylt melding som hun sender selv er greit som
+  reserveløsning. Se `mockup/SMS-OG-KALENDER.md`.
 - **Behandle det å slippe inn skjermbilder som en nødløsning.** Det er hele
   designet, ikke en reserveløsning. Det er også grunnen til at personvernløftet er sant: den
   leser bare det hun sender den.

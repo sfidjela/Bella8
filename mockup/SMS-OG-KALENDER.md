@@ -42,6 +42,66 @@ første linje i meldingen sier uansett hvem den er fra.
 **Kost:** grovt 0,20–0,50 kr per melding pluss månedsleie på nummeret.
 Ved 30 meldinger i måneden per familie er det 6–15 kr — godt innenfor.
 
+### Kan vi sende fra hennes egen telefon i stedet?
+
+Spørsmålet kommer alltid, og det er et godt spørsmål. Det ville spart
+gatewayen, månedsleia, org.nr.-kravet og hele art. 14-teksten, fordi en melding
+fra henne til mannen hennes er en privat melding, ikke en tjeneste som sender.
+
+**Og den har ett ekte fortrinn:** Marius svarer kona si. Han svarer ikke like
+lett på et ukjent langt nummer. Svarprosenten er sannsynligvis høyere.
+
+Men det går ikke. Fire grunner, i rekkefølge etter hvor tungt de veier.
+
+**1. iPhone kan det ikke i det hele tatt.**
+iOS har ingen måte å lese innkommende SMS på. Ingen. Og ingen måte å sende uten
+at hun trykker send selv i Meldinger. Du kan fylle ut en melding på forhånd,
+men svaret hans er utilgjengelig for appen for alltid. Halve sløyfa finnes ikke
+på iPhone, og iPhone står sterkt blant norske mødre. Det alene avgjør saken.
+
+**2. Android tillater det, men Google Play gjør det ikke.**
+Teknisk kan en Android-app både sende og lese SMS. Men Google begrenser de
+tillatelsene til en kort liste apptyper — standard meldingsapp, standard
+telefonapp, sikkerhetskopiering, noen få til. Familielogistikk står ikke på
+lista, og søknaden behandles manuelt. Du kan bygge det og bli avvist i
+gjennomgangen. Sideloading er ikke et produkt.
+
+**3. Det river ned løftet hele produktet hviler på.**
+Vi skriver «den leser bare det du sender den». Det er sant i dag, og det er
+grunnen til at skjermbilde-dropp er ærlig og ikke en nødløsning. Leser vi
+SMS-innboksen hennes, leser vi alt: legen, banken, eksmannen, venninnen som
+skriver noe hun aldri ville delt. Vi går fra å lese det hun rekker oss, til
+å lese alt hun får. Det er ikke en teknisk forskjell, det er en annen avtale
+med henne — og den avtalen er det eneste vi har.
+
+**4. Verdien forsvinner uansett.**
+Poenget er ikke at meldingen ble sendt. Poenget er at hun slipper å følge med
+på om han svarte. Kommer svaret inn i hennes egen SMS-innboks, piper telefonen
+hennes, og hun er tilbake til å holde styr på det selv. Vi ville løst
+utsendingen og mistet hele grunnen til å betale.
+
+### Den varianten som er verdt å beholde
+
+Ikke automatisk sending, men **ferdig utfylt melding i hennes egen meldingsapp**.
+Jajumi skriver teksten, åpner Meldinger med mottaker og innhold på plass, og hun
+trykker send. Det virker på både iPhone og Android, krever ingen tillatelser,
+koster ingenting, og er juridisk sett hennes egen private melding.
+
+Svaret må hun da sende inn selv — som skjermbilde, akkurat som alt annet.
+Sløyfa lukkes ikke av seg selv, men den lukkes.
+
+Det er verdt å bygge som **reserveløsning**, av tre grunner: det virker den dagen
+gatewayen er nede, det virker før org.nr. og gateway-avtalen er på plass, og det
+er den eneste veien til noen som har svart STOPP. Men det er ikke hovedveien.
+Hovedveien er et langt nummer.
+
+### Én ting som faktisk er ulovlig
+
+Å sette opp egne SIM-kort som en sendesentral — altså at du kjøper abonnementer
+og sender alle kunders meldinger derfra. Forbrukerabonnementene hos Telenor og
+Telia har vilkår mot masseutsending og kommersiell videreformidling. Det er
+noe annet enn at hun sender sin egen melding fra sitt eget abonnement.
+
 ### Det vanskeligste er ikke teknikken
 
 Det er tilstanden. Når «2» kommer inn fra +47 xxx, må systemet vite:
