@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jajumi — annonsekutt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --ground:#F4EEE5; --card:#FFFDF9; --line:#E2D7C6; --hair:#EDE4D6;
+    --ink:#2C2722; --muted:#6F665C; --faint:#8A8075;
+    --forest:#44574B; --on-forest:#F7F4EE;
+    --clay:#A0603F; --clay-ink:#7E4A30; --clay-bg:#F6E6DA;
+    --sms-bg:#EDEDF0; --sms-card:#FFF; --sms-ink:#1C1C1E; --sms-out:#4C5A67; --sms-faint:#8E8E96;
+    --ease:cubic-bezier(.2,.7,.2,1);
+    color-scheme: light;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#15120F; color:var(--ink);
+    font-family:Karla,'Helvetica Neue',Helvetica,sans-serif;
+    display:flex; flex-direction:column; align-items:center; gap:16px; padding:16px;
+    -webkit-font-smoothing:antialiased; }
+
+  /* ---------- ramma: 9:16, alt inni skalerer med den ---------- */
+  .frame { position:relative; aspect-ratio:9/16; height:min(88vh, 1280px); max-width:96vw;
+    background:var(--ground); overflow:hidden; container-type:inline-size;
+    box-shadow:0 20px 60px rgba(0,0,0,.45); }
+  body.capture { background:#000; padding:0; gap:0; justify-content:center; }
+  body.capture .frame { height:100vh; max-width:none; width:calc(100vh * 9 / 16); box-shadow:none; }
+  body.capture .controls, body.capture .note { display:none; }
+
+  .stage { position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    padding-bottom:16cqw; }
+
+  /* Begge telefonene ligger i samme rute. Vi klipper mellom dem i full
+     størrelse i stedet for å vise dem ved siden av hverandre — i 9:16
+     koster side om side halve høyden. */
+  .rig { display:grid; transform:scale(1.24); }
+  .rig > .phone { grid-area:1/1;
+    transition:opacity .45s var(--ease), transform .6s var(--ease); }
+
+  .phone { width:62cqw; aspect-ratio:390/720; background:#15120F; border-radius:6cqw; padding:1.1cqw;
+    box-shadow:0 3cqw 8cqw rgba(44,39,34,.26); }
+  .slot-b { opacity:0; transform:translateX(9cqw); }
+  .rig.b .slot-a { opacity:0; transform:translateX(-9cqw); }
+  .rig.b .slot-b { opacity:1; transform:none; }
+
+  /* hvem sin telefon ser vi nå */
+  .who { position:absolute; z-index:3; left:0; right:0; top:3.4cqw; text-align:center;
+    font-size:2.3cqw; letter-spacing:.2em; text-transform:uppercase; font-weight:700;
+    color:var(--faint); opacity:0; transition:opacity .45s var(--ease); }
+  .who.on { opacity:1; }
+
+  .screen { width:100%; height:100%; background:var(--ground); border-radius:5cqw; overflow:hidden;
+    display:flex; flex-direction:column; }
+  .bar { display:flex; align-items:center; gap:1.8cqw; padding:3cqw 2.6cqw 2cqw;
+    border-bottom:1px solid var(--line); flex-shrink:0; }
+  .mark { width:5.2cqw; height:5.2cqw; border-radius:50%; background:var(--forest);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .mark svg { width:2.6cqw; height:2.6cqw; }
+  .bar-n { font-family:Newsreader,Georgia,serif; font-size:3cqw; }
+  .thread { flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column;
+    justify-content:flex-end; padding:0 2.2cqw 2cqw; }
+
+  /* hvert element vokser inn i stedet for å hoppe */
+  .r { display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s var(--ease); }
+  .r > .in { overflow:hidden; opacity:0; transform:translateY(1.2cqw);
+    transition:opacity .5s var(--ease), transform .5s var(--ease); padding-top:1.5cqw; }
+  .r.on { grid-template-rows:1fr; }
+  .r.on > .in { opacity:1; transform:none; }
+
+  .day { text-align:center; font-size:1.8cqw; letter-spacing:.1em; text-transform:uppercase;
+    color:#9A9086; font-weight:700; padding:.5cqw 0; }
+  .them, .me { display:flex; } .me { justify-content:flex-end; }
+  .b-them { max-width:88%; background:var(--card); border:1px solid var(--line);
+    border-radius:3cqw 3cqw 3cqw 1cqw; padding:1.7cqw 2.2cqw;
+    font-family:Newsreader,Georgia,serif; font-size:2.7cqw; line-height:1.42; }
+  .b-me { max-width:84%; background:var(--forest); color:var(--on-forest);
+    border-radius:3cqw 3cqw 1cqw 3cqw; padding:1.5cqw 2.2cqw; font-size:2.4cqw; line-height:1.38; }
+  .think { padding-left:1cqw; font-family:Newsreader,Georgia,serif; font-style:italic;
+    font-size:2.3cqw; color:#9A9086; }
+  .think i { font-style:normal; animation:bl 1.4s var(--ease) infinite; }
+  .think i:nth-child(2){animation-delay:.2s} .think i:nth-child(3){animation-delay:.4s}
+  @keyframes bl { 0%,60%,100%{opacity:.25} 30%{opacity:1} }
+
+  .shot { width:70%; border-radius:2.4cqw; overflow:hidden; border:1px solid #DCD0BF; background:#fff; }
+  .shot-h { background:#EFEAE1; padding:1.3cqw 1.9cqw; border-bottom:1px solid #E2D9CB; }
+  .shot-k { font-size:1.6cqw; letter-spacing:.08em; text-transform:uppercase; color:#8A8075; font-weight:700; }
+  .shot-b { position:relative; padding:1.9cqw; font-family:Newsreader,Georgia,serif;
+    font-size:1.95cqw; line-height:1.5; color:#3A342D; display:flex; flex-direction:column; gap:1.1cqw; }
+  .shot-f { position:absolute; left:0; right:0; bottom:0; height:5cqw;
+    background:linear-gradient(to bottom,rgba(255,255,255,0),#fff); }
+
+  .card { background:var(--card); border:1px solid var(--line); border-radius:2.6cqw; overflow:hidden; }
+  .card-h { padding:2.2cqw 2.4cqw 1.8cqw; border-bottom:1px solid var(--hair); }
+  .card-t { font-family:Newsreader,Georgia,serif; font-size:3.1cqw; line-height:1.2; }
+  .card-s { font-size:2cqw; color:var(--muted); margin-top:.5cqw; }
+  .card-b { padding:.8cqw 2.4cqw 1.8cqw; }
+  .fact { padding:1.1cqw 0; border-bottom:1px solid var(--hair); opacity:0;
+    transform:translateY(.8cqw); transition:opacity .4s var(--ease), transform .4s var(--ease); }
+  .fact.on { opacity:1; transform:none; }
+  .fact:last-child { border-bottom:none; }
+  .f-l { font-size:1.55cqw; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:700; }
+  .f-v { font-family:Newsreader,Georgia,serif; font-size:2.4cqw; line-height:1.3; margin-top:.3cqw; }
+  .alert { background:var(--clay-bg); border-radius:1.6cqw; padding:1.4cqw 1.8cqw; margin-top:1cqw; }
+  .alert .f-l { color:var(--clay); } .alert .f-v { color:var(--clay-ink); }
+  .btn { margin:0 2.4cqw 2.4cqw; height:6.4cqw; border-radius:3.2cqw; background:var(--forest);
+    color:var(--on-forest); display:flex; align-items:center; justify-content:center;
+    font-size:2.3cqw; font-weight:600; position:relative; overflow:hidden; }
+  .btn.press { transform:scale(.97); transition:transform .18s var(--ease); }
+
+  .st { display:flex; align-items:center; gap:1.7cqw; background:var(--card);
+    border:1px solid var(--line); border-radius:2.2cqw; padding:1.7cqw 2cqw; }
+  .dot { width:3.2cqw; height:3.2cqw; border-radius:50%; background:#C8B79E; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; transition:background .4s ease; }
+  .dot svg { width:1.7cqw; height:1.7cqw; opacity:0; transition:opacity .4s ease; }
+  .st.done .dot { background:var(--forest); } .st.done .dot svg { opacity:1; }
+  .s-l { font-size:1.55cqw; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:700; }
+  .s-v { font-family:Newsreader,Georgia,serif; font-size:2.3cqw; line-height:1.3; margin-top:.3cqw; }
+
+  /* hans telefon — bevisst nøytral */
+  .sms-screen { background:var(--sms-bg); height:100%; display:flex; flex-direction:column;
+    font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .sms-bar { padding:3cqw 2.6cqw 2cqw; border-bottom:1px solid #DDD;
+    font-size:2.3cqw; font-weight:600; color:var(--sms-ink); text-align:center; }
+  .sms-body { flex:1; min-height:0; display:flex; flex-direction:column; justify-content:flex-end;
+    padding:2.2cqw; gap:1.4cqw; }
+  .sms-day { text-align:center; font-size:1.8cqw; color:var(--sms-faint); font-weight:600; }
+  .sms-in { background:var(--sms-card); color:var(--sms-ink); border-radius:2.8cqw 2.8cqw 2.8cqw .8cqw;
+    padding:1.8cqw 2.2cqw; font-size:2.15cqw; line-height:1.42; display:flex; flex-direction:column; gap:.2cqw; }
+  .sms-g { height:1.2cqw; }
+  #b-out > .in { display:flex; justify-content:flex-end; }
+  .sms-out { align-self:flex-end; background:var(--sms-out); color:#fff;
+    border-radius:2.8cqw 2.8cqw .8cqw 2.8cqw; padding:1.3cqw 3cqw; font-size:2.6cqw; font-weight:700; }
+
+  /* ---------- tekstplakaten ---------- */
+  .caption { position:absolute; left:7%; right:7%; bottom:5.6%; text-align:center; height:9cqw; }
+  .caption p { margin:0; position:absolute; left:0; right:0; bottom:0;
+    font-family:Newsreader,Georgia,serif; font-size:4.3cqw; line-height:1.28; color:var(--ink);
+    text-wrap:balance; opacity:0; transform:translateY(1cqw);
+    transition:opacity .55s var(--ease), transform .55s var(--ease); }
+  .caption p.on { opacity:1; transform:none; }
+
+  /* ---------- sluttbildet ---------- */
+  .end { position:absolute; inset:0; background:var(--ground); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:3cqw; opacity:0; pointer-events:none;
+    transition:opacity .7s var(--ease); }
+  .end.on { opacity:1; }
+  .end .logo { width:11cqw; height:11cqw; border-radius:50%; background:var(--forest);
+    display:flex; align-items:center; justify-content:center; }
+  .end .logo svg { width:5.4cqw; height:5.4cqw; }
+  .end h2 { margin:0; font-family:Newsreader,Georgia,serif; font-weight:500; font-size:6.6cqw;
+    line-height:1.14; text-align:center; max-width:80%; text-wrap:balance; }
+  .end .word { font-size:3cqw; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--faint); font-weight:700; }
+  .end .fine { font-family:Newsreader,Georgia,serif; font-style:italic; font-size:2.9cqw;
+    color:var(--muted); margin-top:1cqw; }
+
+  .progress { position:absolute; left:0; bottom:0; height:.5cqw; background:var(--forest);
+    width:0; opacity:.5; }
+
+  /* ---------- kontroller ---------- */
+  .controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center; }
+  .controls button { font-family:Karla,sans-serif; font-size:13px; font-weight:600; color:#EFE7DA;
+    background:#2B2724; border:1px solid #453D34; border-radius:16px; min-height:32px;
+    padding:0 13px; cursor:pointer; }
+  .controls button:hover { background:#3A342D; }
+  .controls button[aria-pressed="true"] { background:#44574B; border-color:#44574B; color:#F7F4EE; }
+  .note { color:#8A8075; font-size:12px; font-family:Karla,sans-serif; text-align:center; max-width:560px; }
+</style>
+</head>
+<body>
+
+<div class="frame" id="frame">
+  <div class="who" id="who">Marius sin telefon</div>
+
+  <div class="stage">
+    <div class="rig" id="rig">
+
+      <!-- hennes telefon -->
+      <div class="phone slot-a">
+        <div class="screen">
+          <div class="bar">
+            <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#EDE6DA" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c4.2 2.6 5.8 6.4 4.7 10.1C15.6 18.3 13 20 12 20s-3.6-1.7-4.7-5.4C6.2 10.9 7.8 7.1 12 4.5Z"/><path d="M12 9.5v8.5"/></svg></div>
+            <div class="bar-n">Jajumi</div>
+          </div>
+          <div class="thread">
+
+            <!-- Tråden starter halvfull. Første ramme i en annonse skal ikke vise en tom skjerm,
+                 og vekslingen fra i går viser at den husker uten at noen sier det. -->
+            <div class="r" id="a-old1"><div class="in"><div class="day">I går</div></div></div>
+            <div class="r" id="a-old2"><div class="in"><div class="me"><div class="b-me">hvor er jakobs gymtøy</div></div></div></div>
+            <div class="r" id="a-old3"><div class="in"><div class="them"><div class="b-them">I tørketrommelen. Du la det inn etter middag.</div></div></div></div>
+
+            <div class="r" id="a-day"><div class="in"><div class="day">I dag · 11.48</div></div></div>
+
+            <div class="r" id="a-shot"><div class="in"><div class="me"><div class="shot">
+              <div class="shot-h"><div class="shot-k">Bekkeblomen barnehage</div></div>
+              <div class="shot-b">
+                <div>Hei alle sammen!</div>
+                <div>Torsdag 24. september tar vi høsttur til Sognsvann. Vi går fra barnehagen kl. 08.30, så vær her senest 08.15.</div>
+                <div>Barna må ha med matpakke, drikkeflaske, regntøy og et ekstra skift.</div>
+                <div class="shot-f"></div>
+              </div>
+            </div></div></div></div>
+
+            <div class="r" id="a-ask"><div class="in"><div class="me"><div class="b-me">kan du ta denne?</div></div></div></div>
+
+            <div class="r" id="a-think"><div class="in"><div class="think">Ser på det<i>.</i><i>.</i><i>.</i></div></div></div>
+
+            <div class="r" id="a-card"><div class="in"><div class="card">
+              <div class="card-h">
+                <div class="card-t">Høsttur til Sognsvann</div>
+                <div class="card-s">Emma · Bekkeblomen barnehage</div>
+              </div>
+              <div class="card-b">
+                <div class="fact" id="f1"><div class="f-l">Når</div><div class="f-v">Torsdag 24. september, 08.30–14.00</div></div>
+                <div class="fact" id="f2"><div class="f-l">Oppmøte</div><div class="f-v">Barnehagen, senest 08.15</div></div>
+                <div class="fact" id="f3"><div class="f-l">Ta med</div><div class="f-v">Matpakke, drikke, regntøy, skift</div></div>
+                <div class="alert fact" id="f4"><div class="f-l">Frist</div><div class="f-v">Påmelding i Vigilo innen mandag</div></div>
+              </div>
+              <div class="btn" id="a-btn">Legg i kalenderen</div>
+            </div></div></div>
+
+            <div class="r" id="a-tell"><div class="in"><div class="me"><div class="b-me">og si fra til Marius at han må levere</div></div></div></div>
+
+            <div class="r" id="a-status"><div class="in"><div class="st" id="a-st">
+              <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="#F7F4EE" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+              <div><div class="s-l">Marius</div><div class="s-v" id="a-st-v">Sendt 11.52 — venter på svar</div></div>
+            </div></div></div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- hans telefon -->
+      <div class="phone slot-b">
+        <div class="screen"><div class="sms-screen">
+          <div class="sms-bar">Jajumi</div>
+          <div class="sms-body">
+            <div class="sms-day">I dag 11.52</div>
+            <div class="r" id="b-in"><div class="in"><div class="sms-in">
+              <div>Fra Kristin, via Jajumi.</div>
+              <div class="sms-g"></div>
+              <div>Emma: høsttur til Sognsvann.</div>
+              <div>Torsdag 24.9, oppmøte i barnehagen 08.15.</div>
+              <div class="sms-g"></div>
+              <div>Kristin spør om du kan levere.</div>
+              <div class="sms-g"></div>
+              <div>Svar med ett tall:</div>
+              <div>1 — Forstått</div>
+              <div>2 — Forstått, legg den i kalenderen min</div>
+              <div>3 — Passer ikke, foreslå noe annet</div>
+              <div>4 — Noe annet</div>
+            </div></div></div>
+            <div class="r" id="b-out"><div class="in"><div class="sms-out">2</div></div></div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="caption">
+    <p id="c1">Slipp inn beskjeden du ikke rakk å lese.</p>
+    <p id="c2">Du får den tilbake som en avtale.</p>
+    <p id="c3">Han får en SMS. Svarer med ett tall.</p>
+    <p id="c4">Du slipper å minne ham på det.</p>
+  </div>
+
+  <div class="end" id="end">
+    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#EDE6DA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c4.2 2.6 5.8 6.4 4.7 10.1C15.6 18.3 13 20 12 20s-3.6-1.7-4.7-5.4C6.2 10.9 7.8 7.1 12 4.5Z"/><path d="M12 9.5v8.5"/></svg></div>
+    <h2>Noen andre husker det nå</h2>
+    <div class="word">Jajumi</div>
+    <div class="fine">299 kr i måneden. Ingen binding.</div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+</div>
+
+<div class="controls">
+  <button type="button" id="btn-play">Pause</button>
+  <button type="button" id="btn-restart">Start på nytt</button>
+  <button type="button" id="btn-capture">Opptaksmodus</button>
+</div>
+<div class="note">11 sekunder, 9:16, går i loop. Opptaksmodus fyller skjermen og skjuler knappene — ta opp skjermen og beskjær til telefonen. Esc avslutter.</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var CAPS = ["c1","c2","c3","c4"];
+  var VIS = ["a-old1","a-old2","a-old3","a-day","a-shot","a-ask","a-think","a-card","a-tell","a-status","b-in","b-out",
+             "f1","f2","f3","f4"];
+
+  function inn(id) { $(id).classList.add("on"); }
+  function ut(id) { $(id).classList.remove("on"); }
+  function tekst(id) { CAPS.forEach(function (c) { if (c !== id) ut(c); }); if (id) inn(id); }
+  function hans(p) { $("rig").classList.toggle("b", p); $("who").classList.toggle("on", p); }
+
+  // Hele sløyfa på elleve sekunder. Bekreftelsen kommer etter sju,
+  // ikke etter atten som i den lange filmen.
+  var STEG = [
+    [0,     function () { ["a-old1","a-old2","a-old3","a-day","a-shot"].forEach(inn); tekst("c1"); }],
+    [500,   function () { inn("a-ask"); }],
+    [1300,  function () { inn("a-think"); }],
+    [2200,  function () { ut("a-think"); inn("a-card"); tekst("c2"); }],
+    [2600,  function () { inn("f1"); }],
+    [2900,  function () { inn("f2"); }],
+    [3200,  function () { inn("f3"); }],
+    [3500,  function () { inn("f4"); }],
+    [4100,  function () { $("a-btn").classList.add("press"); }],
+    [4350,  function () { $("a-btn").classList.remove("press"); }],
+    [4700,  function () { inn("a-tell"); }],
+    [5300,  function () { hans(true); inn("b-in"); tekst("c3"); }],
+    [6900,  function () { inn("b-out"); }],
+    [7700,  function () { hans(false); inn("a-status"); }],
+    [8300,  function () { $("a-st").classList.add("done");
+                          $("a-st-v").textContent = "Svarte 2 kl. 12.04 — lagt i hans kalender"; }],
+    [8800,  function () { tekst("c4"); }],
+    [10200, function () { $("end").classList.add("on"); tekst(null); }]
+  ];
+  var LENGDE = 12600;
+
+  var t0 = 0, spiller = true, raf = null, gjort = 0;
+
+  function nullstill() {
+    VIS.forEach(ut);
+    CAPS.forEach(ut);
+    $("end").classList.remove("on");
+    $("a-st").classList.remove("done");
+    $("a-st-v").textContent = "Sendt 11.52 — venter på svar";
+    $("a-btn").classList.remove("press");
+    hans(false);
+    gjort = 0;
+  }
+
+  function ramme(na) {
+    if (!t0) t0 = na;
+    var t = na - t0;
+    if (t >= LENGDE) { nullstill(); t0 = na; t = 0; }
+    while (gjort < STEG.length && STEG[gjort][0] <= t) { STEG[gjort][1](); gjort++; }
+    $("progress").style.width = (t / LENGDE * 100) + "%";
+    raf = requestAnimationFrame(ramme);
+  }
+
+  function start() { nullstill(); t0 = 0; if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(ramme); }
+
+  $("btn-play").onclick = function () {
+    spiller = !spiller;
+    this.textContent = spiller ? "Pause" : "Spill";
+    if (spiller) { t0 = 0; raf = requestAnimationFrame(ramme); }
+    else if (raf) { cancelAnimationFrame(raf); raf = null; }
+  };
+  $("btn-restart").onclick = start;
+  $("btn-capture").onclick = function () { document.body.classList.add("capture"); start(); };
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") document.body.classList.remove("capture");
+  });
+
+  start();
+})();
+</script>
+
+</body>
+</html>

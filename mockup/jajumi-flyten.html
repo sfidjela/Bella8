@@ -279,7 +279,7 @@
               <div class="status">
                 <div class="st done"><div class="st-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F7F4EE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></div>
                   <div><div class="st-label">Din kalender</div><div class="st-value">Høsttur — torsdag 24.9</div></div></div>
-                <div class="st" id="st-thomas"><div class="st-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F7F4EE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></div>
+                <div class="st" id="st-marius"><div class="st-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F7F4EE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></div>
                   <div><div class="st-label">Marius</div><div class="st-value" id="st-val">Sendt 11.58 — venter på svar</div></div></div>
               </div>
             </div></div>
@@ -433,7 +433,7 @@
     [16400, function () { show('s-del'); }],
     [17200, function () { duo(false); }],
     [17800, function () { caption('c5'); show('r-status'); }],
-    [18600, function () { $('st-thomas').classList.add('done'); $('st-val').textContent = 'Svarte 2 kl. 12.04 — lagt i hans kalender'; }],
+    [18600, function () { $('st-marius').classList.add('done'); $('st-val').textContent = 'Svarte 2 kl. 12.04 — lagt i hans kalender'; }],
     [19400, function () { show('r-nofollow'); }],
     [20800, function () { caption('c6'); show('r-mday'); }],
     [21500, function () { show('r-greet'); }],
@@ -461,7 +461,7 @@
     TRANSIENT.forEach(hide);
     CAPTIONS.forEach(hide);
     $('acts').classList.remove('press', 'done');
-    $('st-thomas').classList.remove('done');
+    $('st-marius').classList.remove('done');
     $('st-val').textContent = 'Sendt 11.58 — venter på svar';
     duo(false);
   }
