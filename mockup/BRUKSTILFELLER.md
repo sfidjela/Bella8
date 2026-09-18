@@ -259,8 +259,8 @@ Her, og bare her, går det SMS. Ingenting internt på SMS.
 > **Jajumi:** Sender.
 
 > **SMS til Marius:**
-> Fra Ida, via Jajumi.
-> Kan du hente Emma i barnehagen onsdag 23. september? Ida har møte til 17.
+> Fra Kristin, via Jajumi.
+> Kan du hente Emma i barnehagen onsdag 23. september? Kristin har møte til 17.
 > Svar med ett tall:
 > 1 – Forstått
 > 2 – Forstått, legg i min kalender
@@ -292,7 +292,7 @@ Her, og bare her, går det SMS. Ingenting internt på SMS.
 > **Hun:** mormor henter emma på fredag, send henne det hun trenger
 
 > **SMS til mormor:**
-> Fra Ida, via Jajumi.
+> Fra Kristin, via Jajumi.
 > Du henter Emma i barnehagen fredag 25. september. De stenger 16.30.
 > Adressen er Furuveien 12. Si i porttelefonen at du henter Emma.
 > Hun tåler ikke nøtter.
@@ -306,10 +306,10 @@ Her, og bare her, går det SMS. Ingenting internt på SMS.
 > **Hun:** sender du rutinen til julie som skal passe i kveld
 
 > **SMS til Julie:**
-> Fra Ida, via Jajumi.
+> Fra Kristin, via Jajumi.
 > I kveld: Emma legger seg 19.30, Jakob 20.30. Begge pusser tenner først.
 > Emma skal ha nattlampen på.
-> Vi er hjemme rundt 23. Ring Ida på 9XX XX XXX om noe er rart.
+> Vi er hjemme rundt 23. Ring Kristin på 9XX XX XXX om noe er rart.
 > Svar STOPP om du ikke vil ha flere meldinger.
 
 **Tester:** at hun slipper å skrive den samme meldingen for tolvte gang.
@@ -319,7 +319,7 @@ Her, og bare her, går det SMS. Ingenting internt på SMS.
 > **Hun:** jakob kan ikke på kamp lørdag, si fra til trener
 
 > **SMS til Lars Bjørnstad:**
-> Fra Ida, via Jajumi.
+> Fra Kristin, via Jajumi.
 > Jakob kan dessverre ikke spille kampen lørdag 26. september.
 > Svar STOPP om du ikke vil ha flere meldinger.
 
