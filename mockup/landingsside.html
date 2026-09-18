@@ -62,7 +62,7 @@
 
   /* ---------- telefonen ---------- */
   .stage { display:flex; justify-content:center; padding-block:4px 20px; }
-  .phone { width:min(330px,86vw); aspect-ratio:390/760; border-radius:40px; background:#15120F;
+  .phone { width:min(322px,84vw); aspect-ratio:390/620; border-radius:40px; background:#15120F;
     padding:8px; box-shadow:0 22px 50px rgba(44,39,34,.22), 0 0 0 1px rgba(44,39,34,.07); position:relative; }
   .screen { width:100%; height:100%; border-radius:33px; overflow:hidden; background:var(--ground);
     display:flex; flex-direction:column; }
@@ -190,12 +190,43 @@
     height:clamp(220px,34vw,380px); background:linear-gradient(160deg,#E6DBC9,#D9C9B2);
     color:#6F665C; font-size:13px; line-height:1.5; padding:24px; }
   :root[data-theme="dark"] .bleed .venter, :root:not([data-theme="light"]) .bleed .venter { background:linear-gradient(160deg,#332E28,#262320); }
+
+  /* ---------- taktmåleren under telefonen ---------- */
+  .beats { display:flex; gap:8px; width:100%; max-width:322px; margin:14px auto 0; }
+  .beat { flex:1; }
+  .beat .rail { height:2px; background:var(--line); border-radius:1px; overflow:hidden; }
+  .beat .rail i { display:block; height:100%; width:0; background:var(--forest);
+    transition:width .55s var(--ease); }
+  .beat.done .rail i, .beat.on .rail i { width:100%; }
+  .beat .lbl { font-size:10.5px; letter-spacing:.04em; color:var(--faint); margin-top:7px;
+    line-height:1.3; transition:color .35s ease; }
+  .beat.on .lbl, .beat.done .lbl { color:var(--ink-2); }
+  .beat.on .lbl { font-weight:600; }
+
+  /* ---------- gjenkjenningen ---------- */
+  .kjenner p { font-family:Newsreader,Georgia,serif; font-size:clamp(21px,4.4vw,29px);
+    line-height:1.32; color:var(--ink); max-width:19em; }
+  .kjenner p + p { margin-top:14px; }
+  .kjenner .siste { color:var(--clay-ink); }
+
+  /* ---------- sløyfa, vist utenfor telefonen ---------- */
+  .loop { display:grid; gap:12px; }
+  @media (min-width:620px) { .loop { grid-template-columns:1fr 1fr; align-items:start; } }
+  .loop .sms { margin-top:0; }
+  .loop-note { font-family:Newsreader,Georgia,serif; font-size:15.5px; line-height:1.5;
+    color:var(--muted); }
+  .badge { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--forest); }
   footer { padding-block:44px 60px; border-top:1px solid var(--hair); font-size:13.5px; color:var(--faint); }
 </style>
 
-<section class="wrap" style="padding-top:34px;padding-bottom:40px">
-  <div class="stack" style="gap:16px">
+<section class="wrap" style="padding-top:30px;padding-bottom:36px">
+  <div class="stack" style="gap:14px">
     <div class="eyebrow" style="text-align:center">Jajumi</div>
+
+    <div class="stack-s" style="text-align:center;align-items:center;gap:8px">
+      <h1>Noen andre husker det nå</h1>
+    </div>
 
     <div class="stage">
       <div class="phone">
@@ -211,15 +242,20 @@
       </div>
     </div>
 
-    <div class="picker" id="picker"></div>
+    <div class="beats" id="beats">
+      <div class="beat"><div class="rail"><i></i></div><div class="lbl">Du sender inn</div></div>
+      <div class="beat"><div class="rail"><i></i></div><div class="lbl">Du får avtalen</div></div>
+      <div class="beat"><div class="rail"><i></i></div><div class="lbl">De bekrefter</div></div>
+    </div>
 
-    <div class="stack-s" style="text-align:center;align-items:center;padding-top:22px">
-      <h1>Noen andre husker det nå</h1>
-      <p class="lede" style="max-width:26em">
-        Slipp inn beskjeden du ikke rakk å lese. Få den tilbake som en avtale —
+    <div class="picker" id="picker" style="padding-top:18px"></div>
+
+    <div class="stack-s" style="text-align:center;align-items:center;padding-top:20px">
+      <p class="lede" style="max-width:27em">
+        Send inn beskjeden du ikke rakk å lese. Få den tilbake som en avtale —
         og få de andre til å bekrefte at de har fått den med seg.
       </p>
-      <div style="padding-top:8px"><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
+      <div style="padding-top:6px"><a class="cta" href="#pris">Start i dag — 299 kr/mnd</a></div>
       <div class="fine">Ingen binding. Ingen som ringer deg. Og han trenger ikke laste ned noe.</div>
     </div>
   </div>
@@ -230,24 +266,75 @@
        alt="En tom gang tidlig om morgenen. En barnestøvel ligger veltet på gulvet, en sekk står åpen med matboks og en lapp stikkende ut, og en lue er sluppet ved trappa.">
 </div>
 
+<section class="wrap stack" style="padding-top:56px">
+  <div class="kjenner">
+    <p>Du er den eneste som vet at bursdagen er på lørdag.</p>
+    <p>Den eneste som husker at fristen gikk ut i går.</p>
+    <p class="siste">Og den eneste som må minne ham på det.</p>
+  </div>
+  <p class="lede" style="padding-top:6px">Det er ikke tid du mangler. Det er at du er den eneste som holder alt i hodet samtidig.</p>
+  <p class="lede">Den jobben har ingen gitt deg. Den bare ble din.</p>
+</section>
+
 <section class="band">
   <div class="wrap stack">
     <div class="stack-s">
-      <div class="eyebrow">Prøv den</div>
-      <h2>Spør om noe, eller slipp inn et rot</h2>
-      <p style="color:var(--muted)">Svarene under er ekte eksempler fra produktet, ikke levende. Du får det ordentlige når du starter.</p>
+      <div class="eyebrow">Den vanskelige delen</div>
+      <h2>Han trenger ikke laste ned noe</h2>
+      <p style="color:var(--muted)">De andre — far, mormor, barnevakt, trener — får en helt vanlig SMS.
+        Ingen app, ingen konto, ingen innlogging. De svarer med ett tall.</p>
     </div>
 
-    <div class="sand">
-      <div class="sand-sub">Spør om noe</div>
-      <div class="qs" id="qs"></div>
-
-      <div class="sand-sub" style="margin-top:20px">Eller slipp inn et skjermbilde</div>
-      <div class="ups" id="ups"></div>
-
-      <div class="out" id="out">
-        <p class="placeholder">Trykk på noe over, så svarer den.</p>
+    <div class="loop">
+      <div class="sms">
+        <div class="sms-l">Marius sin telefon</div>
+        <div class="sms-in">
+          <div>Fra Kristin, via Jajumi.</div>
+          <div class="sms-g"></div>
+          <div>Emma: høsttur til Sognsvann.</div>
+          <div>Torsdag 24.9, oppmøte i barnehagen 08.15.</div>
+          <div class="sms-g"></div>
+          <div>Kristin spør om du kan levere.</div>
+          <div class="sms-g"></div>
+          <div>Svar med ett tall:</div>
+          <div>1 — Forstått</div>
+          <div>2 — Forstått, legg den i kalenderen min</div>
+          <div>3 — Passer ikke, foreslå noe annet</div>
+          <div>4 — Noe annet</div>
+        </div>
+        <div class="sms-out">2</div>
       </div>
+
+      <div class="stack-s">
+        <div class="badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+          Det du ser
+        </div>
+        <div class="st"><div class="dot ok"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F7F4EE" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></div>
+          <div><div class="s-l">Marius</div><div class="s-v">Svarte 2 kl. 12.04 — lagt i hans kalender</div></div></div>
+        <p class="loop-note" style="padding-top:8px">Du slipper å spørre om han har sett det.
+          Du slipper å minne ham på det onsdag kveld. Det er hele forskjellen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap stack">
+  <div class="stack-s">
+    <div class="eyebrow">Prøv den</div>
+    <h2>Spør om noe, eller slipp inn et rot</h2>
+    <p style="color:var(--muted)">Svarene under er ekte eksempler fra produktet, ikke levende. Du får det ordentlige når du starter.</p>
+  </div>
+
+  <div class="sand">
+    <div class="sand-sub">Spør om noe</div>
+    <div class="qs" id="qs"></div>
+
+    <div class="sand-sub" style="margin-top:20px">Eller slipp inn et skjermbilde</div>
+    <div class="ups" id="ups"></div>
+
+    <div class="out" id="out">
+      <p class="placeholder">Trykk på noe over, så svarer den.</p>
     </div>
   </div>
 </section>
@@ -258,12 +345,6 @@
 </div>
 
 <section class="wrap stack" style="padding-top:52px">
-  <h2>Det er ikke tid du mangler</h2>
-  <p class="lede">Det er at du er den eneste som holder alt i hodet samtidig.</p>
-  <p class="lede">Den jobben har ingen gitt deg. Den bare ble din.</p>
-</section>
-
-<section class="wrap stack">
   <h2>Du trenger ikke fylle ut noe</h2>
   <div class="steps">
     <div class="step"><div class="step-n">1</div><div class="stack-s" style="gap:4px">
@@ -291,7 +372,12 @@
   </div>
 </section>
 
-<section class="wrap stack">
+<div class="bleed">
+  <img src="bilder/kjokkenbenken-kvelden.jpg" width="1292" height="587" loading="lazy" decoding="async"
+       alt="En kjøkkenbenk sent på kvelden. En tømt matboks står åpen til tørk, et barnetegnet ark henger på skapdøra, og ett rent glass står igjen.">
+</div>
+
+<section class="wrap stack" style="padding-top:52px">
   <h2>Spørsmål</h2>
   <div>
     <details><summary>Må mannen min være med?</summary>
@@ -304,6 +390,8 @@
       <p>Du retter det ved å si ifra i meldingen. Den spør ikke om det samme to ganger. Er den usikker, sier den det i stedet for å gjette i stillhet.</p></details>
     <details><summary>Hvor mye jobb er det for meg?</summary>
       <p>Å sende videre det du allerede får. Noen meldinger i uka.</p></details>
+    <details><summary>Leser den e-posten og meldingene mine?</summary>
+      <p>Nei. Den leser bare det du sender den. Det er derfor du kan sende den hva som helst.</p></details>
   </div>
 </section>
 
@@ -350,99 +438,124 @@
           '</div><div><div class="s-l">' + esc(r[0]) + '</div><div class="s-v">' + esc(r[1]) + "</div></div></div>";
       }).join("");
     },
-    sms: function (linjer, svar) {
+    sms: function (eier, linjer, svar) {
       var b = linjer.map(function (x) { return x === "" ? '<div class="sms-g"></div>' : "<div>" + esc(x) + "</div>"; }).join("");
-      return '<div class="sms"><div class="sms-l">Marius sin telefon</div><div class="sms-in">' + b + "</div>" +
+      return '<div class="sms"><div class="sms-l">' + esc(eier) + '</div><div class="sms-in">' + b + "</div>" +
         (svar ? '<div class="sms-out">' + esc(svar) + "</div>" : "") + "</div>";
     }
   };
 
-  // ---- seks situasjoner ----------------------------------------------------
+  // SMS-en til Marius går igjen i to situasjoner. Skrevet én gang.
+  var TUR_SMS = ["Fra Kristin, via Jajumi.", "", "Emma: høsttur til Sognsvann.",
+    "Torsdag 24.9, oppmøte i barnehagen 08.15.", "", "Kristin spør om du kan levere.", "",
+    "Svar med ett tall:", "1 — Forstått", "2 — Forstått, legg den i kalenderen min",
+    "3 — Passer ikke, foreslå noe annet", "4 — Noe annet"];
+
+  // ---- situasjonene --------------------------------------------------------
+  // Hvert steg: [ms, html, flagg, takt].  Takt 0 = inn, 1 = avtale, 2 = bekreftet.
   var S = [
-    { navn: "Beskjeden fra barnehagen", steg: [
-      [0, K.dag("I dag")],
-      [400, K.shot("Bekkeblomen barnehage", "Avdeling Maurtua · 11. september", [
+    { navn: "Hele flyten", steg: [
+      // Tråden starter halvfull. Den skal se ut som noe som har pågått en stund.
+      [0, K.dag("I går"), null, 0],
+      [0, K.meg("hvor er jakobs gymtøy"), null, 0],
+      [0, K.dem("I tørketrommelen. Du la det inn etter middag."), null, 0],
+      [0, K.dag("I dag · 11.48"), null, 0],
+      [0, K.shot("Bekkeblomen barnehage", "Avdeling Maurtua · 11. september", [
         "Hei alle sammen!",
         "Torsdag 24. september tar vi høsttur til Sognsvann. Vi går fra barnehagen kl. 08.30, så vær her senest 08.15.",
-        "Barna må ha med matpakke, drikkeflaske, regntøy og et ekstra skift."])],
-      [1900, K.meg("kan du ta denne?")],
-      [2700, K.tenker()],
-      [4100, K.dem("Dette gjelder Emma, om åtte dager."), "fjern-tenker"],
-      [4800, K.kort({ tittel: "Høsttur til Sognsvann", under: "Emma · Bekkeblomen barnehage",
+        "Barna må ha med matpakke, drikkeflaske, regntøy og et ekstra skift."]), null, 0],
+      [1600, K.meg("kan du ta denne?"), null, 0],
+      [2400, K.tenker(), null, 1],
+      [3600, K.dem("Dette gjelder Emma, om åtte dager."), "fjern-tenker", 1],
+      [4200, K.kort({ tittel: "Høsttur til Sognsvann", under: "Emma · Bekkeblomen barnehage",
         fakta: [["Når", "Torsdag 24. september, 08.30–14.00"], ["Oppmøte", "Barnehagen, senest 08.15"],
                 ["Ta med", "Matpakke, drikke, regntøy, skift"]],
-        frist: ["Frist", "Påmelding i Vigilo innen mandag"], knapp: "Legg i kalenderen" })],
+        frist: ["Frist", "Påmelding i Vigilo innen mandag"], knapp: "Legg i kalenderen" }), null, 1],
+      [6200, K.meg("og si fra til Marius at han må levere"), null, 2],
+      [7200, K.dem("Sendt. Jeg sier ifra når han har svart — ikke før."), null, 2],
+      [8000, K.sms("Marius sin telefon", TUR_SMS), null, 2],
+      [9800, K.sms("Marius sin telefon", TUR_SMS, "2"), "erstatt-forrige", 2],
+      [10900, K.status([["Marius", "Svarte 2 kl. 12.04 — lagt i hans kalender", true]]), null, 2],
+      [11800, K.dem("Du trenger ikke følge opp. Jeg minner ham onsdag kveld."), null, 2],
     ]},
 
     { navn: "Bursdagsinvitasjonen", steg: [
-      [0, K.dag("I dag · 13.42")],
+      [0, K.dag("I dag · 13.42"), null, 0],
       [400, K.shot("Melding fra Hanne", "Sofias mamma", [
         "Hei! Sofia fyller 5 år og vi feirer i Sagene bad lørdag 3. oktober kl. 13–15.30.",
-        "Si ifra innen onsdag om Emma kommer, så booker jeg antall."])],
-      [1900, K.meg("er ikke Emma på svømming da?")],
-      [2700, K.tenker()],
-      [4000, K.dem("Nei. Svømmingen er torsdager — lørdagen er fri."), "fjern-tenker"],
+        "Si ifra innen onsdag om Emma kommer, så booker jeg antall."]), null, 0],
+      [1900, K.meg("er ikke Emma på svømming da?"), null, 0],
+      [2700, K.tenker(), null, 1],
+      [4000, K.dem("Nei. Svømmingen er torsdager — lørdagen er fri."), "fjern-tenker", 1],
       [4700, K.kort({ tittel: "Sofias bursdag", under: "Emma · lørdag 3. oktober",
         fakta: [["Når", "13.00–15.30"], ["Hvor", "Sagene bad"]],
-        frist: ["Svarfrist", "Onsdag, til Hanne"], knapp: "Svar ja" })],
-      [5900, K.notat("Gaven sier jeg ifra om torsdag, så du rekker butikken. Emma har badedrakt som passer.")],
+        frist: ["Svarfrist", "Onsdag, til Hanne"], knapp: "Svar ja" }), null, 1],
+      [5900, K.notat("Gaven sier jeg ifra om torsdag, så du rekker butikken. Emma har badedrakt som passer."), null, 1],
     ]},
 
-    { navn: "Si fra til Marius", steg: [
-      [0, K.dag("I dag · 11.52")],
-      [400, K.meg("og si fra til Marius at han må levere — jeg vil vite at han faktisk har fått det med seg")],
-      [1600, K.dem("Sendt. Jeg sier ifra når han har svart — ikke før.")],
-      [2600, K.sms(["Fra Kristin, via Jajumi.", "", "Emma: høsttur til Sognsvann.",
-        "Torsdag 24.9, oppmøte i barnehagen 08.15.", "", "Kristin spør om du kan levere.", "",
-        "Svar med ett tall:", "1 — Forstått", "2 — Forstått, legg den i kalenderen min",
-        "3 — Passer ikke, foreslå noe annet", "4 — Noe annet"])],
-      [4600, K.sms(["Fra Kristin, via Jajumi.", "", "Emma: høsttur til Sognsvann.",
-        "Torsdag 24.9, oppmøte i barnehagen 08.15.", "", "Kristin spør om du kan levere.", "",
-        "Svar med ett tall:", "1 — Forstått", "2 — Forstått, legg den i kalenderen min",
-        "3 — Passer ikke, foreslå noe annet", "4 — Noe annet"], "2"), "erstatt-forrige"],
-      [5800, K.status([["Din kalender", "Høsttur — torsdag 24.9", true],
-                       ["Marius", "Svarte 2 kl. 12.04 — lagt i hans kalender", true]])],
-      [6800, K.dem("Du trenger ikke følge opp. Jeg minner ham onsdag kveld.")],
+    { navn: "Mormor henter fredag", steg: [
+      [0, K.dag("I dag · 14.02"), null, 0],
+      [400, K.meg("mormor henter emma på fredag"), null, 0],
+      [1400, K.dem("Sendt. Hun får det hun trenger, ingenting mer."), null, 1],
+      [2400, K.sms("Mormor sin telefon", ["Fra Kristin, via Jajumi.", "",
+        "Du henter Emma i barnehagen fredag 25. september. De stenger 16.30.", "",
+        "Furuveien 12 — si i porttelefonen at du henter Emma.", "Hun tåler ikke nøtter.", "",
+        "Svar 1 om det er greit."]), null, 2],
+      [4400, K.sms("Mormor sin telefon", ["Fra Kristin, via Jajumi.", "",
+        "Du henter Emma i barnehagen fredag 25. september. De stenger 16.30.", "",
+        "Furuveien 12 — si i porttelefonen at du henter Emma.", "Hun tåler ikke nøtter.", "",
+        "Svar 1 om det er greit."], "1"), "erstatt-forrige", 2],
+      [5500, K.status([["Mormor", "Svarte 1 kl. 14.09", true]]), null, 2],
+      [6400, K.notat("Hun så ikke resten av kalenderen deres. Bare fredag."), null, 2],
     ]},
 
     { navn: "Morgenmeldingen", steg: [
-      [0, K.dag("Onsdag 16. september · 07.02")],
-      [400, K.dem("God morgen. Tre ting i dag.")],
+      [0, K.dag("Onsdag 16. september · 07.02"), null, 1],
+      [400, K.dem("God morgen. Tre ting i dag."), null, 1],
       [1300, K.liste([["Turdag i barnehagen", "Gummistøvler og skift i sekken", false],
                       ["Jakob har fotball 17.00", "Marius kjører", false],
-                      ["Meld på høstturen", "Fristen går ut mandag", true]])],
-      [3000, K.dem("Ellers er det ingenting du må huske i dag.")],
+                      ["Meld på høstturen", "Fristen går ut mandag", true]]), null, 1],
+      [3000, K.dem("Ellers er det ingenting du må huske i dag."), null, 2],
     ]},
 
     { navn: "Hva blir det til middag", steg: [
-      [0, K.dag("I dag · 16.40")],
-      [400, K.meg("hva skal vi ha til middag")],
-      [1200, K.tenker()],
-      [2400, K.dem("Fiskegrateng. Du har alt hjemme bortsett fra rømme."), "fjern-tenker"],
+      [0, K.dag("I dag · 16.40"), null, 0],
+      [400, K.meg("hva skal vi ha til middag"), null, 0],
+      [1200, K.tenker(), null, 1],
+      [2400, K.dem("Fiskegrateng. Du har alt hjemme bortsett fra rømme."), "fjern-tenker", 1],
       [3100, K.kort({ tittel: "Fiskegrateng", under: "25 minutter · uten melkeprotein",
         fakta: [["Emma", "Hun har spist den før og likt den"], ["Mangler", "Rømme — den laktosefrie"]],
-        knapp: "Legg i handlelista" })],
-      [4200, K.notat("Rekker du ikke butikken: pasta med laks og erter. Da har du alt.")],
+        knapp: "Legg i handlelista" }), null, 1],
+      [4200, K.notat("Rekker du ikke butikken: pasta med laks og erter. Da har du alt."), null, 2],
     ]},
 
     { navn: "Fristen i april", steg: [
-      [0, K.dag("Torsdag 12. februar · 09.15")],
-      [400, K.dem("En ting som ikke haster ennå, men som blir vond hvis den ryker.")],
+      [0, K.dag("Torsdag 12. februar · 09.15"), null, 1],
+      [400, K.dem("En ting som ikke haster ennå, men som blir vond hvis den ryker."), null, 1],
       [1500, K.kort({ tittel: "Sommer-SFO", under: "Jakob · påmelding i Visma",
         fakta: [["Stengt", "Uke 28 og 29"], ["Ferien deres", "Uke 29 og 30 — uke 28 står åpen"]],
-        frist: ["Frist", "1. april, og den forlenges ikke"], knapp: "Minn meg 20. mars" })],
-      [3000, K.notat("Jeg tar den opp igjen i midten av mars. Du trenger ikke tenke på den før det.")],
+        frist: ["Frist", "1. april, og den forlenges ikke"], knapp: "Minn meg 20. mars" }), null, 1],
+      [3000, K.notat("Jeg tar den opp igjen i midten av mars. Du trenger ikke tenke på den før det."), null, 2],
     ]},
   ];
 
   var stackt = document.getElementById("stackt");
   var picker = document.getElementById("picker");
+  var beats = document.getElementById("beats").children;
   var timers = [], rolig = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (rolig) document.body.classList.add("reduced");
+
+  function takt(n) {
+    for (var i = 0; i < beats.length; i++) {
+      beats[i].classList.toggle("on", i === n);
+      beats[i].classList.toggle("done", i < n);
+    }
+  }
 
   function spill(i) {
     timers.forEach(clearTimeout); timers = [];
     stackt.innerHTML = "";
+    takt(S[i].steg[0][3] || 0);
     Array.prototype.forEach.call(picker.children, function (b, n) { b.setAttribute("aria-pressed", String(n === i)); });
 
     var sisteSms = null;
@@ -456,10 +569,11 @@
         var rad = E('<div class="row"><div class="in">' + st[1] + "</div></div>");
         stackt.appendChild(rad);
         if (st[1].indexOf('class="sms"') > -1) sisteSms = rad;
+        if (typeof st[3] === "number") takt(st[3]);
         if (rolig) rad.classList.add("on");
         else requestAnimationFrame(function () { requestAnimationFrame(function () { rad.classList.add("on"); }); });
       };
-      if (rolig) vis(); else timers.push(setTimeout(vis, st[0] + 500));
+      if (rolig || st[0] === 0) vis(); else timers.push(setTimeout(vis, st[0] + 380));
     });
   }
 
@@ -482,8 +596,8 @@
      "Ja. Påmeldingen åpner 15. januar og pleier å bli full i løpet av et døgn.\n\nJeg sier fra kvelden før, og igjen på formiddagen hvis du ikke har gjort det.\n\nDu trenger ikke huske datoen."],
     ["Hva må Emma ha med på turdagen?",
      "Gummistøvler, regntøy og et skift i sekken. Matpakke og drikkeflaske som vanlig.\n\nHun har ikke skift i barnehagen nå — det ble sendt hjem forrige uke."],
-    ["Si fra til mormor at hun henter fredag",
-     "Sendt til mormor 14.06.\n\nHun fikk med seg at Emma ikke tåler melkeprotein, og at hun må hentes senest 16.45.\n\nJeg sier ifra når hun svarer. Du trenger ikke følge opp."],
+    ["Jeg orker ikke mer",
+     "Da tar vi bare i morgen.\n\nEmma trenger regntøy og matpakke. Jakob trenger gymtøy.\n\nResten kan vente til mandag. Jeg holder på det."],
   ];
 
   var OPP = [
