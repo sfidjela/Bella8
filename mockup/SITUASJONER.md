@@ -1,8 +1,8 @@
-# 30 brukstilfeller, skrevet som de faktisk lyder
+# 30 situasjoner, skrevet som de faktisk lyder
 
 Hovedmålgruppen er mor i tidsklemma. Alt annet er bonus.
 
-Dette er ikke en funksjonsliste. Det er 30 faktiske vekslinger — hennes ord
+Dette er ikke en funksjonsliste. Det er 30 samtaler — hennes ord
 slik folk faktisk skriver dem, og svaret ordrett slik produktet skal svare.
 Lista har tre bruk:
 
@@ -10,7 +10,7 @@ Lista har tre bruk:
    eller mer sikkert enn det som står her, er feil.
 2. **Tekstbank.** Landingssiden, annonsene og sandkassen henter herfra.
 3. **Kravspesifikasjon.** «Feiler hvis» under hver sak er det som skal gå galt
-   først, og det er der du skal se etter når du tester med noen ekte.
+   først, og det er der du skal se etter når du prøver den på ekte folk.
 
 Familien er den samme hele veien: Emma er 4 og går i barnehagen, Jakob er 7
 og går i 2. klasse, Marius jobber sent torsdager. I dag er fredag 18. september.
@@ -20,7 +20,7 @@ Merkelappene: **D1** virker første dag uten oppsett. **Minne** trenger uker.
 
 ---
 
-## A. Beskjeden som alt har kommet inn
+## A. Beskjeden som allerede har kommet
 
 Hun har informasjonen. Den ligger bare i en app hun ikke orker å åpne igjen.
 
@@ -28,9 +28,9 @@ Hun har informasjonen. Den ligger bare i en app hun ikke orker å åpne igjen.
 > **Hun:** *[skjermbilde]* kan du ta denne?
 
 > **Jajumi:** Turdag for Emma torsdag 24. september. Oppmøte 08.30, de går
-> til Storskogen og er tilbake til lunsj.
+> til Sognsvann og er tilbake til lunsj.
 > Hun trenger regntøy, støvler, matpakke og drikkeflaske.
-> Svarfristen er tirsdag.
+> Påmeldingsfristen er mandag.
 > Skal jeg legge den i kalenderen?
 
 **Tester:** lesing fra app-skjermbilde, at frist skilles fra selve dagen.
@@ -41,10 +41,10 @@ Hun har informasjonen. Den ligger bare i en app hun ikke orker å åpne igjen.
 
 > **Jajumi:** Jeg leser tre ting:
 > — Gymtøy på torsdag. Det blir 24. september.
-> — Dugnad lørdag 3. oktober, dere trenger to foreldre.
+> — Dugnad lørdag 10. oktober, dere trenger to foreldre.
 > — Si fra til Anne.
 > Jeg er usikker på om det står «to foreldre» eller «to timer» — sjekk den.
-> Resten står trygt.
+> Resten er jeg sikker på.
 > Skal jeg spørre Marius om dugnaden?
 
 **Tester:** håndskrift, dårlig lys, og om den tør å si at den er usikker.
@@ -57,7 +57,7 @@ Hun har informasjonen. Den ligger bare i en app hun ikke orker å åpne igjen.
 > kinoturen på tirsdag.
 > Resten er foreldre som diskuterer om det skal være kake.
 
-**Tester:** å kaste bort 95 prosent. Verdien ligger i det som ikke kommer tilbake.
+**Tester:** å luke bort 95 prosent. Verdien ligger i det som ikke kommer tilbake.
 **Feiler hvis:** den oppsummerer hele chatten. Da har hun fortsatt lest alt.
 
 ### 4. Bursdagsinvitasjonen · D1
@@ -65,7 +65,7 @@ Hun har informasjonen. Den ligger bare i en app hun ikke orker å åpne igjen.
 
 > **Jajumi:** Bursdag for Noah lørdag 26. september, 13–16, i Lilleveien 4.
 > Svar innen onsdag.
-> Det står at det er henting klokka 16, ikke at man er med.
+> Det står henting klokka 16, så du trenger ikke bli.
 > Skal jeg legge den inn?
 
 **Tester:** at den fanger det foreldre faktisk lurer på — skal jeg bli eller dra.
@@ -109,7 +109,7 @@ Hun har informasjonen. Den ligger bare i en app hun ikke orker å åpne igjen.
 
 > **Jajumi:** Notert. Jeg sier fra i slutten av mars, ikke før.
 
-**Tester:** at den holder kjeft i syv måneder. Det er en funksjon.
+**Tester:** at den holder kjeft i syv måneder. Det er med vilje.
 **Feiler hvis:** den nevner leirskolen igjen neste uke.
 
 ---
@@ -117,7 +117,7 @@ Hun har informasjonen. Den ligger bare i en app hun ikke orker å åpne igjen.
 ## B. Det hun må bestemme
 
 Ikke mangel på informasjon. Beslutningstretthet. Middag er tredje største
-stressfaktor i researchen, og den kommer hver eneste dag.
+stressfaktor i undersøkelsene, og den kommer hver eneste dag.
 
 ### 9. Middag i kveld · D1 · minne
 > **Hun:** hva i huleste skal vi ha til middag
@@ -128,7 +128,7 @@ stressfaktor i researchen, og den kommer hver eneste dag.
 > — Egg og brød. Det er fredag.
 > Jakob spiste taco på tirsdag.
 
-**Tester:** at den husker hva som ble spist, og at den tillater å gi opp.
+**Tester:** at den husker hva som ble spist, og at den lar henne gi opp.
 **Feiler hvis:** den foreslår noe som krever handletur. Da har hun fått en oppgave til.
 
 ### 10. Ukemenyen · D1 · minne
@@ -157,11 +157,11 @@ stressfaktor i researchen, og den kommer hver eneste dag.
 ### 12. Kollisjonen · D1 · kalender
 > **Hun:** *[ingenting — den sier fra når hun legger inn noe]*
 
-> **Jajumi:** Nå står fotball og tannlege begge på tirsdag 14.20.
+> **Jajumi:** Nå står både fotball og tannlege på tirsdag 14.20.
 > Jakob rekker ikke begge.
 > Vil du flytte tannlegen, eller skal han stå over fotballen?
 
-**Tester:** at den oppdager krasjet i det hun legger inn, ikke dagen etter.
+**Tester:** at den oppdager kollisjonen med én gang, ikke dagen etter.
 **Feiler hvis:** den løser det selv. Hun skal bestemme.
 
 ### 13. Sykt barn klokka 06.40 · D1 · SMS
@@ -171,7 +171,7 @@ stressfaktor i researchen, og den kommer hver eneste dag.
 > Jeg kan si fra til barnehagen, og til Marius at han må ta Jakob til skolen.
 > Du hadde tannlege selv klokka 11 — skal jeg avlyse den?
 
-**Tester:** at den tar tre beslutninger på én gang når hun har null kapasitet.
+**Tester:** at den tar tre beslutninger på én gang når hun ikke har overskudd til noe.
 **Feiler hvis:** den spør tre ganger etter hverandre.
 
 ### 14. Klær etter vær · D1
@@ -196,17 +196,17 @@ stressfaktor i researchen, og den kommer hver eneste dag.
 
 ## C. Det hun bærer alene
 
-Den mentale lasten. Ingen andre i huset vet at hun holder dette.
+Den mentale belastningen. Ingen andre i huset vet at hun bærer dette.
 
-### 16. Hjernedumpen · D1
+### 16. Alt på én gang · D1
 > **Hun:** ok så jakob trenger nye fotballsko og emma skal ha med bamse på fredag og jeg må huske å svare barnehagen og betale for skoleturen og ringe mamma
 
-> **Jajumi:** Jeg har tatt vare på alt.
+> **Jajumi:** Jeg har notert alt.
 > Det eneste som haster i dag er svaret til barnehagen.
 > Fotballskoene og skoleturen setter jeg på lørdag. Bamsen sier jeg fra om torsdag kveld.
 > Skal jeg minne deg på å ringe moren din i helgen?
 
-**Tester:** at kaos inn gir ro ut, og at den tør å prioritere ned fire av fem.
+**Tester:** at hun kan tømme hodet og få ro tilbake, og at den tør å legge fire av fem til side.
 **Feiler hvis:** den gir henne alle fem tilbake som en liste. Da har hun fortsatt fem ting.
 
 ### 17. Hva må jeg gjøre i dag · D1 · minne
@@ -242,10 +242,10 @@ Den mentale lasten. Ingen andre i huset vet at hun holder dette.
 
 > **Jajumi:** Da tar vi bare i morgen.
 > Emma trenger regntøy og matpakke. Jakob trenger gymtøy.
-> Resten kan vente til mandag. Jeg holder på det.
+> Resten kan vente til mandag. Jeg passer på det.
 
 **Tester:** at den ikke trøster, ikke spør hvordan hun har det, ikke foreslår egentid.
-**Feiler hvis:** den skriver noe varmt. Hun vil ha færre ting å holde, ikke omsorg fra en skjerm.
+**Feiler hvis:** den skriver noe varmt. Hun vil ha færre ting å bære, ikke omsorg fra en skjerm.
 
 ---
 
@@ -262,10 +262,10 @@ Her, og bare her, går det SMS. Ingenting internt på SMS.
 > Fra Kristin, via Jajumi.
 > Kan du hente Emma i barnehagen onsdag 23. september? Kristin har møte til 17.
 > Svar med ett tall:
-> 1 – Forstått
-> 2 – Forstått, legg i min kalender
-> 3 – Kan ikke, foreslå ny tid
-> 4 – Noe annet
+> 1 — Forstått
+> 2 — Forstått, legg den i kalenderen min
+> 3 — Kan ikke, foreslå ny tid
+> 4 — Noe annet
 > Svar STOPP om du ikke vil ha flere meldinger.
 
 **Tester:** hele forretningsideen. Fire valg, ett tegn å svare med.
@@ -299,7 +299,7 @@ Her, og bare her, går det SMS. Ingenting internt på SMS.
 > Svar 1 om det er greit.
 > Svar STOPP om du ikke vil ha flere meldinger.
 
-**Tester:** at den gir et menneske utenfor familien nok, og ikke mer.
+**Tester:** at den gir et menneske utenfor familien akkurat nok, og ikke mer.
 **Feiler hvis:** den sender hele familiekalenderen til mormor.
 
 ### 25. Barnevakten · D1 · SMS · minne
@@ -348,12 +348,12 @@ Her, og bare her, går det SMS. Ingenting internt på SMS.
 
 ## E. Rutinene hun har sagt ja til
 
-Foreslås én gang, i vanlig tekst, først etter at mønsteret er sett.
+Foreslås én gang, i vanlig tekst, og først etter at den har sett mønsteret.
 Går aldri av seg selv før hun har svart.
 
 ### 29. Forslaget om morgenmelding · minne
 > **Jajumi:** Du har spurt om hva som må med om morgenen fem dager på rad.
-> Vil du at jeg sender det av meg selv, før du spør?
+> Vil du at jeg sender det uten at du spør?
 > Si i så fall når. «Kvart over sju» holder.
 
 > **Hun:** ja 06.45
@@ -370,30 +370,30 @@ Går aldri av seg selv før hun har svart.
 > Ellers er det en rolig uke.
 
 **Tester:** at søndagsmeldingen gir ro, ikke vondt i magen.
-**Feiler hvis:** den er lang. Over fire linjer søndag kveld er et overgrep.
+**Feiler hvis:** den er lang. Over fire linjer søndag kveld er for mye.
 
 ---
 
 ## Hva jeg mener om lista
 
 **Tre saker selger produktet: 1, 21 og 22.** Skjermbildet inn, beskjeden ut,
-bekreftelsen tilbake. Hele verdiløftet ligger i den sløyfa, og den virker dag én
+bekreftelsen tilbake. Hele løftet ligger i den sløyfa, og den virker dag én
 uten minne, uten integrasjoner, uten oppsett. Alt annet er grunner til å bli.
 
 **Én sak holder henne: 9.** Hendelser kommer i rykk. Sult kommer klokka fem.
 Middag er den eneste saken som tvinger henne inn i produktet hver dag, og
-uten en daglig grunn dør abonnementet i måned tre.
+uten en daglig grunn dør abonnementet i tredje måned.
 
 **To saker er farligst å bomme på: 2 og 20.**
 Sak 2 fordi den avgjør om hun stoler på den. Et produkt som gjetter på en
 uklar lapp og tar feil én gang, får aldri se en lapp igjen.
 Sak 20 fordi fristelsen til å skrive noe varmt er enorm, og det er feil svar.
-Hun vil ha færre ting å holde. Ikke omsorg fra en skjerm.
+Hun vil ha færre ting å bære. Ikke omsorg fra en skjerm.
 
 **Fem jeg ville kuttet fra første versjon:** 5 (ukeplanen er verste lesejobben
-og minst akutte følelsen), 14 (vær-mot-klær gjør produktet mindre, ikke større),
-15 (gaveforslag ligger ett skritt fra kjøpsforslag), 25 (barnevakt er sjeldent),
-27 (kjørelister krever at flere familier er inne, og det har du ikke ennå).
+og den som haster minst), 14 (vær-mot-klær gjør produktet mindre, ikke større),
+15 (gaveforslag ligger ett skritt fra kjøpsforslag), 25 (man trenger sjelden barnevakt),
+27 (kjørelister krever at flere familier bruker den, og det har du ikke ennå).
 
 **Hullet, som står igjen fra forrige versjon:** 27 av 30 saker begynner med at
 hun gjør noe. Det er riktig for tilliten, men det betyr at glemmer hun produktet

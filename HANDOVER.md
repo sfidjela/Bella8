@@ -26,7 +26,7 @@ for gøy. Hun har allerede fem apper fra barnehage, skole, idrettslag og
 klassechat, og problemet er ikke at hun mangler informasjon — det er at hun er
 den eneste som samler den.
 
-Alt annet er bonus og add-ons: skilte foreldre, pårørende til eldre, fedre som
+Alt annet er bonus og tillegg: skilte foreldre, pårørende til eldre, fedre som
 står utenfor informasjonsflyten. Disse kan bli egne merkevarer på samme motor
 senere, men de skal ikke forme første versjon.
 
@@ -81,17 +81,35 @@ skrevet ut (torsdag 24. september).
 
 Den er rolig, ikke blid. Den trøster ikke. Skriver hun «jeg orker ikke mer»,
 er riktig svar å gjøre morgendagen mindre — ikke å spørre hvordan hun har det.
-Hun vil ha færre ting å holde, ikke omsorg fra en skjerm.
+Hun vil ha færre ting å bære, ikke omsorg fra en skjerm.
+
+**Skriv norsk, ikke oversatt engelsk.** Dette er den feilen som går igjen når
+en modell skriver norsk, og den som raskest får teksten til å virke uekte.
+
+- Eiendom står etter substantivet: «kalenderen hans», ikke «hans kalender».
+- Adverbet kommer etter verbet i hovedsetning: «Den ble bare din», ikke
+  «Den bare ble din».
+- Norsk kløyver setningen der engelsk ikke gjør det: «Nå er det noen andre som
+  husker», ikke «Noen andre husker nå».
+- «Den vanskelige delen» er *the hard part* oversatt. Skriv «det vanskelige».
+- «Det er hele forskjellen» er engelsk. Skriv «det er der forskjellen ligger».
+- «I stillhet» er *silently*. «Verdiløfte» er *value proposition*. «Mental
+  last» er *mental load* — på norsk heter det mental belastning.
+- Ikke skriv «Inkludert:» over en liste. Skriv «Du får:».
+- Unngå «relevant», «optimal», «fokusere på», «håndtere», «smertepunkt» og
+  «brukstilfelle» når et vanlig norsk ord gjør jobben.
+
+Les setningen høyt i hodet før du sender den. Ville en norsk forelder sagt det slik?
 
 Er den usikker, sier den det høyt: *«Jeg er ikke sikker på om det står «to
-foreldre» eller «to timer» — sjekk den. Resten står trygt.»* Dette er den
+foreldre» eller «to timer» — sjekk den. Resten er jeg sikker på.»* Dette er den
 viktigste enkeltoppførselen i hele produktet. Et produkt som gjetter på en
 uklar lapp og tar feil én gang, får aldri se en lapp igjen.
 
 ## 6. Hva som faktisk er bygget
 
 ### Appen — virker i dag
-En ekte chat. Tar imot skjermbilder, svarer strømmende, husker mellom øktene.
+En ekte chat. Tar imot skjermbilder, svarer mens den skriver, husker mellom øktene.
 Kjører som en publisert artefakt på **brukerens egen Claude-konto**, med minnet
 lagret lokalt på hennes telefon. Ingen server. Derfor kan den **ikke** sende
 SMS eller skrive i kalender — en artefakt har ingen nettverkstilgang ut.
@@ -113,19 +131,30 @@ kan stå under. Det er et bevisst valg: produktet er innpakningen, ikke motoren.
 
 ### Landingssiden
 Bygget for å **vise**, ikke fortelle. En telefon øverst som spiller av hele
-saken automatisk, seks situasjoner å velge mellom, og en sandkasse med fem
-ferdige spørsmål og tre skjermbilder man kan slippe inn. Hvert svar er merket
-«Eksempel». To tomme bildefelt venter på fotografier.
+sløyfa automatisk — skjermbilde inn, avtale ut, SMS til Marius, bekreftelse
+tilbake — med en taktmåler under som fylles i takt. Seks situasjoner å velge
+mellom, og en sandkasse med fem ferdige spørsmål og tre skjermbilder man kan
+slippe inn. Hvert svar er merket «Eksempel». Tre fotografier i full bredde.
+
+Knappen styres av én bryter i koden, `APEN`. Så lenge den er `false` sier siden
+«sett meg på lista» i stedet for «start i dag», fordi det siste ikke er sant
+ennå. Sett den til `true` når betaling virker.
 
 ### Mockups
 32 skjermbilder fordelt på seks sider: kjerneflyt, flere flyter,
 bekreftelsessløyfa, uten onboarding, delt hverdag, hennes flate.
 
 ### Dokumentene i repoet
-Research på smertepunkter, markedsvurdering, konkurrentanalyse mot Muse,
-plattformvalg, navnealternativer, systemprompt, tone, tekst til landingsside,
-30 brukstilfeller skrevet som faktiske vekslinger med «tester / feiler hvis»
-under hver, og bildepromter.
+Undersøkelser av hva som faktisk tynger henne, markedsvurdering,
+sammenlikning med Muse, plattformvalg, navnealternativer, systemprompt, tone,
+tekst til landingsside, 30 situasjoner skrevet som ekte samtaler med
+«tester / feiler hvis» under hver, bildeprompter, og et notat om film og
+annonser.
+
+**Mappa `lansering/` er utgått.** Den beskriver en tidligere versjon som het
+Familiens ro og som bygde på 45 minutter onboarding med et menneske. Begge
+deler er avvist. Les `lansering/UTGÅTT.md` før du bruker noe derfra — ellers
+bygger du videre på et produkt eieren har forlatt.
 
 **Eksempelfamilien er den samme overalt:** Kristin er moren, Marius er faren og
 jobber sent torsdager, Emma er 4 og går i barnehagen, Jakob er 7 og går i
@@ -138,22 +167,23 @@ modellkostnaden på 10–20 kr per bruker per måned. Ved 299 kr gir det rundt
 90 % bruttomargin.
 
 **Betalingsmodell.** Fast pris, ikke måling. Begrunnelsen: produktet selger at
-hun slipper å holde noe. En teller gir henne noe nytt å holde. Anbefalt løsning
+hun slipper å bære noe. En teller gir henne noe nytt å bære. Anbefalt løsning
 er et mykt tak, eller trinn etter familiestørrelse — ikke tokenbasert fakturering
 mot brukeren.
 
-**Konkurransen.** Muse fra Meta er den reelle. Fire ting skiller: smalheten,
-sløyfa mot tredjeperson, norsk hverdagskontekst, og tillit. De tre første kan
-bygges på hvilken som helst modell. Den fjerde kan ikke leies. Det gir en
-spenning hvis Metas API brukes under panseret, og den bør løses bevisst.
+**Konkurransen.** Muse fra Meta er den reelle. Fire ting skiller den fra
+Jajumi: at Jajumi er smalere, sløyfa ut til tredjeperson, at den kjenner norsk
+hverdag, og tillit. De tre første kan bygges på hvilken som helst modell. Den
+fjerde kan ikke leies. Det henger dårlig sammen om Metas eget API ligger under
+panseret, og det må avklares bevisst.
 
 Spond og Vigilo er ikke konkurrenter. De er infrastrukturen rundt henne — de
 produserer beskjedene hun drukner i.
 
 **Kanaljus.** SMS til tredjepart er lovlig så lenge første melding sier hvem
 som sender, på oppdrag fra hvem, og hvordan man reserverer seg (GDPR art. 14 +
-STOPP-linje). WhatsApp og Messenger tillater ikke kald utsending i det hele
-tatt. «Sendt via Jajumi» er greit; «Prøv Jajumi gratis» gjør meldingen til
+STOPP-linje). WhatsApp og Messenger tillater ikke at man sender til folk som
+ikke har bedt om det. «Sendt via Jajumi» er greit; «Prøv Jajumi gratis» gjør meldingen til
 markedsføring og ødelegger det rettslige grunnlaget.
 
 ## 8. Åpne beslutninger
@@ -164,7 +194,7 @@ Eieren har ikke landet disse. Ikke lat som de er avgjort.
 |---|---|---|
 | Navnet | Jajumi, Kartet, Oversikten | Jajumi, fordi det ikke betyr noe og derfor kan bety dette |
 | Eksakt pris | 99–399 | 299, som står på siden nå |
-| Skal den skrive i kalenderen, eller bare foreslå? | | Foreslå og legge inn etter bekreftelse — aldri skrive stille |
+| Skal den skrive i kalenderen, eller bare foreslå? | | Foreslå, og legge inn når hun har sagt ja — aldri uten å si fra |
 | Myk grense eller trinn? | | Trinn etter familiestørrelse |
 
 ## 9. Neste steg, i rekkefølge
@@ -174,7 +204,7 @@ Eieren har ikke landet disse. Ikke lat som de er avgjort.
 2. **Start papirarbeidet.** Org.nr. og SMS-gateway-avtale er det eneste med
    ledetid. Alt annet kan gjøres på en kveld; dette kan ikke.
 3. **Sett opp serveren.** Maskin, domene, HTTPS, modellnøkkel.
-4. **Skaff bildene.** Åtte promter er skrevet. To felt på landingssiden er tomme.
+4. **Ta opp annonsefilmen.** Den er ferdig og går i loop. Bildene er på plass.
 5. **Annonser.** Ikke før 1 har gitt svar.
 
 ## 10. Prøvd og forkastet — ikke foreslå disse på nytt
@@ -187,21 +217,21 @@ Eieren har ikke landet disse. Ikke lat som de er avgjort.
 - **Tokenbasert fakturering mot brukeren.** Frarådet, se punkt 7.
 - **Database-funksjonen i artefakten.** Gjør artefakten intern for
   organisasjonen, og da kan den ikke deles med en ektefelle utenfor.
-- **La artefakten ringe SMS- eller kalender-API-er.** Umulig. Artefakter har
-  ingen nettverkstilgang ut.
-- **Kutte middag fra produktet.** Feil. Research setter matlaging som tredje
-  største stressfaktor, og det er den eneste saken som kommer hver dag.
-  Uten en daglig grunn dør abonnementet i måned tre.
-- **Behandle skjermbilde-dropp som en nødløsning.** Det er designet, ikke en
-  reserveløsning. Det er også grunnen til at personvernløftet er sant: den
+- **La artefakten snakke med SMS- eller kalender-API-er.** Umulig. Artefakter
+  har ingen nettverkstilgang ut.
+- **Kutte middag fra produktet.** Feil. Undersøkelsene setter matlaging som
+  tredje største stressfaktor, og det er den eneste saken som kommer hver dag.
+  Uten en daglig grunn dør abonnementet i tredje måned.
+- **Behandle det å slippe inn skjermbilder som en nødløsning.** Det er hele
+  designet, ikke en reserveløsning. Det er også grunnen til at personvernløftet er sant: den
   leser bare det hun sender den.
 
 ## 11. Slik vil eieren jobbe
 
 Steffen Fidjeland, norsk, bygger dette selv.
 
-Han vil ha **direkte sparring, ikke oppmuntring.** Kritiser ideen, navngi
-risikoen, still skarpe spørsmål, si når han tar feil — og si når du selv tok
+Han vil ha **direkte sparring, ikke oppmuntring.** Kritiser ideen, si hva
+risikoen er, still skarpe spørsmål, si når han tar feil — og si når du selv tok
 feil, kort og uten omsvøp. Ikke oppsummer det han nettopp sa. Ikke ramse opp
 alternativer du likevel ikke anbefaler. Gi en anbefaling.
 
