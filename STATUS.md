@@ -116,7 +116,7 @@ POST /api/speiling {"token": "<din lenke>", "paa": false}
 ### Den viktige regelen som følger med
 
 Modellen får vite hvem som er i tråden, og at **de er innenfor**.
-SMS-sløyfa gjelder bare folk **utenfor** — besteforeldre, barnepasser, barnehagen,
+SMS-sløyfa gjelder bare folk **utenfor** — besteforeldre, barnevakt, barnehagen,
 en annen forelder som ikke er med.
 
 Er Steffen i tråden, får han beskjed der. Ikke på SMS.

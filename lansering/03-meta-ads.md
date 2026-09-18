@@ -23,7 +23,7 @@ Erstatt «Familiens ro» hvis navnet endres.
 >
 > 15 familier nå i oppstarten.
 
-**Overskrift:** Noen andre husker det nå
+**Overskrift:** Nå er det noen andre som husker
 **Beskrivelse:** kr 1 490/mnd. Ingen binding.
 **Knapp:** Lær mer
 

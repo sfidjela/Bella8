@@ -7,7 +7,7 @@ Erstatt «Familiens ro» hvis navnet endres. `[VENTER]` = skal stå tomt til det
 
 ## Hero
 
-# Noen andre husker det nå
+# Nå er det noen andre som husker
 
 Turnklær på torsdag. Foreldremøtet. At melken er tom.
 Du har hele familiens hode i ditt eget.

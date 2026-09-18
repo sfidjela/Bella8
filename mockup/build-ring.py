@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Samme sløyfe, men til besteforeldre og barnepasser — der minnet faktisk betaler seg."""
+"""Samme sløyfe, men til besteforeldre og barnevakt — der minnet faktisk betaler seg."""
 import pathlib
 from importlib.machinery import SourceFileLoader
 

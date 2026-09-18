@@ -52,7 +52,7 @@ gjetninger.
 
 ### 3. Det lukker sløyfer med folk som ikke er brukere
 
-Den andre forelderen, mormor, barnepasseren. De får en vanlig SMS og svarer med ett tall.
+Den andre forelderen, mormor, barnevakten. De får en vanlig SMS og svarer med ett tall.
 Svaret går tilbake i systemet, og hun slipper å sjekke om han har lest det.
 
 *Vanskelighetsgrad: høy — og dette er det eneste som faktisk er en vollgrav.*

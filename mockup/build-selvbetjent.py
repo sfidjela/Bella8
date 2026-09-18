@@ -85,7 +85,7 @@ SCREENS["Hjelp.dc.html"] = [
     b.tasklist([
         b.task(1, "Slenge inn beskjeder", "Barnehagen, skolen, invitasjoner — jeg gjør dem om til avtaler"),
         b.task(2, "Spørre om dagen", "«Hva skjer i morgen» klokka ti om kvelden"),
-        b.task(3, "Sende videre", "Til Thomas, mormor eller barnepasser — de svarer med ett tall", last=True),
+        b.task(3, "Sende videre", "Til Thomas, mormor eller barnevakt — de svarer med ett tall", last=True),
     ]),
     b.them("Vil du at jeg viser nummer 1 med noe ekte fra din egen uke?"),
     b.aside("Får du det fortsatt ikke til: ring 22 00 00 00 mellom 09 og 15 på hverdager."),

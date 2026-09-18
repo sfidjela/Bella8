@@ -53,7 +53,7 @@ Tre vinkler. Kjør dem mot hverandre og la tallene bestemme, ikke smaken din.
 >
 > Det er ikke tid du mangler.
 >
-> **Overskrift:** Noen andre husker det nå
+> **Overskrift:** Nå er det noen andre som husker
 > **Knapp:** Les mer
 
 Ingen tall om antall brukere. Ingen sitater. Ingenting som ikke er sant ennå.

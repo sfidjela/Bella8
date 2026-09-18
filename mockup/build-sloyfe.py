@@ -144,7 +144,7 @@ SCREENS["Bekreftet.dc.html"] = [
     b.them("Marius svarte. Han tar leveringen."),
     "\n\n".join([
         pending("Din kalender", "Høsttur — torsdag 24.9", done=True),
-        pending("Marius", "Svarte 2 kl. 12.04 — lagt i hans kalender", done=True),
+        pending("Marius", "Svarte 2 kl. 12.04 — lagt i kalenderen hans", done=True),
     ]),
     b.them("Du trenger ikke følge opp den. Jeg minner ham på det onsdag kveld."),
 ]
