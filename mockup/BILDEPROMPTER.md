@@ -160,3 +160,23 @@ Ett objekt skal bære det. Boten i bilde 1. Hendene i bilde 2. Votten i bilde 6.
 1 og 3 først. Bilde 1 fordi siden mangler problemet, og bilde 3 fordi det er
 det eneste bildet som følger med lenken ut i verden. 6 når du skal begynne
 med annonser. Resten når de andre sitter.
+
+---
+
+## Status — hva som finnes nå
+
+| Motiv | Fil | Brukt |
+|---|---|---|
+| 1 · Gangen 07.10 | `bilder/gangen-syv-om-morgenen.jpg` | Øverste bånd på landingssiden |
+| 2 · Telefonen legges fra seg | `bilder/telefonen-legges-fra-seg.jpg` | Nederste bånd |
+| 3 · Delingsbildet 1200×630 | `bilder/deling-1200x630.jpg` | `og:image` — må få absolutt URL ved lansering |
+| — Stue mot kjøkken, varm | `bilder/stue-mot-kjokken-varm.jpg` | Ubrukt. Materiale. |
+| — Stue mot kjøkken, kjølig | `bilder/stue-mot-kjokken-kjolig.jpg` | Ubrukt. Har en plakat med lesbar tekst — beskjær den bort før bruk. |
+
+Originalene er beskåret til 2,2:1 fordi båndet på siden er bredt og lavt.
+Beskjær aldri i etterkant på nytt fra JPEG-ene her — gå tilbake til originalen.
+
+### Mangler fortsatt
+- **Motiv 5, garderoben.** Generert, men ikke lastet opp som fil.
+- **Motiv 6, bilen.** Ikke laget. Det sterkeste annonsemotivet.
+- **Motiv 7 og 8**, story og filmåpning. Ikke laget.
