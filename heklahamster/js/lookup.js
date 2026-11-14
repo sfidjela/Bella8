@@ -52,8 +52,8 @@
       var q = input.value.trim();
       if (q.length < 3) return close();
       timer = setTimeout(function () {
-        var mine = ++seq;
-        search({ sok: q + '*', fuzzy: 'true', treffPerSide: 6, side: 0, asciiKompatibel: 'false' }).then(function (res) {
+        var mine = ++seq;   // «*» i søket gir treff mens man skriver (kan ikke kombineres med fuzzy)
+        search({ sok: q + '*', treffPerSide: 8, side: 0, asciiKompatibel: 'false' }).then(function (res) {
           if (mine !== seq) return;   // et nyere søk er på vei
           var seen = {};
           items = res.map(function (r) { return { address: r.adressetekst, zip: r.postnummer, city: title(r.poststed) }; })
