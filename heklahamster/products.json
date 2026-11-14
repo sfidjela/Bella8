@@ -1,0 +1,13 @@
+{
+  "merknad": "Produktfeed for heklahamster.no. Pris er plassholder til den er godkjent. Ingen lagerstatus er oppgitt fordi varene ikke er produsert ennå.",
+  "valuta": "NOK",
+  "prisErPlassholder": true,
+  "broderingMaksTegn": 20,
+  "hilsentyper": ["tekst", "lyd", "video"],
+  "produkter": [
+    { "id": "lang", "navn": "Langhamsteren", "beskrivelse": "Litt for lang. Litt for stolt.", "pris": 244, "bilde": "assets/lang.webp" },
+    { "id": "skjev", "navn": "Skjevehamsteren", "beskrivelse": "Noe gikk galt. Vi vet ikke hva.", "pris": 244, "bilde": "assets/skjev.webp" },
+    { "id": "bust", "navn": "Bustehamsteren", "beskrivelse": "Har hatt en vanskelig uke.", "pris": 244, "bilde": "assets/bust.webp" },
+    { "id": "feit", "navn": "Fetthamsteren", "beskrivelse": "Liten kropp. Store problemer.", "pris": 244, "bilde": "assets/feit.webp" }
+  ]
+}

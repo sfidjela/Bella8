@@ -26,3 +26,9 @@ Alt materiell er utkast. Ingen annonser er opprettet, ingen DM-er sendt, ingen k
 
 Ingen kundesitater, tall eller «X familier bruker det» før det faktisk finnes.
 Alle slike felt er merket `[VENTER]` i teksten og skal stå tomme til en ekte pilotmor har sagt ja til å bli sitert.
+
+---
+
+## Heklahamster.no
+
+Nettbutikken for heklede hamstere ligger i [`heklahamster/`](heklahamster/). Se [heklahamster/README.md](heklahamster/README.md).

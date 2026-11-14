@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Private hilsener: skal aldri indekseres, og lenken skal ikke lekke videre. -->
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#ff8db7">
+<title>Du har fått en hamster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800&family=Gochi+Hand&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="gr-page">
+<main id="greetingRoot" aria-live="polite"></main>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script src="js/greeting.js"></script>
+<script>
+'use strict';
+/* Nøkkelen ligger etter # i lenken. Den delen sendes aldri til serveren som del av
+   sideforespørselen og havner dermed ikke i tilgangslogger. */
+(function () {
+  var root = document.getElementById('greetingRoot');
+  function load() {
+    var token = location.hash.replace(/^#/, '');
+    HH.store.getGreeting(token).then(function (data) { HH.renderGreeting(root, data, {}); });
+  }
+  window.addEventListener('hashchange', load);
+  load();
+})();
+</script>
+</body>
+</html>
