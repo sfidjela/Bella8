@@ -1,0 +1,4 @@
+# Publisering av demoen på Netlify. Hele nettstedet ligger bak en kode (netlify/edge-functions/kode.js).
+[build]
+  command = "sh tools/build-site.sh"
+  publish = "dist"

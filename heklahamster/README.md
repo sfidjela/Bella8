@@ -92,5 +92,13 @@ Nøkler som trengs (ingen finnes i koden): Supabase URL og nøkler, Vipps eller 
 
 ## Publisering
 
-Mappen kan legges rett ut på Netlify, Vercel eller GitHub Pages som statisk nettsted. Ikke publiser på
-heklahamster.no før punkt 1–3 over er gjort, eller behold demo-merkingen.
+Demoen ligger på Netlify (prosjektet `heklahamster-demo`) bak en kode.
+
+- `netlify.toml` kjører `tools/build-site.sh`, som lager `dist/` med bare det som skal ut.
+- `netlify/edge-functions/kode.js` stopper alle forespørsler uten gyldig kode, også bilder, skript og 3D-modeller.
+- Koden ligger som miljøvariabelen `HH_KODE` hos Netlify, ikke i koden. Bytt den der for å stenge ute alle som har den gamle.
+  Mangler variabelen, slipper ingen inn.
+- Hele demoen er merket `noindex`.
+
+Kodelåsen er for å dele en forhåndsvisning med noen få. Den erstatter ikke innlogging på ordreoversikten når ekte ordre kommer.
+Fjern kodelåsen (slett edge-funksjonen) først når pris, bilder, backend og betaling er på plass.
