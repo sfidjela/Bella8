@@ -4,16 +4,22 @@
 create table orders (
   id              uuid primary key default gen_random_uuid(),
   created_at      timestamptz not null default now(),
-  status          text not null default 'kladd'
-                  check (status in ('kladd','venter_betaling','betalt','brodert','sendt','levert','kansellert')),
+  order_no        text unique not null,     -- kort nummer som står på QR-lappen og pakkseddelen
+  status          text not null default 'venter_betaling'
+                  check (status in ('venter_betaling','betalt','venter_adresse','brodert','sendt','levert','kansellert')),
   product_id      text not null check (product_id in ('lang','skjev','bust','feit')),
-  embroidery      text not null check (char_length(embroidery) between 1 and 20),
-  price_nok       integer not null,
+  embroidery      text not null default '' check (char_length(embroidery) <= 20),   -- tom = uten brodering
+  price_base_nok  integer not null,
+  price_embroidery_nok integer not null default 0,
+  price_shipping_nok   integer not null default 0,
+  price_nok       integer not null,          -- regnes ut på serveren, aldri hentet fra nettleseren
   buyer_email     text not null,
   recipient_name  text not null,
-  recipient_addr  text not null,
-  recipient_zip   text not null check (recipient_zip ~ '^\d{4}$'),
-  recipient_city  text not null,
+  recipient_phone text,                      -- bare når mottakeren selv skal oppgi adressen
+  address_token   text unique,               -- nøkkel til adresse.html#<token>, 128 bit
+  recipient_addr  text,
+  recipient_zip   text check (recipient_zip ~ '^\d{4}$'),
+  recipient_city  text,
   payment_ref     text,            -- settes kun av webhook fra Vipps/Stripe
   tracking_ref    text             -- settes når fraktetikett er laget
 );
@@ -43,3 +49,22 @@ language sql security definer set search_path = public as $$
   from greetings g join orders o on o.id = g.order_id
   where g.token = p_token and g.deleted_at is null and o.status in ('betalt','brodert','sendt','levert');
 $$;
+
+-- Mottakeren oppgir adressen sin selv. Siden får bare fornavnet tilbake.
+create function get_address_request(p_token text)
+returns table (first_name text, done boolean)
+language sql security definer set search_path = public as $$
+  select split_part(recipient_name, ' ', 1), recipient_addr is not null
+  from orders where address_token = p_token and status in ('betalt','venter_adresse');
+$$;
+
+create function save_address(p_token text, p_addr text, p_zip text, p_city text)
+returns boolean language plpgsql security definer set search_path = public as $$
+begin
+  update orders set recipient_addr = p_addr, recipient_zip = p_zip, recipient_city = p_city, status = 'betalt'
+  where address_token = p_token and status = 'venter_adresse' and p_zip ~ '^\d{4}$' and char_length(p_addr) between 1 and 120;
+  return found;
+end $$;
+
+-- Ordreoversikten (admin.html) leser «orders» direkte, men bare for innloggede ansatte:
+-- create policy admin_all on orders for all to authenticated using (true) with check (true);

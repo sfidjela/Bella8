@@ -10,6 +10,10 @@ HH.config = {
 
   // PRIS (plassholder til godkjent pris foreligger)
   priceNok: 244,
+  embroideryPriceNok: 49,     // tillegg for brodering (plassholder)
+
+  // Adresseoppslag: Kartverkets åpne adresseregister. Tom streng slår det av.
+  addressApi: 'https://ws.geonorge.no/adresser/v1/sok',
   priceIsPlaceholder: true,
 
   // GRENSER – må også valideres på serveren når backend kobles til.
@@ -21,6 +25,7 @@ HH.config = {
 
   // QR-lenker. Tom streng = samme mappe som nettsiden (hilsen.html#<token>).
   greetingBaseUrl: '',
+  addressBaseUrl: '',         // tilsvarende for adresse.html#<token>
   // Settes til true av forhåndsvisningsbygget, der alt ligger i én fil.
   singleFile: false,
 
@@ -66,6 +71,12 @@ HH.config = {
   ],
 
   embroiderySuggestions: ['Din lille idiot', 'Hvorfor?', 'Unnskyld', 'Gratulerer, antar vi', 'Dette er din feil', 'Jeg prøvde']
+};
+
+/* Prisen for en bestilling. Samme regnestykke må gjøres på serveren. */
+HH.priceOf = function (draft) {
+  var emb = String(draft.embroidery || '').trim() ? HH.config.embroideryPriceNok : 0;
+  return { base: HH.config.priceNok, embroidery: emb, total: HH.config.priceNok + emb };
 };
 
 HH.product = function (id) {

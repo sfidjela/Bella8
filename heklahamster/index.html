@@ -104,7 +104,7 @@
     <p class="logo">heklahamster<span>.</span>no</p>
     <p class="foot-note">Dette er en konseptdemo. Bildene er illustrasjoner, prisen er ikke fastsatt, og ingen betaling eller ekte bestilling behandles.</p>
   </div>
-  <p class="foot-contact">Kontakt (eksempel):<br><span class="selectable">hei@heklahamster.no</span></p>
+  <p class="foot-contact">Kontakt (eksempel):<br><span class="selectable">hei@heklahamster.no</span><br><a href="admin.html" id="adminLink">Ordreoversikt (demo)</a></p>
 </footer>
 
 <button class="resume" id="resume" type="button" hidden></button>
@@ -138,9 +138,9 @@
         <h2 class="fstep-title" tabindex="-1">Gjør den verre.</h2>
 
         <div class="field">
-          <label for="emb">Hva skal vi brodere på magen?</label>
+          <label for="emb">Hva skal vi brodere på magen? <span class="plus" id="embPrice"></span></label>
           <input id="emb" type="text" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Din lille idiot" aria-describedby="embHelp embErr">
-          <div class="field-meta"><span id="embHelp">Maks 20 tegn. Magen er ikke større.</span><span class="count" id="embCount">0/20</span></div>
+          <div class="field-meta"><span id="embHelp">Maks 20 tegn. La feltet stå tomt for en naken mage uten tillegg.</span><span class="count" id="embCount">0/20</span></div>
           <div class="chips" id="embChips" aria-label="Forslag"></div>
           <p class="err" id="embErr" role="alert" hidden></p>
         </div>
@@ -203,9 +203,28 @@
           <input id="toName" type="text" maxlength="80" autocomplete="off" autocapitalize="words" enterkeyhint="next" aria-describedby="toNameErr">
           <p class="err" id="toNameErr" role="alert" hidden></p>
         </div>
+        <fieldset class="field">
+          <legend class="visually-hidden">Har du adressen?</legend>
+          <div class="seg seg-2">
+            <label><input type="radio" name="addrMode" id="addrHave" value="har"><span>Jeg har adressen</span></label>
+            <label><input type="radio" name="addrMode" id="addrAsk" value="spor"><span>Spør mottakeren</span></label>
+          </div>
+        </fieldset>
+
+        <div class="panel-ask" id="panelAsk" hidden>
+          <div class="field">
+            <label for="toPhone">Mottakerens mobilnummer</label>
+            <input id="toPhone" type="tel" inputmode="tel" maxlength="16" autocomplete="off" enterkeyhint="next" placeholder="8 sifre" aria-describedby="toPhoneHelp toPhoneErr">
+            <p class="field-meta" id="toPhoneHelp"><span>Vi sender en SMS med en lenke der mottakeren selv skriver adressen. Vi røper verken hvem du er eller hva som kommer.</span></p>
+            <p class="err" id="toPhoneErr" role="alert" hidden></p>
+          </div>
+        </div>
+
+        <div id="panelAddr">
         <div class="field">
           <label for="toAddress">Gateadresse</label>
-          <input id="toAddress" type="text" maxlength="120" autocomplete="off" enterkeyhint="next" aria-describedby="toAddressErr">
+          <input id="toAddress" type="text" maxlength="120" autocomplete="off" enterkeyhint="next" aria-describedby="toAddressHelp toAddressErr">
+          <p class="field-meta" id="toAddressHelp"><span>Begynn å skrive, så foreslår vi adresser. Postnummer og sted fylles ut selv.</span></p>
           <p class="err" id="toAddressErr" role="alert" hidden></p>
         </div>
         <div class="field-row">
@@ -219,6 +238,7 @@
             <input id="toCity" type="text" maxlength="60" autocomplete="off" autocapitalize="words" enterkeyhint="next" aria-describedby="toCityErr">
             <p class="err" id="toCityErr" role="alert" hidden></p>
           </div>
+        </div>
         </div>
         <div class="field">
           <label for="email">Din e-post</label>
@@ -256,6 +276,7 @@
 <script src="js/config.js"></script>
 <script src="js/store.js"></script>
 <script src="js/greeting.js"></script>
+<script src="js/lookup.js"></script>
 <script src="js/view3d.js"></script>
 <script src="js/app.js"></script>
 <script src="js/alive.js"></script>

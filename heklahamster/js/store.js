@@ -91,11 +91,19 @@
         senderName: draft.reveal ? draft.senderName : '',  // lagres ikke når avsender er hemmelig
         createdAt: now
       };
+      var ask = draft.addrMode === 'spor';
+      var price = HH.priceOf(draft);
       var order = {
-        id: orderId, status: 'demo_ikke_betalt', createdAt: now,
-        productId: draft.product, embroidery: draft.embroidery, priceNok: HH.config.priceNok,
-        greetingToken: token,
-        recipient: { name: draft.toName, address: draft.toAddress, zip: draft.toZip, city: draft.toCity },
+        id: orderId, createdAt: now,
+        // Status i produksjon: venter_betaling → betalt → brodert → sendt. «paid» settes kun av betalings-webhook.
+        status: ask ? 'venter_adresse' : 'ny', paid: false,
+        productId: draft.product, embroidery: draft.embroidery,
+        priceNok: price.total, priceLines: price,
+        greetingToken: token, greetingType: draft.greetType,
+        recipient: ask
+          ? { name: draft.toName, phone: draft.toPhone, address: '', zip: '', city: '' }
+          : { name: draft.toName, address: draft.toAddress, zip: draft.toZip, city: draft.toCity },
+        addressToken: ask ? randomToken() : '',     // egen nøkkel til «skriv adressen din»-siden
         buyerEmail: draft.email
       };
 
@@ -117,6 +125,49 @@
         if (g.type === 'tekst') return { greeting: g, media: null };
         return kvGet('media-' + token).then(function (m) { return { greeting: g, media: m || null }; });
       });
+    },
+
+    /* ----- Ordreoversikt (admin) -----
+       Senere: krever innlogging, og leses fra tabellen «orders» på serveren. */
+    listOrders: function () { return (lsGet(ORDERS_KEY) || []).slice().reverse(); },
+    updateOrder: function (id, patch) {
+      var orders = lsGet(ORDERS_KEY) || [], found = null;
+      orders.forEach(function (o) { if (o.id === id) { Object.assign(o, patch); found = o; } });
+      lsSet(ORDERS_KEY, orders);
+      return found;
+    },
+    /* Finn ordre fra ordrenummer, hilsenlenke eller skannet QR-kode. */
+    findOrder: function (text) {
+      var q = String(text || '').trim(), m = q.match(/[0-9a-f]{32}/);
+      var orders = lsGet(ORDERS_KEY) || [];
+      for (var i = 0; i < orders.length; i++) {
+        if ((m && orders[i].greetingToken === m[0]) || orders[i].id.toLowerCase() === q.toLowerCase()) return orders[i];
+      }
+      return null;
+    },
+
+    /* ----- Mottakeren skriver adressen sin selv -----
+       Siden får bare fornavnet. Ingenting om avsender, hamster eller hilsen. */
+    getAddressRequest: function (token) {
+      if (!/^[0-9a-f]{32}$/.test(token || '')) return null;
+      var o = (lsGet(ORDERS_KEY) || []).filter(function (x) { return x.addressToken === token; })[0];
+      return o ? { firstName: String(o.recipient.name || '').split(' ')[0], done: !!o.recipient.address } : null;
+    },
+    saveAddress: function (token, addr) {
+      var orders = lsGet(ORDERS_KEY) || [], ok = false;
+      orders.forEach(function (o) {
+        if (o.addressToken !== token) return;
+        o.recipient.address = addr.address; o.recipient.zip = addr.zip; o.recipient.city = addr.city;
+        if (o.status === 'venter_adresse') o.status = 'ny';
+        ok = true;
+      });
+      lsSet(ORDERS_KEY, orders);
+      return ok;
+    },
+    addressUrl: function (token) {
+      var base = HH.config.addressBaseUrl;
+      if (!base) { try { base = new URL('adresse.html', location.href).href.split('#')[0]; } catch (e) { base = 'adresse.html'; } }
+      return base + '#' + token;
     },
 
     /* ----- Meld fra om hilsen (misbruk / sletting) – lagres lokalt i demo ----- */

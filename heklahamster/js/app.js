@@ -3,7 +3,8 @@
 (function () {
   var cfg = HH.config, esc = HH.esc;
   var $ = function (id) { return document.getElementById(id); };
-  var price = cfg.priceNok + ' kr';
+  var price = cfg.priceNok + ' kr';                       // «fra»-pris på forsiden
+  var total = function () { return HH.priceOf(state).total + ' kr'; };
 
   // Bilder i den statiske HTML-en
   document.querySelectorAll('img[data-img]').forEach(function (img) { img.src = cfg.img(img.dataset.img); });
@@ -12,7 +13,7 @@
   // ---------- Tilstand ----------
   var blank = function () {
     return { step: 1, reached: 1, product: null, embroidery: '', greetType: 'tekst', greetText: '',
-             reveal: false, senderName: '', toName: '', toAddress: '', toZip: '', toCity: '', email: '' };
+             reveal: false, senderName: '', toName: '', addrMode: 'har', toPhone: '', toAddress: '', toZip: '', toCity: '', email: '' };
   };
   var saved = HH.store.loadDraft();
   var state = Object.assign(blank(), saved || {});
@@ -160,7 +161,7 @@
     nextBtn.disabled = false;
     if (state.step === 1 && p) nextBtn.textContent = 'Videre med ' + p.name + ' →';
     if (state.step === 2) nextBtn.textContent = 'Videre →';
-    if (state.step === 3) nextBtn.textContent = cfg.paymentEnabled ? 'Betal ' + price : 'Betal ' + price + ' (demo)';
+    if (state.step === 3) nextBtn.textContent = cfg.paymentEnabled ? 'Betal ' + total() : 'Betal ' + total() + ' (demo)';
   }
 
   function next() {
@@ -206,6 +207,8 @@
     var n = HH.chars(state.embroidery).length;
     $('embCount').textContent = n + '/' + cfg.embroideryMax;
     $('embCount').classList.toggle('is-full', n >= cfg.embroideryMax);
+    $('embPrice').textContent = '+ ' + cfg.embroideryPriceNok + ' kr';
+    $('embPrice').classList.toggle('is-on', n > 0);
     $('greetCount').textContent = HH.chars(state.greetText).length + '/' + cfg.greetingTextMax;
     $('panelTekst').hidden = state.greetType !== 'tekst';
     $('panelLyd').hidden = state.greetType !== 'lyd';
@@ -357,7 +360,6 @@
     var ok = true;
     state.embroidery = state.embroidery.trim();
     state.senderName = state.senderName.trim();
-    if (!state.embroidery) ok = showErr('emb', 'embErr', 'Magen er tom. Skriv noe, eller velg et forslag.');
     if (state.greetType !== 'tekst' && !media[state.greetType]) {
       ok = showErr(null, 'mediaErr', state.greetType === 'lyd'
         ? 'Lydhilsen uten lyd. Ta opp noe, eller bytt til tekst.'
@@ -383,9 +385,42 @@
       state[f[0]] = v; clearErr(f[0]); save();
     });
   });
+  // Har kunden adressen, eller skal vi spørre mottakeren på SMS?
+  function syncAddrMode() {
+    var ask = state.addrMode === 'spor';
+    $('addrAsk').checked = ask; $('addrHave').checked = !ask;
+    $('panelAsk').hidden = !ask; $('panelAddr').hidden = ask;
+  }
+  $('addrAsk').addEventListener('change', function () { state.addrMode = 'spor'; syncAddrMode(); save(); renderBar(); $('toPhone').focus(); });
+  $('addrHave').addEventListener('change', function () { state.addrMode = 'har'; syncAddrMode(); save(); renderBar(); });
+  $('toPhone').addEventListener('input', function (e) { state.toPhone = e.target.value; clearErr('toPhone'); save(); });
+
+  // Adresseforslag mens kunden skriver, og poststed fra postnummer.
+  HH.addressLookup($('toAddress'), function (a) {
+    state.toAddress = a.address; state.toZip = a.zip; state.toCity = a.city;
+    $('toAddress').value = a.address; $('toZip').value = a.zip; $('toCity').value = a.city;
+    ['toAddress', 'toZip', 'toCity'].forEach(function (id) { clearErr(id); });
+    save(); $('email').focus();
+  });
+  $('toZip').addEventListener('input', function (e) {
+    var zip = e.target.value;
+    if (!/^\d{4}$/.test(zip)) return;
+    HH.postalLookup(zip).then(function (city) {
+      if (!city || $('toZip').value !== zip) return;
+      state.toCity = city; $('toCity').value = city; clearErr('toCity'); save();
+    });
+  });
+
   function validate3() {
     var ok = true;
+    var ask = state.addrMode === 'spor';
+    if (ask) {
+      var phone = HH.cleanPhone(state.toPhone);
+      if (!phone) ok = showErr('toPhone', 'toPhoneErr', 'Skriv et norsk mobilnummer med åtte sifre.');
+      else { state.toPhone = phone; $('toPhone').value = phone; clearErr('toPhone'); }
+    }
     fields3.forEach(function (f) {
+      if (ask && (f[0] === 'toAddress' || f[0] === 'toZip' || f[0] === 'toCity')) { clearErr(f[0]); return; }
       state[f[0]] = String(state[f[0]] || '').trim();
       var msg = f[1](state[f[0]]);
       if (msg) ok = showErr(f[0], f[0] + 'Err', msg); else clearErr(f[0]);
@@ -404,19 +439,23 @@
   function renderStep3() {
     var p = HH.product(state.product);
     fields3.forEach(function (f) { $(f[0]).value = state[f[0]]; });
+    $('toPhone').value = state.toPhone;
+    syncAddrMode();
+    var pr = HH.priceOf(state);
     $('summary').innerHTML =
       '<h3 class="summary-title">Bestillingen din</h3>' +
       '<div class="summary-top">' + HH.hamsterFigure(p, state.embroidery, { cls: 'summary-fig' }) +
         '<div><p class="summary-name">' + p.nameHtml + '</p><p class="summary-line">' + esc(p.line) + '</p></div></div>' +
       '<dl class="summary-list">' +
-        row('Brodering', '«' + esc(state.embroidery) + '»', 2) +
+        row('Brodering', state.embroidery ? '«' + esc(state.embroidery) + '»' : 'Ingen. Naken mage.', 2) +
         row('QR-hilsen', esc(greetLabel()), 2) +
         row('Avsender', state.reveal ? 'Avsløres: ' + esc(state.senderName) : 'Hemmelig', 2) +
       '</dl>' +
       '<dl class="summary-list summary-sum">' +
-        '<div><dt>Hamster, brodering og hilsen</dt><dd>' + price + '</dd></div>' +
+        '<div><dt>Hamster med QR-hilsen</dt><dd>' + pr.base + ' kr</dd></div>' +
+        (pr.embroidery ? '<div><dt>Brodering</dt><dd>' + pr.embroidery + ' kr</dd></div>' : '') +
         '<div><dt>Frakt i Norge</dt><dd>Ikke fastsatt</dd></div>' +
-        '<div class="summary-total"><dt>Å betale</dt><dd>' + price + '</dd></div>' +
+        '<div class="summary-total"><dt>Å betale</dt><dd>' + pr.total + ' kr</dd></div>' +
       '</dl>' +
       (cfg.priceIsPlaceholder ? '<p class="fineprint">Konseptpris. Endelig pris og frakt settes før butikken åpner.</p>' : '');
     $('payNote').textContent = cfg.paymentEnabled ? '' :
@@ -479,6 +518,12 @@
       '<p class="done-lead">' + (cfg.demo
         ? 'Ingen penger er trukket, og ingen hamster er sendt. Når butikken åpner, går ' + esc(p.name) + ' til ' + esc(o.recipient.name) + ' med denne QR-koden rundt halsen.'
         : esc(p.name) + ' sendes til ' + esc(o.recipient.name) + '. Kvittering kommer på e-post.') + '</p>' +
+      (o.addressToken
+        ? '<div class="note ask-note"><p><b>Vi mangler adressen.</b> Når butikken er åpen, får ' + esc(o.recipient.name) + ' denne SMS-en på ' + esc(o.recipient.phone) + ':</p>' +
+          '<p class="sms">Hei! Noen vil sende deg en pakke fra Heklahamster.no. Vi sier ikke hva. Hvor skal den? ' +
+          '<a href="' + esc(HH.store.addressUrl(o.addressToken)) + '" target="_blank" rel="noopener" id="addrLink">Skriv adressen din</a></p>' +
+          (cfg.demo ? '<p class="fineprint">Demo: ingen SMS er sendt. Lenken virker i denne nettleseren.</p>' : '') + '</div>'
+        : '') +
       '<div class="done-grid">' +
         '<div class="tag">' +
           '<span class="tag-hole" aria-hidden="true"></span>' +

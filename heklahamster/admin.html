@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#171717">
+<title>Ordreoversikt – Heklahamster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800&family=Gochi+Hand&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="adm-page">
+<header class="top adm-top">
+  <a class="logo" href="index.html">heklahamster<span>.</span>no</a>
+  <span class="demo-tag adm-demo">Demo: ordre fra denne nettleseren</span>
+</header>
+<main class="adm">
+  <h1 class="fstep-title">Ordreoversikt</h1>
+  <div class="adm-tools">
+    <div class="field adm-find">
+      <label for="admFind">Finn ordre</label>
+      <input id="admFind" type="text" autocomplete="off" placeholder="Ordrenummer, eller skann QR-lappen">
+    </div>
+    <div class="adm-filter" id="admFilter" role="group" aria-label="Filter"></div>
+    <button class="btn" type="button" id="admPrintAll">Skriv ut lapper for alle nye</button>
+  </div>
+  <p class="adm-count" id="admCount" role="status"></p>
+  <div class="adm-list" id="admList"></div>
+</main>
+<div class="print-area" id="printArea" aria-hidden="true"></div>
+<script src="js/vendor/qrcode.js"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

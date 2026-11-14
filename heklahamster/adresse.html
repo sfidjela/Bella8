@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#f7e83d">
+<title>Hvor skal pakken?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,800&family=Gochi+Hand&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="ask-page">
+<main class="ask" id="askRoot">
+  <p class="eyebrow">Heklahamster.no</p>
+  <div id="askBody"></div>
+</main>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script src="js/lookup.js"></script>
+<script>
+'use strict';
+/* Siden mottakeren får på SMS når avsenderen ikke har adressen.
+   Den vet bare fornavnet. Ingenting om avsender, hamster eller hilsen vises her. */
+(function () {
+  var body = document.getElementById('askBody'), esc = HH.esc;
+  var token = location.hash.replace(/^#/, '');
+  var req = HH.store.getAddressRequest(token);
+  var $ = function (id) { return document.getElementById(id); };
+
+  if (!req) {
+    body.innerHTML = '<h1 class="gr-title">DENNE LENKEN VIRKER IKKE.</h1><p>Den er feil eller utløpt. Sjekk SMS-en en gang til.</p>' +
+      (HH.config.demo ? '<p class="note">Demo: lenken virker bare i nettleseren bestillingen ble laget i.</p>' : '');
+    return;
+  }
+  if (req.done) { thanks(); return; }
+
+  body.innerHTML =
+    '<h1 class="gr-title">' + (req.firstName ? esc(req.firstName).toUpperCase() + ', ' : '') + 'NOEN VIL SENDE DEG NOE.</h1>' +
+    '<p class="gr-lead">Vi sier ikke hva. Vi sier ikke hvem. Vi trenger bare å vite hvor.</p>' +
+    '<form class="form ask-form" id="askForm" novalidate>' +
+      '<div class="field"><label for="aAddress">Gateadresse</label>' +
+        '<input id="aAddress" type="text" maxlength="120" autocomplete="street-address" enterkeyhint="next" aria-describedby="aAddressErr">' +
+        '<p class="err" id="aAddressErr" role="alert" hidden></p></div>' +
+      '<div class="field-row"><div class="field"><label for="aZip">Postnr.</label>' +
+        '<input id="aZip" type="text" inputmode="numeric" maxlength="4" autocomplete="postal-code" enterkeyhint="next" aria-describedby="aZipErr">' +
+        '<p class="err" id="aZipErr" role="alert" hidden></p></div>' +
+      '<div class="field"><label for="aCity">Sted</label>' +
+        '<input id="aCity" type="text" maxlength="60" autocomplete="address-level2" enterkeyhint="done" aria-describedby="aCityErr">' +
+        '<p class="err" id="aCityErr" role="alert" hidden></p></div></div>' +
+      '<button class="btn btn-blaa btn-big" type="submit">Send hit</button>' +
+      '<p class="fineprint">Adressen brukes bare til å sende denne ene pakken.</p>' +
+    '</form>';
+
+  HH.addressLookup($('aAddress'), function (a) { $('aAddress').value = a.address; $('aZip').value = a.zip; $('aCity').value = a.city; });
+  $('aZip').addEventListener('input', function (e) {
+    var zip = e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+    if (zip.length === 4) HH.postalLookup(zip).then(function (c) { if (c && $('aZip').value === zip) $('aCity').value = c; });
+  });
+  $('askForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = { address: $('aAddress').value.trim(), zip: $('aZip').value.trim(), city: $('aCity').value.trim() };
+    var errs = { aAddress: v.address ? '' : 'Skriv gateadressen.', aZip: /^\d{4}$/.test(v.zip) ? '' : 'Fire sifre.', aCity: v.city ? '' : 'Skriv poststedet.' };
+    var bad = null;
+    Object.keys(errs).forEach(function (id) {
+      var el = $(id + 'Err'); el.textContent = errs[id]; el.hidden = !errs[id];
+      if (errs[id]) { $(id).setAttribute('aria-invalid', 'true'); bad = bad || $(id); } else $(id).removeAttribute('aria-invalid');
+    });
+    if (bad) { bad.focus(); return; }
+    if (HH.store.saveAddress(token, v)) thanks();
+  });
+
+  function thanks() {
+    body.innerHTML = '<h1 class="gr-title">TAKK. DEN ER PÅ VEI.</h1><p class="gr-lead">Vi beklager på forhånd.</p>' +
+      '<p class="pen gr-note" aria-hidden="true">Lykke til.<br>– Ledelsen</p>';
+  }
+})();
+</script>
+</body>
+</html>

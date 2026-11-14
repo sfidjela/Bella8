@@ -467,3 +467,77 @@ body:has(#resume:not([hidden])) .foot { padding-bottom: 96px; }
   .pv3d { width: min(72%, 300px); margin-inline: auto; box-shadow: 5px 5px 0 var(--blaa); }
   .pv-toggle { width: min(72%, 300px); margin-inline: auto; }
 }
+
+/* ============ Adresseoppslag, broderipris, «spør mottakeren» ============ */
+.field { position: relative; }
+.suggest { position: absolute; z-index: 5; left: 0; right: 0; top: 100%; margin: -2px 0 0; padding: 0; list-style: none; background: var(--hvit); border: var(--strek); box-shadow: var(--skygge); max-height: 280px; overflow-y: auto; }
+.field:has(.suggest:not([hidden])) .field-meta { visibility: hidden; }
+.suggest li { padding: 12px 14px; min-height: 44px; cursor: pointer; border-bottom: 1px dashed var(--blekk); line-height: 1.25; }
+.suggest li:last-child { border-bottom: 0; }
+.suggest li span { color: var(--dempet); white-space: nowrap; }
+.suggest li:hover, .suggest li[aria-selected="true"] { background: var(--gul); }
+.plus { font-family: var(--hand); font-weight: 400; font-size: 1.15rem; color: var(--dempet); margin-left: 6px; white-space: nowrap; }
+.plus.is-on { color: var(--penn); }
+.ask-note { margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
+.sms { background: var(--hvit); border: var(--strek); padding: 12px 14px; max-width: 30em; font-size: 1rem; }
+.ask-page { background: var(--gul); }
+.ask { max-width: 480px; margin-inline: auto; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; gap: 18px; padding-block: 28px 40px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.ask #askBody { display: flex; flex-direction: column; gap: 18px; }
+.ask-form { gap: 18px; }
+
+/* ============ Ordreoversikt ============ */
+.adm-page { background: var(--papir); }
+.adm-top { background: var(--blekk); color: var(--hvit); }
+.adm-top .logo span { color: var(--gul); }
+.adm-demo { transform: none; }
+.adm { max-width: 1080px; margin-inline: auto; padding-block: 28px 64px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.adm-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px 20px; align-items: end; margin-top: 12px; }
+.adm-filter { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+.adm-filter button { min-height: 44px; padding: 8px 12px; background: var(--hvit); border: var(--strek); border-radius: 0; font-weight: 800; }
+.adm-filter button[aria-pressed="true"] { background: var(--blekk); color: var(--gul); }
+.adm-filter b { font-variant-numeric: tabular-nums; margin-left: 4px; }
+.adm-count { margin: 18px 0 10px; font-weight: 600; color: var(--dempet); }
+.adm-list { display: flex; flex-direction: column; gap: 16px; }
+.adm-card { background: var(--hvit); border: var(--strek); box-shadow: var(--skygge); }
+.adm-card > header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 14px; border-bottom: var(--strek); background: var(--tint-gul); }
+.adm-id { font-family: var(--display); letter-spacing: -0.02em; font-size: 1.1rem; }
+.adm-status { border: var(--strek); padding: 2px 8px; font-weight: 800; font-size: .85rem; background: var(--hvit); }
+.adm-status.s-ny { background: var(--gul); }
+.adm-status.s-venter_adresse { background: var(--tint-rosa); }
+.adm-status.s-brodert { background: var(--tint-blaa); }
+.adm-status.s-sendt { background: var(--blekk); color: var(--hvit); }
+.adm-paid { font-size: .85rem; font-weight: 600; color: var(--dempet); }
+.adm-card time { margin-left: auto; font-size: .85rem; font-variant-numeric: tabular-nums; }
+.adm-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 14px; }
+.adm-body h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.adm-body p { overflow-wrap: anywhere; }
+.adm-emb .pen { font-size: 1.5rem; }
+.adm-mail { font-size: .88rem; color: var(--dempet); margin-top: 6px; }
+.adm-card > footer { display: flex; flex-wrap: wrap; gap: 12px; padding: 0 14px 16px; }
+.adm-empty { border: 2px dashed var(--blekk); padding: 24px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; max-width: 36em; }
+.print-area { display: none; }
+.is-printing .print-area { display: block; position: fixed; inset: 0; z-index: 60; overflow: auto; background: var(--hvit); padding: 20px; }
+.lbl { display: grid; grid-template-columns: 62mm minmax(0, 1fr); border: 1px dashed #000; margin-bottom: 8mm; break-inside: avoid; color: #000; background: #fff; max-width: 180mm; }
+.lbl-tag { padding: 5mm; text-align: center; border-right: 1px dashed #000; }
+.lbl-tag img { width: 46mm; height: 46mm; margin-inline: auto; image-rendering: pixelated; }
+.lbl-say { font-family: var(--hand); font-size: 15pt; line-height: 1; margin-top: 2mm; }
+.lbl-id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10pt; font-weight: 700; letter-spacing: .04em; margin-top: 2mm; }
+.lbl-slip { padding: 5mm; font-size: 11pt; line-height: 1.35; display: flex; flex-direction: column; gap: 2mm; }
+.lbl-slip .lbl-id { font-size: 14pt; margin: 0; }
+.lbl-to { border: 1px solid #000; padding: 3mm; font-size: 12pt; }
+.lbl-fine { font-size: 8pt; margin-top: auto; }
+@media print {
+  body.adm-page > :not(.print-area) { display: none !important; }
+  .print-area, .is-printing .print-area { display: block; position: static; padding: 0; }
+  @page { margin: 12mm; }
+}
+@media (max-width: 760px) {
+  .adm-tools { grid-template-columns: 1fr; }
+  .adm-body { grid-template-columns: 1fr; }
+  .lbl { grid-template-columns: 1fr; }
+  .lbl-tag { border-right: 0; border-bottom: 1px dashed #000; }
+}
+
+.print-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-weight: 600; }
+@media print { .print-bar { display: none; } }
+#panelAddr, .panel-ask { display: flex; flex-direction: column; gap: 26px; }

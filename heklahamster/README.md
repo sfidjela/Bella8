@@ -21,6 +21,10 @@ python3 -m http.server 4173
 |---|---|
 | `index.html` | Forside og bestilling i tre steg (velg, tilpass, send) |
 | `hilsen.html` | Siden mottakeren ser når QR-koden skannes. `noindex`, nøkkelen ligger etter `#` |
+| `adresse.html` | Siden mottakeren får på SMS når avsenderen ikke har adressen |
+| `admin.html`, `js/admin.js` | Ordreoversikt med status, brodering, adresse og utskrift av QR-lapper |
+| `js/lookup.js` | Adresseforslag og poststed fra Kartverkets åpne adresseregister |
+| `docs/betalingsplan.md` | Plan for betaling (Vipps anbefalt), steg for steg |
 | `css/style.css` | All stil. Farger og skrifter ligger som variabler øverst |
 | `js/config.js` | Produkter, pris, grenser og flagg. **Start her for å endre tekst, pris eller hamstere** |
 | `js/store.js` | Datalaget. Lagrer lokalt i dag, byttes mot Supabase senere |
@@ -45,6 +49,19 @@ node tests/smoke.js
 Testen sjekker blant annet at alle bilder lastes, at brodering stopper på 20 tegn, at ingenting
 forsvinner når kunden går tilbake eller laster siden på nytt, og at hilsensiden aldri inneholder
 adresse eller e-post.
+
+## Adresse, pris og ordreflyt
+
+- **Adresseforslag:** når kunden skriver gateadresse, hentes forslag fra Kartverket (`ws.geonorge.no`, gratis og uten nøkkel).
+  Postnummer og sted fylles ut. Skriver kunden bare postnummer, hentes poststedet.
+- **Har ikke adressen:** kunden velger «Spør mottakeren» og oppgir mobilnummer. Mottakeren får en SMS med lenke til
+  `adresse.html#<nøkkel>` og skriver adressen selv. Siden røper verken avsender eller innhold. SMS-utsending er ikke koblet til ennå.
+- **Oppslag på navn eller telefon:** finnes ikke som åpen tjeneste i Norge. 1881 og Gule Sider selger slike oppslag,
+  men det krever avtale, koster per søk, og gir adresser til folk som ikke har bedt om det. «Spør mottakeren» løser det samme uten det.
+- **Pris:** `priceNok` (hamster) og `embroideryPriceNok` (brodering) i `js/config.js`. Brodering er valgfritt. Begge beløp er plassholdere.
+- **Ordreoversikt:** `admin.html` viser alle ordre med status (venter på adresse → ny → brodert → sendt). I demoen leses de fra nettleseren.
+- **QR-lapp per ordre:** «Skriv ut QR-lapp» gir en lapp til hamsteren og en pakkseddel med samme ordrenummer.
+  Skanner du lappen i søkefeltet i ordreoversikten (QR-leser eller mobil), kommer riktig ordre opp.
 
 ## Slik er personvernet tenkt
 

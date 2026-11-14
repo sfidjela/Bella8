@@ -24,6 +24,15 @@ async function run(label, contextOpts) {
   page.on('console', m => { if (m.type() === 'error' && !/fonts\.g|ERR_/.test(m.text())) errors.push(m.text()); });
   const shot = async name => { if (shots) await page.screenshot({ path: path.join(shots, label + '-' + name + '.png'), fullPage: name === 'forside' }); };
 
+  // Adresseregisteret simuleres, så testen ikke er avhengig av nettet.
+  await ctx.route('https://ws.geonorge.no/**', route => {
+    const u = new URL(route.request().url());
+    const zip = u.searchParams.get('postnummer');
+    const adresser = zip
+      ? (zip === '5003' ? [{ adressetekst: 'Torget 1', postnummer: '5003', poststed: 'BERGEN' }] : [])
+      : [{ adressetekst: 'Storgata 1', postnummer: '0155', poststed: 'OSLO' }, { adressetekst: 'Storgata 10', postnummer: '9008', poststed: 'TROMSØ' }];
+    route.fulfill({ contentType: 'application/json', body: JSON.stringify({ adresser }) });
+  });
   await page.goto(BASE + 'index.html');
   await page.evaluate(() => { localStorage.clear(); });
   await page.reload();
@@ -67,8 +76,7 @@ async function run(label, contextOpts) {
   check(await page.locator('.fstep[data-step="2"]').isVisible(), 'ett trykk på hamster → steg 2');
 
   // Steg 2: brodering maks 20 tegn, vises i forhåndsvisningen
-  await page.locator('#flowNext').click();
-  check(await page.locator('#embErr').isVisible(), 'tom brodering gir forklarende feilmelding');
+  check(/49 kr/.test(await page.locator('#embPrice').textContent()), 'broderingstillegget vises ved feltet');
   await page.locator('#emb').fill('');
   await page.locator('#emb').pressSequentially('Dette er altfor lang tekst til en hamster');
   const emb = await page.locator('#emb').inputValue();
@@ -124,13 +132,19 @@ async function run(label, contextOpts) {
   await page.locator('#flowNext').click();
   check(await page.locator('#toNameErr').isVisible() && await page.locator('.fstep[data-step="3"]').isVisible(), 'tom adresse stopper betaling');
   await page.locator('#toName').fill('Ola Nordmann');
-  await page.locator('#toAddress').fill('Storgata 1');
+  await page.locator('#toAddress').pressSequentially('Storg');
+  await page.locator('#toAddressSuggest li').first().waitFor();
+  check(await page.locator('#toAddressSuggest li').count() === 2, 'adresseforslag vises mens man skriver');
+  await page.locator('#toAddressSuggest li').first().click();
+  check((await page.locator('#toAddress').inputValue()) === 'Storgata 1' && (await page.locator('#toZip').inputValue()) === '0155' && (await page.locator('#toCity').inputValue()) === 'Oslo',
+    'valgt forslag fyller ut adresse, postnummer og sted');
+  await page.locator('#toZip').fill('');
   await page.locator('#toZip').pressSequentially('01x55');
   check((await page.locator('#toZip').inputValue()) === '0155', 'postnummer tar bare sifre');
-  await page.locator('#toCity').fill('Oslo');
   await page.locator('#email').fill('kari@example.com');
   const sum = (await page.locator('#summary').innerText()).replace(/\u00ad/g, '');
   check(/Skjevehamsteren/.test(sum) && /Din lille idiot/.test(sum) && /Tante Bjørg/.test(sum) && /244 kr/.test(sum), 'oppsummeringen viser valgene');
+  check(/Brodering\s*49 kr/.test(sum) && /Å betale\s*293 kr/.test(sum), 'brodering koster 49 kr ekstra og summen stemmer');
   await shot('steg3');
 
   // Tilbake: ingenting forsvinner
@@ -196,12 +210,51 @@ async function run(label, contextOpts) {
   check(await page.locator('.fstep[data-step="1"]').isVisible(), '«Send en til» starter på nytt');
   await page.locator('#pick [data-pick="lang"]').click();
   check((await page.locator('#emb').inputValue()) === '' && await page.locator('#revealNo').isChecked(), 'ny bestilling starter blank og anonym');
-  await page.locator('#emb').fill('Hvorfor?');
-  await page.locator('#flowNext').click();
+  await page.locator('#flowNext').click();   // uten brodering
   check((await page.locator('#toName').inputValue()) === '', 'forrige mottaker er ikke lagret videre');
-  await page.locator('#toName').fill('Per'); await page.locator('#toAddress').fill('Veien 2');
-  await page.locator('#toZip').fill('5003'); await page.locator('#toCity').fill('Bergen'); await page.locator('#email').fill('a@b.no');
+  check(/Naken mage/.test(await page.locator('#summary').innerText()) && /Betal 244 kr/.test(await page.locator('#flowNext').textContent()), 'uten brodering: ingen tillegg, 244 kr');
+  await page.locator('#toName').fill('Per Hansen');
+  await page.locator('#toZip').pressSequentially('5003');
+  await page.waitForFunction(() => document.getElementById('toCity').value === 'Bergen', null, { timeout: 5000 }).catch(() => {});
+  check((await page.locator('#toCity').inputValue()) === 'Bergen', 'poststed fylles ut fra postnummer');
+  // Avsender har ikke adressen: spør mottakeren
+  await page.locator('#addrAsk').check({ force: true });
+  check(await page.locator('#toPhone').isVisible() && !(await page.locator('#toAddress').isVisible()), '«Spør mottakeren» bytter adressefelt mot mobilnummer');
+  await page.locator('#email').fill('a@b.no');
+  await page.locator('#toPhone').fill('123');
   await page.locator('#flowNext').click();
+  check(await page.locator('#toPhoneErr').isVisible(), 'ugyldig mobilnummer stoppes');
+  await page.locator('#toPhone').fill('+47 912 34 567');
+  await page.locator('#flowNext').click();
+  await page.locator('#addrLink').waitFor();
+  const addrHref = await page.locator('#addrLink').getAttribute('href');
+  check(/adresse\.html#[0-9a-f]{32}$/.test(addrHref), 'mottakeren får en egen, tilfeldig adresselenke');
+  const a = await ctx.newPage();
+  await a.goto(addrHref);
+  const askText = await a.locator('#askRoot').innerText();
+  check(/PER/.test(askText) && !/Langhamsteren|a@b\.no|hilsen/i.test(askText), 'adressesiden røper verken hamster, hilsen eller avsender');
+  await a.locator('#askForm button[type=submit]').click();
+  check(await a.locator('#aAddressErr').isVisible(), 'adressesiden krever adresse');
+  await a.locator('#aAddress').fill('Veien 2'); await a.locator('#aZip').fill('5003'); await a.locator('#aCity').fill('Bergen');
+  await a.locator('#askForm button[type=submit]').click();
+  check(/TAKK/.test(await a.locator('#askRoot').innerText()), 'mottakeren kan lagre adressen sin');
+
+  // Ordreoversikten
+  await a.goto(BASE + 'admin.html');
+  check(await a.locator('.adm-card').count() === 2, 'ordreoversikten viser begge ordrene');
+  const first = a.locator('.adm-card').first();
+  check(/Veien 2/.test(await first.innerText()) && /Ny/.test(await first.locator('.adm-status').innerText()), 'adressen fra mottakeren er koblet til riktig ordre');
+  if (shots) await a.screenshot({ path: path.join(shots, label + '-admin.png'), fullPage: true });
+  await first.locator('[data-next]').click();
+  check(/Brodert/.test(await a.locator('.adm-card').first().locator('.adm-status').innerText()), 'status kan flyttes til brodert');
+  await a.evaluate(() => { window.print = () => {}; });
+  await a.locator('.adm-card').first().locator('[data-print]').click();
+  check(await a.locator('#printArea .lbl img').count() === 1 && /DEMO-/.test(await a.locator('#printArea .lbl-slip').innerText()), 'QR-lapp med ordrenummer kan skrives ut');
+  if (shots) await a.screenshot({ path: path.join(shots, label + '-lapp.png') });
+  await a.locator('#printClose').click();
+  await a.locator('#admFind').fill(href);
+  check(await a.locator('.adm-card').count() === 1 && /Ola Nordmann/.test(await a.locator('.adm-card').innerText()), 'skannet QR-lenke finner riktig ordre');
+  await a.close();
   await page.locator('#openGreeting').click();
   await page.locator('#grOpen').click();
   await page.locator('#grWhoBtn').click();
