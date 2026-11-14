@@ -23,8 +23,8 @@
 
   --strek: 2px solid var(--blekk);
   --skygge: 4px 4px 0 var(--blekk);
-  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
-  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  --gutter-l: max(clamp(20px, 4vw, 64px), env(safe-area-inset-left, 0px));
+  --gutter-r: max(clamp(20px, 4vw, 64px), env(safe-area-inset-right, 0px));
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -389,4 +389,62 @@ h3 { font-family: var(--display); font-weight: 400; letter-spacing: -0.03em; lin
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ============ Runde 2: rettelser etter designkritikk ============ */
+.hero-fig { position: relative; width: 100%; }
+.hero-fig .sticker { right: -18px; top: -34px; }
+.hero-fig .hero-pen { left: -14px; bottom: -26px; }
+.product-name, .pick-name, .preview-cap b, .summary-name { overflow-wrap: normal; hyphens: manual; }
+.product-no { display: none; }
+legend { padding: 0; }
+.count.is-full { color: var(--blekk); }
+.stitch { letter-spacing: .02em; text-shadow: 0 .04em 0 rgba(0, 0, 0, .28), .03em 0 0 rgba(0, 0, 0, .18); }
+.summary-fig .stitch { display: none; }
+.summary-list dt { min-width: 0; }
+.summary-sum dd { flex: none; }
+.summary-list .link { padding: 12px 0 12px 12px; margin: -12px 0; }
+.preview-cap .link, .media-meta .link { padding: 10px 0; }
+.chip { min-height: 44px; }
+.flow-bar .btn { white-space: nowrap; }
+.flow-bar { justify-content: center; }
+.flow-bar > .btn-ghost { margin-right: auto; }
+.flow-steps.is-finished { visibility: hidden; }
+.grview { background: var(--blekk); }
+.gr-closed { min-height: 62vh; justify-content: center; padding-block: 0; }
+.gr-closed .btn { align-self: flex-start; }
+.gr-note { font-size: 1.5rem; transform: rotate(-4deg); align-self: flex-end; margin-top: 12px; }
+button.file { width: 100%; font: inherit; font-weight: 800; color: inherit; border-radius: 0; }
+button.file.is-rec { background: var(--penn); color: var(--hvit); border-style: solid; }
+.file-alt { align-self: flex-start; cursor: pointer; padding: 8px 0; }
+.foot { padding-bottom: 40px; }
+body:has(#resume:not([hidden])) .foot { padding-bottom: 96px; }
+@media (min-width: 961px) {
+  .how p, .product-line, .head-side { font-size: 1.08rem; }
+  .fstep-title { margin-bottom: 16px; }
+  .flow-bar { padding-left: max(var(--gutter-l), calc((100vw - 1080px) / 2)); padding-right: max(var(--gutter-r), calc((100vw - 1080px) / 2)); }
+}
+@media (max-width: 760px) {
+  .hero-copy { padding-block: 26px 30px; }
+  .hero h1 { font-size: clamp(3.2rem, 17vw, 6.4rem); }
+  .hero-fine { display: none; }
+  .hero-fig .sticker { right: -10px; top: -30px; }
+  .hero-fig .hero-pen { left: -8px; bottom: -22px; }
+  .product-name { font-size: 1.02rem; }
+  .pick-name { font-size: 1rem; }
+  /* Forhåndsvisningen: stor nok til at broderingen kan leses */
+  .preview { display: block; }
+  .preview .hamster { width: min(72%, 300px); margin-inline: auto; }
+  .preview-cap { flex-direction: row; justify-content: space-between; align-items: baseline; margin-top: 14px; }
+  .done-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: center; }
+  .done-fig { display: block; max-width: none; }
+  .tag { padding: 40px 12px 12px; }
+  .tag-text { font-size: 1.1rem; }
+  .done-side { display: contents; }
+  .done-side .btn, .done-side .fineprint { grid-column: 1 / -1; }
+}
+@media (max-width: 359px) {
+  .btn-small { font-size: .82rem; padding: 8px 10px; }
+  .flow-bar { gap: 6px; }
+  .flow-bar .btn-next { font-size: 1rem; padding-inline: 12px; }
 }

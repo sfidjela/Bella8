@@ -48,6 +48,7 @@
           '<h1 class="gr-title">NOEN HAR SENDT DEG EN HAMSTER.</h1>' +
           '<p class="gr-lead">Det var med vilje. Det følger en hilsen med.</p>' +
           '<button class="btn btn-blaa btn-big" type="button" id="grOpen">Åpne hilsenen</button>' +
+          '<p class="pen gr-note" aria-hidden="true">Vi beklager.<br>– Ledelsen</p>' +
         '</section>' +
         '<section class="gr-open" id="grOpened" hidden>' +
           HH.hamsterFigure(product, g.embroidery, { cls: 'gr-hamster' }) +

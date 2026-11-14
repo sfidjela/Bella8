@@ -80,11 +80,11 @@
   left: calc((var(--x) - var(--r)) * .125cqw);
   top: calc((var(--y) - var(--r)) * .125cqw);
   width: calc(var(--r) * .25cqw); height: calc(var(--r) * .25cqw);
-  background-color: inherit; background-blend-mode: multiply; background-repeat: no-repeat;
+  background-color: inherit; background-blend-mode: normal, multiply; background-repeat: no-repeat;
   background-size: 100cqw 125cqw;
   background-position: calc((var(--r) - var(--sx)) * .125cqw) calc((var(--r) - var(--sy)) * .125cqw);
-  -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(closest-side, #000 84%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 84%, transparent 100%);
 }
 .al-pupil {
   left: calc((var(--x) - var(--r)) * .125cqw);
@@ -103,30 +103,12 @@
 .stitch .al-sy { animation: al-sy .26s steps(3, jump-none) both; animation-delay: calc(var(--i, 0) * 38ms); }
 @keyframes al-sy { from { opacity: 0; } to { opacity: 1; } }
 
-/* Nåla: stikker ned ved siste bokstav for hvert tastetrykk og legges bort etterpå. */
-.al-needle {
-  position: absolute; left: 0; top: 0; width: 15cqw; height: .9cqw; min-height: 2px; pointer-events: none;
-  background: linear-gradient(#f4f4f0, #8d8d88); border: 1px solid var(--blekk, #171717); border-radius: 0 50% 50% 0 / 0 50% 50% 0;
-  transform-origin: 0 50%;
-  transform: translate(calc(var(--nx, 50) * 1cqw), calc(var(--ny, 60) * 1cqw)) rotate(-52deg);
-  opacity: 0; transition: opacity .3s .5s;
-}
-.al-needle::after {  /* nåløyet med en trådstump */
-  content: ''; position: absolute; right: -1px; top: 50%; width: 2.2cqw; height: 5cqw;
-  border-right: 2px solid var(--penn, #d92b1c); border-radius: 0 0 80% 0; transform: translateY(-10%) rotate(40deg); transform-origin: 100% 0;
-}
-.al-needle.al-sewing { opacity: 1; transition: opacity .08s; }
-.al-needle.al-jab-a { animation: al-jab-a .2s ease-out; }
-.al-needle.al-jab-b { animation: al-jab-b .2s ease-out; }
-@keyframes al-jab-a { 40% { translate: -1.6cqw 2cqw; } }
-@keyframes al-jab-b { 40% { translate: -1.6cqw 2.05cqw; } }
-
 /* ---------- 4. Stempel når en hamster velges ---------- */
 .al-stamp {
   position: absolute; left: 5%; top: 6%; z-index: 2; max-width: 90%; pointer-events: none;
   padding: .12em .45em .05em; background: var(--papir, #fffdf5); color: var(--penn, #d92b1c);
   border: max(2px, .7cqw) solid var(--penn, #d92b1c);
-  font-family: var(--hand, cursive); font-size: max(15px, 8.5cqw); line-height: 1.05;
+  font-family: var(--hand, cursive); font-size: max(19px, 8.5cqw); line-height: 1.05;
   rotate: -7deg; transform-origin: 30% 50%;
   animation: al-stamp 1.7s ease-out both;
 }
@@ -142,8 +124,8 @@
 /* ---------- 5. Bekreftelsen: QR-lappen dingler i tråden ---------- */
 .tag { transform-origin: 50% 28px; }
 .tag::after {   /* tråden gjennom hullet */
-  content: ''; position: absolute; left: 50%; top: 0; width: 3px; height: 29px; margin-left: -1.5px;
-  background: var(--penn, #d92b1c); border-inline: 1px solid var(--blekk, #171717); box-sizing: content-box; margin-left: -2.5px;
+  content: ''; position: absolute; left: 50%; top: 0; width: 3px; height: 29px; margin-left: -2.5px;
+  background: var(--penn, #d92b1c); border-inline: 1px solid var(--blekk, #171717); box-sizing: content-box;
 }
 .fstep:not([hidden]) .tag {
   animation: al-dangle-in 2.4s cubic-bezier(.35, 0, .35, 1) both, al-dangle 5.2s ease-in-out 2.4s infinite;
@@ -199,6 +181,6 @@
 /* ---------- Mindre bevegelse: alt står stille ---------- */
 @media (prefers-reduced-motion: reduce) {
   .hamster > .al-body { transform: none !important; animation: none !important; }
-  .al-patch, .al-pupil, .al-needle, .al-stamp, .al-canvas { display: none !important; }
+  .al-patch, .al-pupil, .al-stamp, .al-canvas { display: none !important; }
   .sticker, .tag, .gr-closed .btn, .gr-hamster, .gr-card, .gr-who, #grWhoBtn, .stitch .al-sy { animation: none !important; }
 }

@@ -112,7 +112,7 @@ async function run(label, contextOpts) {
   check((await page.locator('#toZip').inputValue()) === '0155', 'postnummer tar bare sifre');
   await page.locator('#toCity').fill('Oslo');
   await page.locator('#email').fill('kari@example.com');
-  const sum = await page.locator('#summary').innerText();
+  const sum = (await page.locator('#summary').innerText()).replace(/\u00ad/g, '');
   check(/Skjevehamsteren/.test(sum) && /Din lille idiot/.test(sum) && /Tante Bjørg/.test(sum) && /244 kr/.test(sum), 'oppsummeringen viser valgene');
   await shot('steg3');
 

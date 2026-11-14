@@ -15,6 +15,7 @@ HH.config = {
   // GRENSER – må også valideres på serveren når backend kobles til.
   embroideryMax: 20,
   greetingTextMax: 500,
+  audioMaxSeconds: 60,
   audioMaxBytes: 10 * 1024 * 1024,
   videoMaxBytes: 50 * 1024 * 1024,
 
@@ -23,6 +24,7 @@ HH.config = {
   // Settes til true av forhåndsvisningsbygget, der alt ligger i én fil.
   singleFile: false,
 
+  shopUrl: 'https://heklahamster.no',   // det kunden deler videre
   contactEmail: 'hei@heklahamster.no', // eksempel – ikke opprettet ennå
 
   // Bildestier. Forhåndsvisningsbygget bytter disse ut med innebygde bilder.
@@ -33,32 +35,32 @@ HH.config = {
   /* belly: hvor broderingen plasseres på bildet (prosent av bildet). */
   products: [
     {
-      id: 'lang', name: 'Langhamsteren',
+      id: 'lang', name: 'Langhamsteren', nameHtml: 'Lang&shy;hamsteren',
       line: 'Litt for lang. Litt for stolt.',
       grade: '3−', remark: 'Fulgte ikke oppskriften.',
       tint: 'rosa', belly: { x: 50, y: 60, w: 30 }
     },
     {
-      id: 'skjev', name: 'Skjevehamsteren',
+      id: 'skjev', name: 'Skjevehamsteren', nameHtml: 'Skjeve&shy;hamsteren',
       line: 'Noe gikk galt. Vi vet ikke hva.',
       grade: '2+', remark: 'Ser i to retninger. Finner ingen av dem.',
-      tint: 'blaa', belly: { x: 51, y: 68, w: 42 }
+      tint: 'blaa', belly: { x: 53, y: 68, w: 36 }
     },
     {
-      id: 'bust', name: 'Bustehamsteren',
+      id: 'bust', name: 'Bustehamsteren', nameHtml: 'Buste&shy;hamsteren',
       line: 'Har hatt en vanskelig uke.',
-      grade: '2', remark: 'Garnet tok slutt. Så tok tålmodigheten slutt.',
+      grade: '2', remark: 'Garnet tok slutt. Tålmodigheten også.',
       tint: 'gul', belly: { x: 50, y: 66, w: 42 }
     },
     {
-      id: 'feit', name: 'Fetthamsteren',
+      id: 'feit', name: 'Fetthamsteren', nameHtml: 'Fett&shy;hamsteren',
       line: 'Liten kropp. Store problemer.',
       grade: '4−', remark: 'Overraskende rund. Mistenkelig fornøyd.',
       tint: 'fersken', belly: { x: 50, y: 69, w: 32 }
     }
   ],
 
-  embroiderySuggestions: ['Din lille idiot', 'Hvorfor?', 'Unnskyld', 'Gratulerer, antar vi', 'Jeg ser deg']
+  embroiderySuggestions: ['Din lille idiot', 'Hvorfor?', 'Unnskyld', 'Gratulerer, antar vi', 'Dette er din feil', 'Jeg prøvde']
 };
 
 HH.product = function (id) {
@@ -88,7 +90,7 @@ HH.esc = function (s) {
 HH.stitchSize = function (product, text) {
   var w = product.belly.w;
   var longest = String(text || '').split(/\s+/).reduce(function (m, word) { return Math.max(m, HH.chars(word).length); }, 3);
-  return Math.max(5, Math.min(13, (2.3 * w) / longest)).toFixed(2);
+  return Math.max(6.5, Math.min(13, (2.3 * w) / longest)).toFixed(2);
 };
 
 /* Hamsterbilde med brodert tekst. Brukes i forhåndsvisning, oppsummering og på hilsensiden. */

@@ -16,11 +16,11 @@ assets_js = 'window.HH=window.HH||{};HH.assets={' + ','.join('"%s":"%s"' % kv fo
 overrides = "HH.config.singleFile=true;HH.config.greetingBaseUrl='https://heklahamster.no/hilsen.html';"
 
 scripts = [assets_js, read('js/vendor/qrcode.js'), read('js/config.js'), overrides,
-           read('js/store.js'), read('js/greeting.js'), read('js/app.js')]
+           read('js/store.js'), read('js/greeting.js'), read('js/app.js'), read('js/alive.js')]
 
 out = ('<title>Heklahamster.no</title>\n'
        '<meta name="claude:viewport-fit-sides" content="cover">\n'
-       '<link rel="stylesheet" href="%s">\n<style>\n%s\n</style>\n%s\n' % (fonts, read('css/style.css'), body)
+       '<link rel="stylesheet" href="%s">\n<style>\n%s\n</style>\n%s\n' % (fonts, read('css/style.css') + '\n' + read('css/alive.css'), body)
        + ''.join('<script>\n%s\n</script>\n' % s.replace('</script', '<\\/script') for s in scripts))
 pathlib.Path(sys.argv[1]).write_text(out, encoding='utf-8')
 print('Skrev %s (%.0f kB)' % (sys.argv[1], len(out.encode()) / 1024))

@@ -34,12 +34,11 @@
   // ---------- Forside: produktene ----------
   $('products').innerHTML = cfg.products.map(function (p, i) {
     return '<button class="product" type="button" data-pick="' + p.id + '" aria-label="Velg ' + esc(p.name) + '">' +
-      '<span class="product-no">Nr. ' + (i + 1) + '</span>' +
       HH.hamsterFigure(p, '', { lazy: true }) +
       '<span class="product-info">' +
-        '<span class="product-name">' + esc(p.name) + '</span>' +
+        '<span class="product-name">' + p.nameHtml + '</span>' +
         '<span class="product-line">' + esc(p.line) + '</span>' +
-        '<span class="product-remark pen">Lærerens dom: ' + esc(p.remark) + '</span>' +
+        '<span class="product-remark pen">' + esc(p.remark) + '</span>' +
         '<span class="product-foot"><span class="product-price">' + price + '</span><span class="product-go">Velg denne →</span></span>' +
       '</span>' +
       '<span class="grade" aria-hidden="true">' + p.grade + '</span>' +
@@ -49,7 +48,7 @@
   $('pick').innerHTML = cfg.products.map(function (p) {
     return '<button class="pick-card" type="button" role="radio" aria-checked="false" data-pick="' + p.id + '">' +
       HH.hamsterFigure(p, '') +
-      '<span class="pick-name">' + esc(p.name) + '</span>' +
+      '<span class="pick-name">' + p.nameHtml + '</span>' +
       '<span class="pick-line">' + esc(p.line) + '</span>' +
     '</button>';
   }).join('');
@@ -111,6 +110,8 @@
     if (step < 4) save();
 
     document.querySelectorAll('.fstep').forEach(function (s) { s.hidden = Number(s.dataset.step) !== step; });
+    $('flowSteps').classList.toggle('is-finished', step === 4);
+    if (step !== 2) stopRec();
     document.querySelectorAll('#flowSteps button').forEach(function (b) {
       var n = Number(b.dataset.goto);
       b.disabled = step === 4 || n > state.reached || (n > 1 && !state.product);
@@ -158,7 +159,7 @@
     back.hidden = state.step === 1;
     nextBtn.disabled = false;
     if (state.step === 1 && p) nextBtn.textContent = 'Videre med ' + p.name + ' →';
-    if (state.step === 2) nextBtn.textContent = 'Videre til levering →';
+    if (state.step === 2) nextBtn.textContent = 'Videre →';
     if (state.step === 3) nextBtn.textContent = cfg.paymentEnabled ? 'Betal ' + price : 'Betal ' + price + ' (demo)';
   }
 
@@ -180,7 +181,7 @@
     var p = HH.product(state.product);
     $('preview').innerHTML =
       HH.hamsterFigure(p, state.embroidery) +
-      '<p class="preview-cap"><b>' + esc(p.name) + '</b><button type="button" class="link" data-goto-pick>Bytt hamster</button></p>';
+      '<p class="preview-cap"><b>' + p.nameHtml + '</b><button type="button" class="link" data-goto-pick>Bytt hamster</button></p>';
   }
   $('preview').addEventListener('click', function (e) {
     if (e.target.closest('[data-goto-pick]')) go(1, { push: true });
@@ -265,7 +266,10 @@
     HH.store.saveDraftMedia(file);
     renderMedia(kind);
   }
-  function mb(bytes) { return (bytes / 1048576).toFixed(bytes < 10485760 ? 1 : 0).replace('.', ',') + ' MB'; }
+  function mb(bytes) {
+    if (bytes < 104858) return Math.max(1, Math.round(bytes / 1024)) + ' kB';
+    return (bytes / 1048576).toFixed(bytes < 10485760 ? 1 : 0).replace('.', ',') + ' MB';
+  }
 
   function renderMedia(kind) {
     var box = $(kind === 'lyd' ? 'audioPreview' : 'videoPreview');
@@ -282,6 +286,45 @@
       '<button type="button" class="link" data-remove-media="' + kind + '">Fjern</button></p>';
   }
   $('audioFile').addEventListener('change', function (e) { onFile('lyd', e.target); });
+
+  // Opptak direkte i nettleseren (lyd). Virker ikke overalt; da brukes filvalget.
+  var rec = null, recTimer = null, recStarted = 0;
+  function recLabel() {
+    var left = Math.max(0, cfg.audioMaxSeconds - Math.floor((Date.now() - recStarted) / 1000));
+    $('recBtn').textContent = 'Stopp opptak (' + left + ' s igjen)';
+    if (left <= 0) stopRec();
+  }
+  function stopRec() {
+    clearInterval(recTimer); recTimer = null;
+    if (rec && rec.state !== 'inactive') rec.stop();
+  }
+  $('recBtn').addEventListener('click', function () {
+    if (rec && rec.state === 'recording') { stopRec(); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
+      return showErr(null, 'mediaErr', 'Opptak støttes ikke her. Velg en lydfil i stedet.');
+    }
+    clearErr(null, 'mediaErr');
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+      var chunks = [];
+      rec = new MediaRecorder(stream);
+      rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+      rec.onstop = function () {
+        stream.getTracks().forEach(function (t) { t.stop(); });
+        $('recBtn').textContent = 'Ta opp på nytt';
+        $('recBtn').classList.remove('is-rec');
+        if (!chunks.length) return;
+        var type = rec.mimeType || 'audio/webm';
+        var file = new File(chunks, 'opptak.' + (type.indexOf('mp4') > -1 ? 'm4a' : 'webm'), { type: type });
+        media.lyd = file; HH.store.saveDraftMedia(file); renderMedia('lyd');
+      };
+      rec.start();
+      recStarted = Date.now();
+      $('recBtn').classList.add('is-rec');
+      recLabel(); recTimer = setInterval(recLabel, 500);
+    }).catch(function () {
+      showErr(null, 'mediaErr', 'Fikk ikke tilgang til mikrofonen. Gi tillatelse, eller velg en lydfil i stedet.');
+    });
+  });
   $('videoFile').addEventListener('change', function (e) { onFile('video', e.target); });
   $('form2').addEventListener('click', function (e) {
     var r = e.target.closest('[data-remove-media]');
@@ -312,11 +355,11 @@
     var ok = true;
     state.embroidery = state.embroidery.trim();
     state.senderName = state.senderName.trim();
-    if (!state.embroidery) ok = showErr('emb', 'embErr', 'Hamsteren trenger noe på magen. Skriv minst ett tegn, eller trykk på et forslag.');
+    if (!state.embroidery) ok = showErr('emb', 'embErr', 'Magen er tom. Skriv noe, eller velg et forslag.');
     if (state.greetType !== 'tekst' && !media[state.greetType]) {
       ok = showErr(null, 'mediaErr', state.greetType === 'lyd'
-        ? 'Du har valgt lydhilsen, men ikke lagt ved lyd. Legg ved en fil, eller bytt til tekst.'
-        : 'Du har valgt videohilsen, men ikke lagt ved video. Legg ved en fil, eller bytt til tekst.');
+        ? 'Lydhilsen uten lyd. Ta opp noe, eller bytt til tekst.'
+        : 'Videohilsen uten video. Legg ved en, eller bytt til tekst.');
     }
     if (state.reveal && !state.senderName) ok = showErr('senderName', 'senderErr', 'Skriv navnet mottakeren skal få se, eller velg å være hemmelig.');
     save();
@@ -327,7 +370,7 @@
   var fields3 = [
     ['toName', function (v) { return v ? '' : 'Hvem skal få hamsteren? Skriv navnet.'; }],
     ['toAddress', function (v) { return v ? '' : 'Vi trenger en gateadresse å sende den til.'; }],
-    ['toZip', function (v) { return /^\d{4}$/.test(v) ? '' : 'Postnummeret skal ha fire sifre.'; }],
+    ['toZip', function (v) { return /^\d{4}$/.test(v) ? '' : 'Fire sifre.'; }],
     ['toCity', function (v) { return v ? '' : 'Skriv poststedet.'; }],
     ['email', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Skriv e-postadressen din, så du får kvittering.'; }]
   ];
@@ -362,20 +405,20 @@
     $('summary').innerHTML =
       '<h3 class="summary-title">Bestillingen din</h3>' +
       '<div class="summary-top">' + HH.hamsterFigure(p, state.embroidery, { cls: 'summary-fig' }) +
-        '<div><p class="summary-name">' + esc(p.name) + '</p><p class="summary-line">' + esc(p.line) + '</p></div></div>' +
+        '<div><p class="summary-name">' + p.nameHtml + '</p><p class="summary-line">' + esc(p.line) + '</p></div></div>' +
       '<dl class="summary-list">' +
         row('Brodering', '«' + esc(state.embroidery) + '»', 2) +
         row('QR-hilsen', esc(greetLabel()), 2) +
         row('Avsender', state.reveal ? 'Avsløres: ' + esc(state.senderName) : 'Hemmelig', 2) +
       '</dl>' +
       '<dl class="summary-list summary-sum">' +
-        '<div><dt>Hamster med brodering og QR-hilsen</dt><dd>' + price + '</dd></div>' +
+        '<div><dt>Hamster, brodering og hilsen</dt><dd>' + price + '</dd></div>' +
         '<div><dt>Frakt i Norge</dt><dd>Ikke fastsatt</dd></div>' +
         '<div class="summary-total"><dt>Å betale</dt><dd>' + price + '</dd></div>' +
       '</dl>' +
       (cfg.priceIsPlaceholder ? '<p class="fineprint">Konseptpris. Endelig pris og frakt settes før butikken åpner.</p>' : '');
     $('payNote').textContent = cfg.paymentEnabled ? '' :
-      'Demo: Betaling er ikke koblet til ennå. Knappen under trekker ingen penger og sender ingen hamster. Du får se hvordan bekreftelsen og QR-hilsenen blir.';
+      'Demo: Knappen trekker ingen penger og sender ingen hamster. Du får se bekreftelsen og hilsenen.';
     $('payNote').hidden = cfg.paymentEnabled;
   }
   function row(label, value, goto) {
@@ -443,7 +486,9 @@
         '<div class="done-side">' +
           HH.hamsterFigure(p, o.embroidery, { cls: 'done-fig' }) +
           '<a class="btn btn-blaa btn-big" id="openGreeting" href="' + esc(url) + '" target="_blank" rel="noopener">Se hilsenen som mottakeren</a>' +
-          '<button class="btn" type="button" id="oneMore">Send en hamster til</button>' +
+          '<button class="btn" type="button" id="shareBtn">Vis noen hva du har gjort</button>' +
+          '<p class="fineprint" id="shareStatus" role="status" hidden></p>' +
+          '<button class="btn btn-ghost" type="button" id="oneMore">Send en hamster til</button>' +
         '</div>' +
       '</div>' +
       '<p class="fineprint">Lenken bak QR-koden er tilfeldig og kan ikke gjettes. Bare den som har hamsteren i hånda kommer inn.' +
@@ -455,6 +500,18 @@
       openGreetingView(g.token);
     });
     $('oneMore').addEventListener('click', function () { resetAfterOrder(); go(1, { push: true }); });
+    $('shareBtn').addEventListener('click', function () {
+      // Deler butikken, aldri den private hilsenlenken.
+      var shopUrl = cfg.shopUrl, status = $('shareStatus');
+      var copied = function () { status.hidden = false; status.textContent = 'Lenken er kopiert: ' + shopUrl; };
+      var manual = function () { status.hidden = false; status.textContent = 'Del denne: ' + shopUrl; };
+      if (navigator.share) {
+        navigator.share({ title: 'Ingen ba om dette.', text: 'Jeg har sendt noen en stygg, heklet hamster.', url: shopUrl }).catch(function (err) {
+          if (err && err.name === 'AbortError') return;
+          if (navigator.clipboard) navigator.clipboard.writeText(shopUrl).then(copied, manual); else manual();
+        });
+      } else if (navigator.clipboard) { navigator.clipboard.writeText(shopUrl).then(copied, manual); } else { manual(); }
+    });
   }
 
   function resetAfterOrder() {
