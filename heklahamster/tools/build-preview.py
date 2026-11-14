@@ -15,7 +15,9 @@ assets = {p.stem: 'data:image/webp;base64,' + base64.b64encode(p.read_bytes()).d
 assets_js = 'window.HH=window.HH||{};HH.assets={' + ','.join('"%s":"%s"' % kv for kv in assets.items()) + '};'
 # 3D-modellene (assets/3d/*.glb) publiseres som egne filer ved siden av forhåndsvisningen.
 overrides = ("HH.config.singleFile=true;HH.config.greetingBaseUrl='https://heklahamster.no/hilsen.html';"
-             "HH.config.modelViewerSrc='https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer-umd.min.js';")
+             "HH.config.modelViewerSrc='https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer-umd.min.js';"
+             # Forhåndsvisningstjenesten serverer ikke .glb, så modellene legges ut som binærfiler med et annet etternavn.
+             "HH.config.model=function(id){return 'assets/3d/'+id+'.wasm';};")
 
 scripts = [assets_js, read('js/vendor/qrcode.js'), read('js/config.js'), overrides,
            read('js/store.js'), read('js/greeting.js'), read('js/view3d.js'), read('js/app.js'), read('js/alive.js')]
