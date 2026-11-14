@@ -25,6 +25,8 @@ python3 -m http.server 4173
 | `js/config.js` | Produkter, pris, grenser og flagg. **Start her for å endre tekst, pris eller hamstere** |
 | `js/store.js` | Datalaget. Lagrer lokalt i dag, byttes mot Supabase senere |
 | `js/app.js` | Forside og bestillingsflyt |
+| `js/view3d.js` | 3D-visning av hamsteren i steg 2 (modeller i `assets/3d/`, laget med Meshy) |
+| `js/alive.js`, `css/alive.css` | Animasjonene: pust, glaneøyne, sying, stempel, dinglende QR-lapp |
 | `js/greeting.js` | Hilsenvisningen (brukes både av `hilsen.html` og «se som mottaker») |
 | `products.json` | Produktfeed for søk og AI-assistenter |
 | `docs/supabase-schema.sql` | Forslag til tabeller og tilgangsregler |

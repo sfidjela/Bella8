@@ -32,31 +32,36 @@ HH.config = {
     return (HH.assets && HH.assets[name]) || 'assets/' + name + '.webp';
   },
 
-  /* belly: hvor broderingen plasseres på bildet (prosent av bildet). */
+  // 3D-modeller og visningsbiblioteket (lastes først i steg 2).
+  modelViewerSrc: 'js/vendor/model-viewer.min.js',
+  model: function (id) { return 'assets/3d/' + id + '.glb'; },
+
+  /* belly: hvor broderingen plasseres på bildet (prosent av bildet).
+     model: hvor broderingen festes på 3D-modellen (punkt og retning på magen). */
   products: [
     {
       id: 'lang', name: 'Langhamsteren', nameHtml: 'Lang&shy;hamsteren',
       line: 'Litt for lang. Litt for stolt.',
       grade: '3−', remark: 'Fulgte ikke oppskriften.',
-      tint: 'rosa', belly: { x: 50, y: 60, w: 30 }
+      tint: 'rosa', belly: { x: 50, y: 60, w: 30 }, model: { pos: '0 -0.17 0.19', normal: '0 0 1' }
     },
     {
       id: 'skjev', name: 'Skjevehamsteren', nameHtml: 'Skjeve&shy;hamsteren',
       line: 'Noe gikk galt. Vi vet ikke hva.',
       grade: '2+', remark: 'Ser i to retninger. Finner ingen av dem.',
-      tint: 'blaa', belly: { x: 53, y: 68, w: 36 }
+      tint: 'blaa', belly: { x: 53, y: 68, w: 36 }, model: { pos: '0 -0.26 0.59', normal: '0 0 1' }
     },
     {
       id: 'bust', name: 'Bustehamsteren', nameHtml: 'Buste&shy;hamsteren',
       line: 'Har hatt en vanskelig uke.',
       grade: '2', remark: 'Garnet tok slutt. Tålmodigheten også.',
-      tint: 'gul', belly: { x: 50, y: 66, w: 42 }
+      tint: 'gul', belly: { x: 50, y: 66, w: 42 }, model: { pos: '0 -0.32 0.48', normal: '0 0 1' }
     },
     {
       id: 'feit', name: 'Fetthamsteren', nameHtml: 'Fett&shy;hamsteren',
       line: 'Liten kropp. Store problemer.',
       grade: '4−', remark: 'Overraskende rund. Mistenkelig fornøyd.',
-      tint: 'fersken', belly: { x: 50, y: 69, w: 32 }
+      tint: 'fersken', belly: { x: 50, y: 69, w: 32 }, model: { pos: '0 -0.27 0.88', normal: '0 0 1' }
     }
   ],
 

@@ -13,10 +13,12 @@ fonts = re.search(r'<link rel="stylesheet" href="(https://fonts\.googleapis\.com
 assets = {p.stem: 'data:image/webp;base64,' + base64.b64encode(p.read_bytes()).decode()
           for p in sorted((root / 'assets').glob('*.webp')) if p.stem in ('lang', 'skjev', 'bust', 'feit', 'hero', 'qr')}
 assets_js = 'window.HH=window.HH||{};HH.assets={' + ','.join('"%s":"%s"' % kv for kv in assets.items()) + '};'
-overrides = "HH.config.singleFile=true;HH.config.greetingBaseUrl='https://heklahamster.no/hilsen.html';"
+# 3D-modellene (assets/3d/*.glb) publiseres som egne filer ved siden av forhåndsvisningen.
+overrides = ("HH.config.singleFile=true;HH.config.greetingBaseUrl='https://heklahamster.no/hilsen.html';"
+             "HH.config.modelViewerSrc='https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer-umd.min.js';")
 
 scripts = [assets_js, read('js/vendor/qrcode.js'), read('js/config.js'), overrides,
-           read('js/store.js'), read('js/greeting.js'), read('js/app.js'), read('js/alive.js')]
+           read('js/store.js'), read('js/greeting.js'), read('js/view3d.js'), read('js/app.js'), read('js/alive.js')]
 
 out = ('<title>Heklahamster.no</title>\n'
        '<meta name="claude:viewport-fit-sides" content="cover">\n'

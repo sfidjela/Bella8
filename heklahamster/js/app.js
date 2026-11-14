@@ -182,6 +182,7 @@
     $('preview').innerHTML =
       HH.hamsterFigure(p, state.embroidery) +
       '<p class="preview-cap"><b>' + p.nameHtml + '</b><button type="button" class="link" data-goto-pick>Bytt hamster</button></p>';
+    if (HH.view3d) HH.view3d.mount($('preview'), p, state.embroidery);
   }
   $('preview').addEventListener('click', function (e) {
     if (e.target.closest('[data-goto-pick]')) go(1, { push: true });
@@ -228,6 +229,7 @@
       stitch.hidden = !clamped;
       stitch.style.setProperty('--fs', HH.stitchSize(HH.product(state.product), clamped));
     }
+    if (HH.view3d) HH.view3d.setText(clamped);
     clearErr('emb');
     syncStep2(); save();
   }

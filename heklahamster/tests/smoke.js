@@ -16,7 +16,7 @@ const check = (ok, name, extra) => {
 
 async function run(label, contextOpts) {
   console.log('\n== ' + label + ' ==');
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
   const ctx = await browser.newContext(contextOpts);
   const page = await ctx.newPage();
   const errors = [];
@@ -61,6 +61,9 @@ async function run(label, contextOpts) {
   check(pickImgs, 'fire hamsterbilder i steg 1');
   await shot('steg1');
   await page.locator('#pick [data-pick="skjev"]').click();
+  // 3D-visningen tar over forhåndsvisningen når den er lastet. Lås til bilde mens broderingen testes.
+  const has3d = await page.locator('#preview [data-pv="foto"]').count() > 0;
+  if (has3d) await page.locator('#preview [data-pv="foto"]').click();
   check(await page.locator('.fstep[data-step="2"]').isVisible(), 'ett trykk på hamster → steg 2');
 
   // Steg 2: brodering maks 20 tegn, vises i forhåndsvisningen
@@ -80,6 +83,20 @@ async function run(label, contextOpts) {
   const figBox = await page.locator('#preview .hamster').boundingBox();
   check(stitchBox && stitchBox.x >= figBox.x && stitchBox.x + stitchBox.width <= figBox.x + figBox.width, 'broderingen holder seg innenfor bildet');
   await shot('steg2');
+
+  // 3D-visning
+  if (has3d) {
+    await page.locator('#preview [data-pv="3d"]').click();
+    const loaded = await page.waitForFunction(() => { const v = document.querySelector('#preview model-viewer'); return v && v.loaded; }, null, { timeout: 60000 }).then(() => true, () => false);
+    check(loaded, '3D-modellen lastes');
+    if (loaded) {
+      await page.locator('#preview [data-pv="3d"]').click();
+      check(await page.locator('#preview .pv3d').isVisible() && !(await page.locator('#preview .hamster').isVisible()), '«Snurr i 3D» bytter til 3D-visning');
+      check((await page.locator('#preview .stitch3d').textContent()) === 'Din lille idiot', 'broderingen følger med over på 3D-modellen');
+      await shot('steg2-3d');
+    }
+    await page.locator('#preview [data-pv="foto"]').click();
+  } else { console.log('  (3D ikke testet: WebGL er ikke tilgjengelig i denne nettleseren)'); }
 
   // Hilsentyper
   await page.locator('#gtLyd').check({ force: true });
