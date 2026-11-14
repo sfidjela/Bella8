@@ -1,0 +1,204 @@
+/* Heklahamster – litt liv i hamsterne.
+   Hører sammen med js/alive.js. Alt her er pynt: uten denne filen (eller uten skriptet)
+   ser siden ut som før. Bare transform/opacity animeres, og alt står stille når
+   brukeren har bedt om mindre bevegelse (se nederst). */
+
+/* ---------- 1. Pust og vagging ----------
+   alive.js pakker bilde + brodering inn i .al-body, slik at teksten blir med på magen.
+   Rammen (figuren) står stille; hamsteren rører seg inni den. Bildet er zoomet 4 %
+   slik at vaggingen aldri viser kanten av bildet. */
+.hamster > .al-body {
+  position: absolute; inset: 0; display: block;
+  background-color: inherit;            /* trengs for at «multiply» på bildet fortsatt skal treffe fargen */
+  transform-origin: 50% 100%;
+  transform: translateY(1.2%) scale(1.04);
+}
+.hamster.al-on > .al-body {
+  animation: al-breathe var(--al-dur, 8s) ease-in-out var(--al-delay, 0s) infinite, var(--al-fx, al-none 0s);
+  will-change: transform;
+}
+@keyframes al-none { from { opacity: 1; } to { opacity: 1; } }
+@keyframes al-breathe {
+  0%, 100% { transform: translateY(1.2%) rotate(-.6deg) scale(1.04, 1.04); }
+  25%      { transform: translateY(1.2%) rotate(0deg)   scale(1.048, 1.062); }
+  50%      { transform: translateY(1.2%) rotate(.6deg)  scale(1.04, 1.04); }
+  75%      { transform: translateY(1.2%) rotate(0deg)   scale(1.048, 1.062); }
+}
+
+/* Sprett, klem, hopp og rykk. Bruker «scale»/«translate» som egne egenskaper,
+   så de legges oppå pustingen uten å avbryte den. Verdiene holder seg så vidt over
+   rammestørrelsen, så bakgrunnen aldri titter fram. */
+@keyframes al-boing {
+  0%   { scale: 1 1; }
+  22%  { scale: 1.09 .972; }
+  48%  { scale: .985 1.1; }
+  70%  { scale: 1.035 .99; }
+  86%  { scale: .997 1.02; }
+  100% { scale: 1 1; }
+}
+@keyframes al-squish {
+  0%   { scale: 1 1; }
+  30%  { scale: 1.12 .968; }
+  60%  { scale: .99 1.07; }
+  100% { scale: 1 1; }
+}
+@keyframes al-hop {
+  0%, 100% { scale: 1 1; translate: 0 0; }
+  18%  { scale: 1.06 .975; translate: 0 0; }
+  45%  { scale: .99 1.05; translate: 0 -1.5%; }
+  70%  { scale: 1.04 .985; translate: 0 0; }
+}
+/* To like rykk med hvert sitt navn: bytte av navn starter animasjonen på nytt for hvert tastetrykk. */
+@keyframes al-twitch-a {
+  0% { scale: 1 1; } 35% { scale: 1.035 .985; } 100% { scale: 1 1; }
+}
+@keyframes al-twitch-b {
+  0% { scale: 1 1; } 35% { scale: .995 1.04; } 100% { scale: 1 1; }
+}
+.hamster.al-fx-boing    { --al-fx: al-boing .6s ease-out; }
+.hamster.al-fx-squish   { --al-fx: al-squish .4s ease-out; }
+.hamster.al-fx-hop      { --al-fx: al-hop .7s ease-out; }
+.hamster.al-fx-twitch-a { --al-fx: al-twitch-a .22s ease-out; }
+.hamster.al-fx-twitch-b { --al-fx: al-twitch-b .22s ease-out; }
+@media (hover: hover) {
+  .product:hover .hamster, .pick-card:hover .hamster { --al-fx: al-boing .6s ease-out; }
+}
+
+/* Klistremerket på forsiden sitter litt løst. */
+.sticker { animation: al-sticker 7s ease-in-out infinite; }
+@keyframes al-sticker {
+  0%, 100% { rotate: 0deg; }
+  50%      { rotate: -5deg; }
+}
+
+/* ---------- 2. Skjevehamsterens glaneøyne ----------
+   Koordinater er piksler i originalbildet (800 × 1000); 1 px = 0.125cqw av figurbredden.
+   .al-patch dekker den påsydde pupillen med hvitt garn hentet fra et annet sted i samme øye,
+   .al-pupil er den nye pupillen som kan flytte seg. */
+.al-patch, .al-pupil { position: absolute; border-radius: 50%; pointer-events: none; }
+.al-patch {
+  left: calc((var(--x) - var(--r)) * .125cqw);
+  top: calc((var(--y) - var(--r)) * .125cqw);
+  width: calc(var(--r) * .25cqw); height: calc(var(--r) * .25cqw);
+  background-color: inherit; background-blend-mode: multiply; background-repeat: no-repeat;
+  background-size: 100cqw 125cqw;
+  background-position: calc((var(--r) - var(--sx)) * .125cqw) calc((var(--r) - var(--sy)) * .125cqw);
+  -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
+}
+.al-pupil {
+  left: calc((var(--x) - var(--r)) * .125cqw);
+  top: calc((var(--y) - var(--r)) * .125cqw);
+  width: calc(var(--r) * .25cqw); height: calc(var(--r) * .25cqw);
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, .85) 0 5%, rgba(255, 255, 255, 0) 13%),
+    radial-gradient(circle at 62% 70%, rgba(120, 110, 100, .35) 0, rgba(0, 0, 0, 0) 38%),
+    radial-gradient(circle at 42% 38%, #3a3633 0, #0c0b0b 62%);
+  box-shadow: 0 .35cqw .7cqw rgba(40, 20, 10, .4);
+  transform: translate(calc(var(--px, 0) * .125cqw), calc(var(--py, 0) * .125cqw));
+  transition: transform var(--pt, .16s) cubic-bezier(.3, 1.4, .5, 1);
+}
+
+/* ---------- 3. Brodering som sys på ---------- */
+.stitch .al-sy { animation: al-sy .26s steps(3, jump-none) both; animation-delay: calc(var(--i, 0) * 38ms); }
+@keyframes al-sy { from { opacity: 0; } to { opacity: 1; } }
+
+/* Nåla: stikker ned ved siste bokstav for hvert tastetrykk og legges bort etterpå. */
+.al-needle {
+  position: absolute; left: 0; top: 0; width: 15cqw; height: .9cqw; min-height: 2px; pointer-events: none;
+  background: linear-gradient(#f4f4f0, #8d8d88); border: 1px solid var(--blekk, #171717); border-radius: 0 50% 50% 0 / 0 50% 50% 0;
+  transform-origin: 0 50%;
+  transform: translate(calc(var(--nx, 50) * 1cqw), calc(var(--ny, 60) * 1cqw)) rotate(-52deg);
+  opacity: 0; transition: opacity .3s .5s;
+}
+.al-needle::after {  /* nåløyet med en trådstump */
+  content: ''; position: absolute; right: -1px; top: 50%; width: 2.2cqw; height: 5cqw;
+  border-right: 2px solid var(--penn, #d92b1c); border-radius: 0 0 80% 0; transform: translateY(-10%) rotate(40deg); transform-origin: 100% 0;
+}
+.al-needle.al-sewing { opacity: 1; transition: opacity .08s; }
+.al-needle.al-jab-a { animation: al-jab-a .2s ease-out; }
+.al-needle.al-jab-b { animation: al-jab-b .2s ease-out; }
+@keyframes al-jab-a { 40% { translate: -1.6cqw 2cqw; } }
+@keyframes al-jab-b { 40% { translate: -1.6cqw 2.05cqw; } }
+
+/* ---------- 4. Stempel når en hamster velges ---------- */
+.al-stamp {
+  position: absolute; left: 5%; top: 6%; z-index: 2; max-width: 90%; pointer-events: none;
+  padding: .12em .45em .05em; background: var(--papir, #fffdf5); color: var(--penn, #d92b1c);
+  border: max(2px, .7cqw) solid var(--penn, #d92b1c);
+  font-family: var(--hand, cursive); font-size: max(15px, 8.5cqw); line-height: 1.05;
+  rotate: -7deg; transform-origin: 30% 50%;
+  animation: al-stamp 1.7s ease-out both;
+}
+@keyframes al-stamp {
+  0%   { transform: scale(2.4); opacity: 0; }
+  9%   { transform: scale(.92); opacity: 1; }
+  15%  { transform: scale(1.03); }
+  20%  { transform: scale(1); }
+  82%  { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1) translateY(-12%); opacity: 0; }
+}
+
+/* ---------- 5. Bekreftelsen: QR-lappen dingler i tråden ---------- */
+.tag { transform-origin: 50% 28px; }
+.tag::after {   /* tråden gjennom hullet */
+  content: ''; position: absolute; left: 50%; top: 0; width: 3px; height: 29px; margin-left: -1.5px;
+  background: var(--penn, #d92b1c); border-inline: 1px solid var(--blekk, #171717); box-sizing: content-box; margin-left: -2.5px;
+}
+.fstep:not([hidden]) .tag {
+  animation: al-dangle-in 2.4s cubic-bezier(.35, 0, .35, 1) both, al-dangle 5.2s ease-in-out 2.4s infinite;
+}
+@keyframes al-dangle-in {
+  0%   { rotate: -15deg; }
+  16%  { rotate: 11deg; }
+  33%  { rotate: -7.5deg; }
+  50%  { rotate: 5deg; }
+  67%  { rotate: -3deg; }
+  84%  { rotate: 1.5deg; }
+  100% { rotate: 0deg; }
+}
+@keyframes al-dangle {
+  0%, 100% { rotate: 0deg; }
+  25%      { rotate: 1.7deg; }
+  75%      { rotate: -1.7deg; }
+}
+/* Garnnøstene tegnes på et lerret som ligger oppå alt og ikke tar imot trykk. */
+.al-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1000; pointer-events: none; }
+
+/* ---------- 6. Hilsenen: pakken rister, hamsteren spretter opp ---------- */
+.gr-closed .btn { animation: al-rattle 4.6s ease-in-out 1.4s infinite; }
+@keyframes al-rattle {
+  0%, 13%, 100% { rotate: 0deg; }
+  2.5% { rotate: -2.4deg; }
+  5%   { rotate: 2.4deg; }
+  7.5% { rotate: -1.6deg; }
+  10%  { rotate: 1deg; }
+}
+.gr-hamster { transform-origin: 50% 100%; }
+.gr-open:not([hidden]) .gr-hamster { animation: al-pop .85s cubic-bezier(.3, .9, .4, 1) both; }
+@keyframes al-pop {
+  0%   { translate: 0 60%; scale: .55 .3; opacity: 0; }
+  12%  { opacity: 1; }
+  42%  { translate: 0 -9%; scale: .94 1.12; }
+  62%  { translate: 0 2%; scale: 1.06 .93; }
+  80%  { translate: 0 -2%; scale: .985 1.03; }
+  100% { translate: 0 0; scale: 1 1; opacity: 1; }
+}
+.gr-open:not([hidden]) .gr-card { animation: al-rise .45s ease-out .3s both; }
+.gr-open:not([hidden]) #grWhoBtn { animation: al-rise .45s ease-out .42s both; }
+@keyframes al-rise {
+  from { transform: translateY(18px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.gr-who:not([hidden]) { animation: al-reveal .5s cubic-bezier(.3, 1.5, .5, 1) both; }
+@keyframes al-reveal {
+  0%   { scale: 1.25; rotate: -4deg; opacity: 0; }
+  100% { scale: 1; rotate: 0deg; opacity: 1; }
+}
+
+/* ---------- Mindre bevegelse: alt står stille ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hamster > .al-body { transform: none !important; animation: none !important; }
+  .al-patch, .al-pupil, .al-needle, .al-stamp, .al-canvas { display: none !important; }
+  .sticker, .tag, .gr-closed .btn, .gr-hamster, .gr-card, .gr-who, #grWhoBtn, .stitch .al-sy { animation: none !important; }
+}
