@@ -64,7 +64,39 @@ Salgspris med brodering: 387 kr (249 + 79 + frakt 59). Uten: 308 kr. Tallene und
 
 Om du hekler og broderer selv uten å regne lønn, øker marginen med 50 kr per brodert hamster.
 
-## 5. Neste steg
+## 5. CE-merking og økologisk: hva koster det ekstra?
+
+Besluttet: dere broderer og syr på lappene selv i starten.
+
+### CE-merking (leketøystesting EN 71)
+
+| | Kostnad |
+|---|---|
+| Test per design (EN 71-1, -2 og -3) | ca. 680–1 900 USD (7 000–20 000 kr). Laboratorier som SGS oppgir opptil ca. 4 000 USD for kosedyr. |
+| Alle fire design | ca. 28 000–80 000 kr |
+| Per hamster ved 50 stk per design | **ca. 140–400 kr ekstra** |
+| Per hamster ved 1 000 stk per design | ca. 7–20 kr ekstra |
+
+- Noen produsenter tar testkostnaden inn i stykkprisen på første ordre. Spør om det.
+- **Viktig:** når dere syr på lappen selv, er dere de som ferdigstiller produktet. Da må lappen og sømmen også være med i
+  testen og den tekniske dokumentasjonen, ellers dekker ikke produsentens rapport hamsteren dere selger.
+- Dere har bestemt at hamsterne selges som pynt for voksne. Da kreves ikke CE etter leketøyreglene.
+  **Anbefaling:** dropp CE i starten. Det koster mer per hamster enn hamsteren selv ved små partier.
+
+### Økologisk (GOTS)
+
+- Økologisk bomullsgarn koster ca. 20–40 % mer enn vanlig. En hamster bruker under 100 g garn,
+  så **garnet blir bare noen få kroner dyrere per hamster**.
+- Å kunne *merke* hamsteren som økologisk (GOTS) er vanskeligere. Hele kjeden må være sertifisert: garn, fabrikk og den som
+  ferdigstiller. Jeg fant ingen hekle- eller amigurumiprodusent med GOTS. Sertifisering koster fra ca. 500–2 000 USD per år
+  per fabrikk, ifølge bransjeblogger, og noen kilder oppgir mer.
+- Siden dere syr på lappen selv, må trolig også dere sertifiseres for å bruke GOTS-merket. Det har jeg ikke fått bekreftet.
+
+**Anbefaling:** be om **OEKO-TEX Standard 100**-sertifisert garn. Det er vanlig, nesten gratis ekstra,
+og betyr at garnet er testet for skadelige stoffer. Be i tillegg om pris på økologisk bomullsgarn, men ikke
+skriv «økologisk» på siden før dere har dokumentasjon for hele kjeden.
+
+## 6. Neste steg
 
 1. Send forespørselen i `docs/produksjon-og-brodering.md` til **3 i Vietnam og 2 i Kina**. Be om pris ved 50, 100 og 500 stk.
 2. Bestill prøver av én design fra de to beste. Ca. 430 kr per prøve.
@@ -73,6 +105,13 @@ Om du hekler og broderer selv uten å regne lønn, øker marginen med 50 kr per 
 5. Oppdater regnestykket med ekte tall.
 
 ## Kilder
+
+- ComplianceGate, kostnad for EN 71-testing: https://www.compliancegate.com/product-safety-lab-testing-costs/
+- Plushtoys-factory, EN 71-testing per design: https://plushtoys-factory.com/plush-toy-safety-testing-cost/
+- SGS, leketøytesting for EU: https://ticmall.sgs.com/en/service_details/hl-toy-testing-service-for-eu-market
+- Kinesiske GOTS-produsenter: https://www.chinaimportal.com/blog/organic-cotton-manufacturers/
+- Pris på økologisk garn: https://www.goldsupplier.com/discover/organic-cotton-yarn-wholesale/
+- Kostnad ved GOTS-fabrikk: https://fumaofabric.com/?p=8599
 
 - Global Sources, håndheklet amigurumi fra Kina, 6–10 USD, MOQ 1 000: https://www.globalsources.com/product/handmade-soft-amigurumi-crochet-doll-knitted-toy_1177837458f.htm
 - Made-in-China, priser på heklede leker: https://www.made-in-china.com/products-search/hot-china-products/Crochet_Animal_Price.html

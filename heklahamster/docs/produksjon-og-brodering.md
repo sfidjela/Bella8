@@ -8,7 +8,7 @@ Beslutninger så langt (16.11.2026):
 - Hamsterne selges som **pynt for voksne, ikke som leke**. Da kreves ikke CE-merking etter leketøyreglene,
   men produktet må merkes og markedsføres slik. Siden sier nå «Pynt for voksne, ikke en leke».
 - Firma registreres når produksjonen er avklart.
-- Brodering: **egen maskin, brodert filtlapp som sys på magen** (besluttet). Nettsiden viser nå teksten på en slik lapp.
+- Brodering: **egen maskin, brodert filtlapp som vi syr på magen selv** i starten (besluttet). Nettsiden viser nå teksten på en slik lapp.
 - Norskheklede hamstere blir en **egen, dyrere variant**.
 - Første bestilling fra produsent: **så få som produsenten tillater**, og prøver før det.
 - Siden sier foreløpig **ikke** hvor hamsterne lages.
@@ -81,6 +81,9 @@ Send til 3–5 produsenter, f.eks. via Alibaba eller 1688 med agent. Be om prøv
 > 6. Production lead time and shipping options to Norway.
 > 7. Can each piece be bagged individually with our label?
 > 8. We want to start with the smallest order you accept. What is it?
+> 10. Is your yarn OEKO-TEX Standard 100 certified? Please send the certificate.
+> 11. Can you make the same hamsters in organic cotton yarn (GOTS or OCS)? What is the extra cost per piece?
+> 12. Do you have EN 71 test reports for similar products, and what would EN 71 testing of our designs cost?
 > 9. Please leave a flat area on the belly of about 6 x 5 cm. We will sew on an embroidered patch.
 >
 > Thank you.
