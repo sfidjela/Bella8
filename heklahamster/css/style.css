@@ -545,3 +545,18 @@ body:has(#resume:not([hidden])) .foot { padding-bottom: 96px; }
 /* Produktfakta under hamsterne */
 .facts { margin-top: 36px; font-weight: 800; font-size: 1.05rem; max-width: 46em; border-top: var(--strek); padding-top: 14px; }
 .band-papir > .facts + .fineprint { margin-top: 8px; }
+
+/* Broderingen sitter på en filtlapp som sys på magen (slik den faktisk produseres). */
+:root { --filt: #f4ecdc; --filtkant: #d9c7a6; }
+.stitch, .stitch3d {
+  background: var(--filt); color: var(--traad);
+  padding: .32em .5em .38em; box-sizing: border-box;
+  border: .09em solid var(--filtkant); outline: .06em dashed rgba(43, 27, 18, .45); outline-offset: -.24em;
+  border-radius: 46% 54% 48% 52% / 56% 48% 52% 44%;
+  box-shadow: 0 .12em .18em rgba(0, 0, 0, .28);
+  text-shadow: none;
+}
+.stitch[hidden] { display: none; }
+.stitch { overflow-wrap: normal; word-break: normal; padding: .28em .45em .32em; }
+.stitch3d { max-width: calc(var(--w, 38) * 1cqw); padding: .28em .45em .32em; overflow-wrap: normal; }
+.stitch, .stitch3d { padding-left: .62em; padding-right: .62em; }

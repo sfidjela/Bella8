@@ -122,6 +122,6 @@ HH.hamsterFigure = function (product, embroidery, opts) {
   var text = embroidery || '';
   return '<figure class="hamster tint-' + product.tint + (opts.cls ? ' ' + opts.cls : '') + '">' +
     '<img src="' + HH.config.img(product.id) + '" alt="' + HH.esc(product.name) + ', en rar heklet hamster" width="800" height="1000"' + (opts.lazy ? ' loading="lazy"' : '') + '>' +
-    '<span class="stitch" data-stitch style="left:' + b.x + '%;top:' + b.y + '%;width:' + b.w + '%;--fs:' + HH.stitchSize(product, text) + '"' + (text ? '' : ' hidden') + '>' + HH.esc(text) + '</span>' +
+    '<span class="stitch" data-stitch style="left:' + b.x + '%;top:' + b.y + '%;max-width:' + b.w + '%;width:max-content;--fs:' + HH.stitchSize(product, text) + '"' + (text ? '' : ' hidden') + '>' + HH.esc(text) + '</span>' +
     '</figure>';
 };

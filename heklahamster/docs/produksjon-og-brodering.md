@@ -8,6 +8,10 @@ Beslutninger så langt (16.11.2026):
 - Hamsterne selges som **pynt for voksne, ikke som leke**. Da kreves ikke CE-merking etter leketøyreglene,
   men produktet må merkes og markedsføres slik. Siden sier nå «Pynt for voksne, ikke en leke».
 - Firma registreres når produksjonen er avklart.
+- Brodering: **egen maskin, brodert filtlapp som sys på magen** (besluttet). Nettsiden viser nå teksten på en slik lapp.
+- Norskheklede hamstere blir en **egen, dyrere variant**.
+- Første bestilling fra produsent: **så få som produsenten tillater**, og prøver før det.
+- Siden sier foreløpig **ikke** hvor hamsterne lages.
 
 ## Viktig: «maskinelt heklet» finnes nesten ikke
 
@@ -35,6 +39,30 @@ Broderingstillegget er 79 kr. Løsning B spiser hele tillegget og mer. Løsning 
 
 **Anbefaling:** Start med A og en rimelig én-nåls maskin. Bruk B i perioder med mange ordre. Bruk C for en eventuell norsk variant.
 
+## Arbeidsflyt for magelappen (besluttet)
+
+1. Spenn fast stabilisator i rammen (riv-bort eller vannløselig). Legg en ark filt oppå.
+2. Maskinen syr en heftesøm som markerer lappens form, og deretter kundens tekst.
+3. Maskinen syr en tett kant (satengsøm) rundt lappen. Klipp langs kanten.
+4. Sy lappen fast på magen for hånd. Påsydd holder bedre enn påstrøket.
+
+Bruk ullfilt eller twill som ikke strekker seg. Strekkfilt gir dårlig resultat.
+
+**Lappens størrelse:** 20 tegn på to linjer krever en lapp på ca. 6 x 5 cm, med bokstaver rundt 5–6 mm.
+Mindre enn det blir vanskelig å lese. Be produsenten sette av en flate på magen som passer.
+
+**Krav til maskinen:**
+
+- Kan skrive tekst direkte på skjermen, uten PC. Hver ordre har ny tekst.
+- Broderiramme på minst 10 x 10 cm (gir plass til flere lapper per runde).
+- Én nål holder i starten. Flere nåler (6–10) sparer tid ved trådbytte, men koster mye mer.
+
+**Pris:** en brukt Brother Innov-is NV800E (én nål, 10 x 10 cm, tekst på skjermen) ligger på 23 000–25 000 kr på FINN.
+Den er ikke lenger i produksjon. Enklere nye maskiner for hjemmebruk finnes billigere, men sjekk at de kan skrive tekst på skjermen.
+Profesjonell 10-nåls maskin: ca. 180 000 kr.
+
+**Kostnad per lapp:** filt, stabilisator og tråd koster noen få kroner. Tiden er den egentlige kostnaden: ca. 10–15 min per lapp inkludert påsying.
+
 ## Forespørsel til produsenter (klar til å sende)
 
 Send til 3–5 produsenter, f.eks. via Alibaba eller 1688 med agent. Be om prøver før dere bestiller.
@@ -47,11 +75,13 @@ Send til 3–5 produsenter, f.eks. via Alibaba eller 1688 med agent. Be om prøv
 > 1. Are the pieces hand-crocheted or machine-knitted?
 > 2. Price per piece at 100, 300 and 1 000 pieces, and minimum order per design.
 > 3. Price and lead time for samples (one of each design).
-> 4. Can you sew a blank felt patch on the belly (about 5 x 4 cm), or leave the belly plain?
+> 4. Can you leave the belly plain and flat, without any decoration?
 > 5. Materials: yarn type, stuffing, and how eyes are attached. The product is decoration for adults, not a toy,
 >    but we want secure eyes and no small loose parts.
 > 6. Production lead time and shipping options to Norway.
 > 7. Can each piece be bagged individually with our label?
+> 8. We want to start with the smallest order you accept. What is it?
+> 9. Please leave a flat area on the belly of about 6 x 5 cm. We will sew on an embroidered patch.
 >
 > Thank you.
 
