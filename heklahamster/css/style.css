@@ -541,3 +541,7 @@ body:has(#resume:not([hidden])) .foot { padding-bottom: 96px; }
 .print-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-weight: 600; }
 @media print { .print-bar { display: none; } }
 #panelAddr, .panel-ask { display: flex; flex-direction: column; gap: 26px; }
+
+/* Produktfakta under hamsterne */
+.facts { margin-top: 36px; font-weight: 800; font-size: 1.05rem; max-width: 46em; border-top: var(--strek); padding-top: 14px; }
+.band-papir > .facts + .fineprint { margin-top: 8px; }

@@ -8,13 +8,18 @@ HH.config = {
   paymentEnabled: false,      // Ikke sett til true før Vipps/Stripe er konfigurert og godkjent.
   demo: true,                 // Viser demo-merking og lagrer alt lokalt i nettleseren.
 
-  // PRIS (plassholder til godkjent pris foreligger)
-  priceNok: 244,
-  embroideryPriceNok: 49,     // tillegg for brodering (plassholder)
+  // PRIS (besluttet 16.11.2026)
+  priceNok: 249,             // hamster med QR-hilsen
+  embroideryPriceNok: 79,     // tillegg for brodering
+  shippingNok: 59,            // frakt i hele Norge
+
+  // PRODUKTFAKTA
+  sizeCm: 12,
+  shipWithinDays: 5,          // virkedager fra bestilling til den sendes
 
   // Adresseoppslag: Kartverkets åpne adresseregister. Tom streng slår det av.
   addressApi: 'https://ws.geonorge.no/adresser/v1/sok',
-  priceIsPlaceholder: true,
+  priceIsPlaceholder: false,
 
   // GRENSER – må også valideres på serveren når backend kobles til.
   embroideryMax: 20,
@@ -63,7 +68,7 @@ HH.config = {
       tint: 'gul', belly: { x: 50, y: 66, w: 42 }, model: { pos: '0 -0.32 0.48', normal: '0 0 1' }
     },
     {
-      id: 'feit', name: 'Fetthamsteren', nameHtml: 'Fett&shy;hamsteren',
+      id: 'feit', name: 'Tjukkhamsteren', nameHtml: 'Tjukk&shy;hamsteren',
       line: 'Liten kropp. Store problemer.',
       grade: '4−', remark: 'Overraskende rund. Mistenkelig fornøyd.',
       tint: 'fersken', belly: { x: 50, y: 69, w: 32 }, model: { pos: '0 -0.27 0.88', normal: '0 0 1' }
@@ -76,7 +81,8 @@ HH.config = {
 /* Prisen for en bestilling. Samme regnestykke må gjøres på serveren. */
 HH.priceOf = function (draft) {
   var emb = String(draft.embroidery || '').trim() ? HH.config.embroideryPriceNok : 0;
-  return { base: HH.config.priceNok, embroidery: emb, total: HH.config.priceNok + emb };
+  var c = HH.config;
+  return { base: c.priceNok, embroidery: emb, shipping: c.shippingNok, total: c.priceNok + emb + c.shippingNok };
 };
 
 HH.product = function (id) {

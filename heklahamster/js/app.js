@@ -32,6 +32,8 @@
     }
   });
 
+  $('facts').textContent = 'Ca. ' + cfg.sizeCm + ' cm høy. Heklet for hånd, med vekslende hell. Sendes innen ' + cfg.shipWithinDays + ' virkedager. Frakt ' + cfg.shippingNok + ' kr i hele Norge. Brodering + ' + cfg.embroideryPriceNok + ' kr.';
+
   // ---------- Forside: produktene ----------
   $('products').innerHTML = cfg.products.map(function (p, i) {
     return '<button class="product" type="button" data-pick="' + p.id + '" aria-label="Velg ' + esc(p.name) + '">' +
@@ -454,10 +456,11 @@
       '<dl class="summary-list summary-sum">' +
         '<div><dt>Hamster med QR-hilsen</dt><dd>' + pr.base + ' kr</dd></div>' +
         (pr.embroidery ? '<div><dt>Brodering</dt><dd>' + pr.embroidery + ' kr</dd></div>' : '') +
-        '<div><dt>Frakt i Norge</dt><dd>Ikke fastsatt</dd></div>' +
+        '<div><dt>Frakt i Norge</dt><dd>' + pr.shipping + ' kr</dd></div>' +
         '<div class="summary-total"><dt>Å betale</dt><dd>' + pr.total + ' kr</dd></div>' +
       '</dl>' +
-      (cfg.priceIsPlaceholder ? '<p class="fineprint">Konseptpris. Endelig pris og frakt settes før butikken åpner.</p>' : '');
+      '<p class="fineprint">Sendes innen ' + cfg.shipWithinDays + ' virkedager. Brodert vare har ikke angrerett, siden den er laget for én person.</p>' +
+      (cfg.priceIsPlaceholder ? '<p class="fineprint">Konseptpris. Endelig pris settes før butikken åpner.</p>' : '');
     $('payNote').textContent = cfg.paymentEnabled ? '' :
       'Demo: Knappen trekker ingen penger og sender ingen hamster. Du får se bekreftelsen og hilsenen.';
     $('payNote').hidden = cfg.paymentEnabled;

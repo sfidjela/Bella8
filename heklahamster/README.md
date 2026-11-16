@@ -4,7 +4,7 @@ Nettbutikk for stygge, heklede hamstere med brodert tekst og hemmelig QR-hilsen.
 Ren HTML, CSS og JavaScript. Ingen byggesteg, ingen avhengigheter.
 
 **Status: fungerende demo.** Hele bestillingsflyten virker, men ingenting sendes til en server.
-Betaling er slått av. Bildene er AI-genererte konseptbilder, og 244 kr er en plassholderpris.
+Betaling er slått av. Bildene er AI-genererte konseptbilder. Prisene er besluttet: hamster 249 kr, brodering 79 kr, frakt 59 kr.
 
 ## Kjør lokalt
 
@@ -58,7 +58,7 @@ adresse eller e-post.
   `adresse.html#<nøkkel>` og skriver adressen selv. Siden røper verken avsender eller innhold. SMS-utsending er ikke koblet til ennå.
 - **Oppslag på navn eller telefon:** finnes ikke som åpen tjeneste i Norge. 1881 og Gule Sider selger slike oppslag,
   men det krever avtale, koster per søk, og gir adresser til folk som ikke har bedt om det. «Spør mottakeren» løser det samme uten det.
-- **Pris:** `priceNok` (hamster) og `embroideryPriceNok` (brodering) i `js/config.js`. Brodering er valgfritt. Begge beløp er plassholdere.
+- **Pris og fakta:** `priceNok`, `embroideryPriceNok`, `shippingNok`, `sizeCm` og `shipWithinDays` i `js/config.js`. Brodering er valgfritt.
 - **Ordreoversikt:** `admin.html` viser alle ordre med status (venter på adresse → ny → brodert → sendt). I demoen leses de fra nettleseren.
 - **QR-lapp per ordre:** «Skriv ut QR-lapp» gir en lapp til hamsteren og en pakkseddel med samme ordrenummer.
   Skanner du lappen i søkefeltet i ordreoversikten (QR-leser eller mobil), kommer riktig ordre opp.
@@ -81,7 +81,7 @@ Dette mangler, i anbefalt rekkefølge:
    til en privat bøtte med signerte lenker. Broderingsgrensen på 20 tegn må også håndheves på serveren.
 3. **Betaling (Vipps eller Stripe).** Krever avtale og nøkler. Flyten skal være: ordrekladd på server → betaling hos
    leverandør → webhook setter ordren til betalt. Sett først da `paymentEnabled: true`. Koblingspunktet er `pay()` i `js/app.js`.
-4. **Frakt.** Fraktpris og sporingsnummer (Bring/Posten). Feltet «Frakt i Norge» i oppsummeringen viser «Ikke fastsatt» til dette er på plass.
+4. **Frakt.** Avtale med fraktleverandør og sporingsnummer (Bring/Posten). Fraktprisen (59 kr) er satt.
 5. **Administrasjon.** En enkel side over ordre med status (betalt → brodert → sendt), broderingstekst og utskrift av QR-etikett.
    Tabellen `orders` har allerede statusfeltet.
 6. **API for AI-assistenter.** `products.json` er første byggekloss. Neste er et endepunkt som tar imot en ordrekladd

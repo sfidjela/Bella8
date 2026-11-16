@@ -47,6 +47,8 @@ async function run(label, contextOpts) {
   const imgs = await page.evaluate(() => [...document.querySelectorAll('#site img')].map(i => ({ src: i.currentSrc.split('/').pop(), ok: i.complete && i.naturalWidth > 0 })));
   check(imgs.length >= 6 && imgs.every(i => i.ok), 'alle bilder på forsiden lastes (' + imgs.length + ')', imgs.filter(i => !i.ok).map(i => i.src).join(', '));
   check(await page.locator('#products .product').count() === 4, 'fire hamstere i produktlisten');
+  check(/12 cm/.test(await page.locator('#facts').textContent()) && /5 virkedager/.test(await page.locator('#facts').textContent()), 'størrelse og leveringstid vises på forsiden');
+  check(/Tjukkhamsteren/.test((await page.locator('#products').innerText()).replace(/\u00ad/g, '')), 'Tjukkhamsteren har nytt navn');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check(overflow <= 0, 'ingen sidelengs rulling på forsiden', overflow + 'px');
   await shot('forside');
@@ -76,7 +78,7 @@ async function run(label, contextOpts) {
   check(await page.locator('.fstep[data-step="2"]').isVisible(), 'ett trykk på hamster → steg 2');
 
   // Steg 2: brodering maks 20 tegn, vises i forhåndsvisningen
-  check(/49 kr/.test(await page.locator('#embPrice').textContent()), 'broderingstillegget vises ved feltet');
+  check(/79 kr/.test(await page.locator('#embPrice').textContent()), 'broderingstillegget vises ved feltet');
   await page.locator('#emb').fill('');
   await page.locator('#emb').pressSequentially('Dette er altfor lang tekst til en hamster');
   const emb = await page.locator('#emb').inputValue();
@@ -143,8 +145,8 @@ async function run(label, contextOpts) {
   check((await page.locator('#toZip').inputValue()) === '0155', 'postnummer tar bare sifre');
   await page.locator('#email').fill('kari@example.com');
   const sum = (await page.locator('#summary').innerText()).replace(/\u00ad/g, '');
-  check(/Skjevehamsteren/.test(sum) && /Din lille idiot/.test(sum) && /Tante Bjørg/.test(sum) && /244 kr/.test(sum), 'oppsummeringen viser valgene');
-  check(/Brodering\s*49 kr/.test(sum) && /Å betale\s*293 kr/.test(sum), 'brodering koster 49 kr ekstra og summen stemmer');
+  check(/Skjevehamsteren/.test(sum) && /Din lille idiot/.test(sum) && /Tante Bjørg/.test(sum) && /249 kr/.test(sum), 'oppsummeringen viser valgene');
+  check(/Brodering\s*79 kr/.test(sum) && /Frakt i Norge\s*59 kr/.test(sum) && /Å betale\s*387 kr/.test(sum), 'hamster 249 + brodering 79 + frakt 59 = 387 kr');
   await shot('steg3');
 
   // Tilbake: ingenting forsvinner
@@ -212,7 +214,7 @@ async function run(label, contextOpts) {
   check((await page.locator('#emb').inputValue()) === '' && await page.locator('#revealNo').isChecked(), 'ny bestilling starter blank og anonym');
   await page.locator('#flowNext').click();   // uten brodering
   check((await page.locator('#toName').inputValue()) === '', 'forrige mottaker er ikke lagret videre');
-  check(/Naken mage/.test(await page.locator('#summary').innerText()) && /Betal 244 kr/.test(await page.locator('#flowNext').textContent()), 'uten brodering: ingen tillegg, 244 kr');
+  check(/Naken mage/.test(await page.locator('#summary').innerText()) && /Betal 308 kr/.test(await page.locator('#flowNext').textContent()), 'uten brodering: 249 + frakt 59 = 308 kr');
   await page.locator('#toName').fill('Per Hansen');
   await page.locator('#toZip').pressSequentially('5003');
   await page.waitForFunction(() => document.getElementById('toCity').value === 'Bergen', null, { timeout: 5000 }).catch(() => {});
