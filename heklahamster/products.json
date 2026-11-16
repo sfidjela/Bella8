@@ -6,6 +6,7 @@
   "frakt": 59,
   "hoydeCm": 12,
   "sendesInnenVirkedager": 5,
+  "bruk": "Pynt for voksne. Ikke en leke, ikke egnet for barn under 14 år.",
   "broderingMaksTegn": 20,
   "hilsentyper": ["tekst", "lyd", "video"],
   "produkter": [

@@ -32,7 +32,7 @@
     }
   });
 
-  $('facts').textContent = 'Ca. ' + cfg.sizeCm + ' cm høy. Heklet for hånd, med vekslende hell. Sendes innen ' + cfg.shipWithinDays + ' virkedager. Frakt ' + cfg.shippingNok + ' kr i hele Norge. Brodering + ' + cfg.embroideryPriceNok + ' kr.';
+  $('facts').textContent = 'Ca. ' + cfg.sizeCm + ' cm høy. Heklet med vekslende hell. Pynt for voksne, ikke en leke. Sendes innen ' + cfg.shipWithinDays + ' virkedager. Frakt ' + cfg.shippingNok + ' kr i hele Norge. Brodering + ' + cfg.embroideryPriceNok + ' kr.';
 
   // ---------- Forside: produktene ----------
   $('products').innerHTML = cfg.products.map(function (p, i) {
@@ -459,7 +459,7 @@
         '<div><dt>Frakt i Norge</dt><dd>' + pr.shipping + ' kr</dd></div>' +
         '<div class="summary-total"><dt>Å betale</dt><dd>' + pr.total + ' kr</dd></div>' +
       '</dl>' +
-      '<p class="fineprint">Sendes innen ' + cfg.shipWithinDays + ' virkedager. Brodert vare har ikke angrerett, siden den er laget for én person.</p>' +
+      '<p class="fineprint">Sendes innen ' + cfg.shipWithinDays + ' virkedager. Brodert vare har ikke angrerett, siden den er laget for én person. Pynt for voksne, ikke en leke for barn.</p>' +
       (cfg.priceIsPlaceholder ? '<p class="fineprint">Konseptpris. Endelig pris settes før butikken åpner.</p>' : '');
     $('payNote').textContent = cfg.paymentEnabled ? '' :
       'Demo: Knappen trekker ingen penger og sender ingen hamster. Du får se bekreftelsen og hilsenen.';

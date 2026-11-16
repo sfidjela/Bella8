@@ -48,6 +48,7 @@ async function run(label, contextOpts) {
   check(imgs.length >= 6 && imgs.every(i => i.ok), 'alle bilder på forsiden lastes (' + imgs.length + ')', imgs.filter(i => !i.ok).map(i => i.src).join(', '));
   check(await page.locator('#products .product').count() === 4, 'fire hamstere i produktlisten');
   check(/12 cm/.test(await page.locator('#facts').textContent()) && /5 virkedager/.test(await page.locator('#facts').textContent()), 'størrelse og leveringstid vises på forsiden');
+  check(/ikke en leke/.test(await page.locator('#facts').textContent()), 'forsiden sier at hamsteren er pynt, ikke leke');
   check(/Tjukkhamsteren/.test((await page.locator('#products').innerText()).replace(/\u00ad/g, '')), 'Tjukkhamsteren har nytt navn');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check(overflow <= 0, 'ingen sidelengs rulling på forsiden', overflow + 'px');
